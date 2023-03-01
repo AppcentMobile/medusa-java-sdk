@@ -1,0 +1,12 @@
+# ProductTaxRate
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**productId** | **String** | The ID of the Product | 
+**product** | [**Product**](Product.md) |  |  [optional]
+**rateId** | **String** | The ID of the Tax Rate | 
+**taxRate** | [**TaxRate**](TaxRate.md) |  |  [optional]
+**createdAt** | [**OffsetDateTime**](OffsetDateTime.md) | The date with timezone at which the resource was created. | 
+**updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) | The date with timezone at which the resource was updated. | 
+**metadata** | **Object** | An optional key-value map with additional details | 
