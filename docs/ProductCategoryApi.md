@@ -18,7 +18,7 @@ Retrieve a list of product categories.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.ApiClient;
+//import mobi.appcent.medusa.store.MedusaApiClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -79,7 +79,7 @@ Retrieves a Product Category.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.ApiClient;
+//import mobi.appcent.medusa.store.MedusaApiClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;

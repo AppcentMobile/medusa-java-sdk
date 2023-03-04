@@ -2,9 +2,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>mobi.appcent</groupId>
-  <artifactId>medusa-java-client</artifactId>
+  <artifactId>medusa-java-sdk</artifactId>
   <version>1.0.0</version>
-  <name>medusa-java-client</name>
+  <name>medusa-java-sdk</name>
 
   <scm>
     <connection>scm:git:git@github.com:swagger-api/swagger-codegen.git</connection>

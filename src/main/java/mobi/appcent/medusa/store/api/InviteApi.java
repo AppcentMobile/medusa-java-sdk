@@ -12,14 +12,8 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
+import mobi.appcent.medusa.store.MedusaApiClient;
 
 import java.io.IOException;
 
@@ -32,22 +26,18 @@ import java.util.List;
 import java.util.Map;
 
 public class InviteApi {
-    private ApiClient apiClient;
+    private MedusaApiClient medusaApiClient;
 
-    public InviteApi() {
-        this(Configuration.getDefaultApiClient());
+    public static InviteApi getInstance() {
+        return new InviteApi();
     }
 
-    public InviteApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaApiClient getApiClient() {
+        return medusaApiClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public void setApiClient(MedusaApiClient medusaApiClient) {
+        this.medusaApiClient = medusaApiClient;
     }
 
     /**
@@ -74,17 +64,17 @@ public class InviteApi {
         final String[] localVarAccepts = {
             "application/json", "text/plain"
         };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        final String localVarAccept = medusaApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
             "application/json"
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        final String localVarContentType = medusaApiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
         if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+            medusaApiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
                 public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
@@ -96,7 +86,7 @@ public class InviteApi {
         }
 
         String[] localVarAuthNames = new String[] { "cookie_auth" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return medusaApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
     
     @SuppressWarnings("rawtypes")
@@ -130,7 +120,7 @@ public class InviteApi {
      */
     public ApiResponse<Void> postOrdersCustomerOrderClaimWithHttpInfo(StorePostCustomersCustomerOrderClaimReq body) throws ApiException {
         com.squareup.okhttp.Call call = postOrdersCustomerOrderClaimValidateBeforeCall(body, null, null);
-        return apiClient.execute(call);
+        return medusaApiClient.execute(call);
     }
 
     /**
@@ -163,7 +153,7 @@ public class InviteApi {
         }
 
         com.squareup.okhttp.Call call = postOrdersCustomerOrderClaimValidateBeforeCall(body, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
+        medusaApiClient.executeAsync(call, callback);
         return call;
     }
 }

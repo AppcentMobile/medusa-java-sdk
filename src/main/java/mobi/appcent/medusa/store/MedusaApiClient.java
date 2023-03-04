@@ -51,7 +51,7 @@ import mobi.appcent.medusa.store.auth.HttpBasicAuth;
 import mobi.appcent.medusa.store.auth.ApiKeyAuth;
 import mobi.appcent.medusa.store.auth.OAuth;
 
-public class ApiClient {
+public class MedusaApiClient {
 
     private String basePath = "https://api.medusa-commerce.com/store";
     private boolean debugging = false;
@@ -77,7 +77,7 @@ public class ApiClient {
     /*
      * Constructor for ApiClient
      */
-    public ApiClient() {
+    public MedusaApiClient() {
         httpClient = new OkHttpClient();
 
 
@@ -110,7 +110,7 @@ public class ApiClient {
      * @param basePath Base path of the URL (e.g https://api.medusa-commerce.com/store
      * @return An instance of OkHttpClient
      */
-    public ApiClient setBasePath(String basePath) {
+    public MedusaApiClient setBasePath(String basePath) {
         this.basePath = basePath;
         return this;
     }
@@ -130,7 +130,7 @@ public class ApiClient {
      * @param httpClient An instance of OkHttpClient
      * @return Api Client
      */
-    public ApiClient setHttpClient(OkHttpClient httpClient) {
+    public MedusaApiClient setHttpClient(OkHttpClient httpClient) {
         this.httpClient = httpClient;
         return this;
     }
@@ -150,7 +150,7 @@ public class ApiClient {
      * @param json JSON object
      * @return Api client
      */
-    public ApiClient setJSON(JSON json) {
+    public MedusaApiClient setJSON(JSON json) {
         this.json = json;
         return this;
     }
@@ -172,7 +172,7 @@ public class ApiClient {
      * @param verifyingSsl True to verify TLS/SSL connection
      * @return ApiClient
      */
-    public ApiClient setVerifyingSsl(boolean verifyingSsl) {
+    public MedusaApiClient setVerifyingSsl(boolean verifyingSsl) {
         this.verifyingSsl = verifyingSsl;
         applySslSettings();
         return this;
@@ -194,7 +194,7 @@ public class ApiClient {
      * @param sslCaCert input stream for SSL CA cert
      * @return ApiClient
      */
-    public ApiClient setSslCaCert(InputStream sslCaCert) {
+    public MedusaApiClient setSslCaCert(InputStream sslCaCert) {
         this.sslCaCert = sslCaCert;
         applySslSettings();
         return this;
@@ -211,7 +211,7 @@ public class ApiClient {
      * @param managers The KeyManagers to use
      * @return ApiClient
      */
-    public ApiClient setKeyManagers(KeyManager[] managers) {
+    public MedusaApiClient setKeyManagers(KeyManager[] managers) {
         this.keyManagers = managers;
         applySslSettings();
         return this;
@@ -221,27 +221,27 @@ public class ApiClient {
         return dateFormat;
     }
 
-    public ApiClient setDateFormat(DateFormat dateFormat) {
+    public MedusaApiClient setDateFormat(DateFormat dateFormat) {
         this.json.setDateFormat(dateFormat);
         return this;
     }
 
-    public ApiClient setSqlDateFormat(DateFormat dateFormat) {
+    public MedusaApiClient setSqlDateFormat(DateFormat dateFormat) {
         this.json.setSqlDateFormat(dateFormat);
         return this;
     }
 
-    public ApiClient setOffsetDateTimeFormat(DateTimeFormatter dateFormat) {
+    public MedusaApiClient setOffsetDateTimeFormat(DateTimeFormatter dateFormat) {
         this.json.setOffsetDateTimeFormat(dateFormat);
         return this;
     }
 
-    public ApiClient setLocalDateFormat(DateTimeFormatter dateFormat) {
+    public MedusaApiClient setLocalDateFormat(DateTimeFormatter dateFormat) {
         this.json.setLocalDateFormat(dateFormat);
         return this;
     }
 
-    public ApiClient setLenientOnJson(boolean lenientOnJson) {
+    public MedusaApiClient setLenientOnJson(boolean lenientOnJson) {
         this.json.setLenientOnJson(lenientOnJson);
         return this;
     }
@@ -346,7 +346,7 @@ public class ApiClient {
      * @param userAgent HTTP request's user agent
      * @return ApiClient
      */
-    public ApiClient setUserAgent(String userAgent) {
+    public MedusaApiClient setUserAgent(String userAgent) {
         addDefaultHeader("User-Agent", userAgent);
         return this;
     }
@@ -358,7 +358,7 @@ public class ApiClient {
      * @param value The header's value
      * @return ApiClient
      */
-    public ApiClient addDefaultHeader(String key, String value) {
+    public MedusaApiClient addDefaultHeader(String key, String value) {
         defaultHeaderMap.put(key, value);
         return this;
     }
@@ -378,7 +378,7 @@ public class ApiClient {
      * @param debugging To enable (true) or disable (false) debugging
      * @return ApiClient
      */
-    public ApiClient setDebugging(boolean debugging) {
+    public MedusaApiClient setDebugging(boolean debugging) {
         if (debugging != this.debugging) {
             if (debugging) {
                 loggingInterceptor = new HttpLoggingInterceptor();
@@ -411,7 +411,7 @@ public class ApiClient {
      * @param tempFolderPath Temporary folder path
      * @return ApiClient
      */
-    public ApiClient setTempFolderPath(String tempFolderPath) {
+    public MedusaApiClient setTempFolderPath(String tempFolderPath) {
         this.tempFolderPath = tempFolderPath;
         return this;
     }
@@ -432,7 +432,7 @@ public class ApiClient {
      * @param connectionTimeout connection timeout in milliseconds
      * @return Api client
      */
-    public ApiClient setConnectTimeout(int connectionTimeout) {
+    public MedusaApiClient setConnectTimeout(int connectionTimeout) {
         httpClient.setConnectTimeout(connectionTimeout, TimeUnit.MILLISECONDS);
         return this;
     }
@@ -454,7 +454,7 @@ public class ApiClient {
      * @param readTimeout read timeout in milliseconds
      * @return Api client
      */
-    public ApiClient setReadTimeout(int readTimeout) {
+    public MedusaApiClient setReadTimeout(int readTimeout) {
         httpClient.setReadTimeout(readTimeout, TimeUnit.MILLISECONDS);
         return this;
     }
@@ -476,7 +476,7 @@ public class ApiClient {
      * @param writeTimeout connection timeout in milliseconds
      * @return Api client
      */
-    public ApiClient setWriteTimeout(int writeTimeout) {
+    public MedusaApiClient setWriteTimeout(int writeTimeout) {
         httpClient.setWriteTimeout(writeTimeout, TimeUnit.MILLISECONDS);
         return this;
     }
