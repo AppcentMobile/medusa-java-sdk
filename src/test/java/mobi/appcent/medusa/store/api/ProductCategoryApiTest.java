@@ -12,8 +12,8 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StoreGetProductCategoriesCategoryRes;
-import mobi.appcent.medusa.store.model.StoreProductCategoriesListRes;
+import mobi.appcent.medusa.store.model.response.StoreGetProductCategoriesCategoryRes;
+import mobi.appcent.medusa.store.model.response.StoreProductCategoriesListRes;
 import org.junit.Test;
 import org.junit.Ignore;
 

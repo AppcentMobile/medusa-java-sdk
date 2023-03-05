@@ -167,7 +167,7 @@ Verifies the claim order token provided to the customer upon request of order ow
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.MedusaApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;

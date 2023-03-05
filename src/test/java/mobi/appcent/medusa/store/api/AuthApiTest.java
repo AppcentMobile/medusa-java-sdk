@@ -12,9 +12,9 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StoreAuthRes;
-import mobi.appcent.medusa.store.model.StoreGetAuthEmailRes;
-import mobi.appcent.medusa.store.model.StorePostAuthReq;
+import mobi.appcent.medusa.store.model.response.StoreAuthRes;
+import mobi.appcent.medusa.store.model.response.StoreGetAuthEmailRes;
+import mobi.appcent.medusa.store.model.response.StorePostAuthReq;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -51,7 +51,7 @@ public class AuthApiTest {
      */
     @Test
     public void getAuthTest() throws Exception {
-        StoreAuthRes response = api.getAuth();
+        StoreAuthRes response = api.getAuth().execute().getData();
 
         // TODO: test validations
     }
@@ -66,7 +66,7 @@ public class AuthApiTest {
     @Test
     public void getAuthEmailTest() throws Exception {
         String email = null;
-        StoreGetAuthEmailRes response = api.getAuthEmail(email);
+        StoreGetAuthEmailRes response = api.getAuthEmail().email(email).execute().getData();
 
         // TODO: test validations
     }
@@ -80,9 +80,6 @@ public class AuthApiTest {
      */
     @Test
     public void postAuthTest() throws Exception {
-        StorePostAuthReq body = null;
-        StoreAuthRes response = api.postAuth(body);
-
-        // TODO: test validations
+        StoreAuthRes response = api.postAuth().email("").password("").execute().getData();
     }
 }

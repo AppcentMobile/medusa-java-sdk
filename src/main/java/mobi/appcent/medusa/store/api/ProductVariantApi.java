@@ -21,10 +21,10 @@ import java.io.IOException;
 
 import java.math.BigDecimal;
 
-import mobi.appcent.medusa.store.model.InventoryQuantity;
-import mobi.appcent.medusa.store.model.StoreVariantsListRes;
-import mobi.appcent.medusa.store.model.StoreVariantsRes;
-import mobi.appcent.medusa.store.model.Title;
+import mobi.appcent.medusa.store.model.response.InventoryQuantity;
+import mobi.appcent.medusa.store.model.response.StoreVariantsListRes;
+import mobi.appcent.medusa.store.model.response.StoreVariantsRes;
+import mobi.appcent.medusa.store.model.response.Title;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -33,18 +33,18 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductVariantApi {
-    private MedusaApiClient medusaApiClient;
+    private MedusaSdkClient medusaSdkClient;
 
     public static ProductVariantApi getInstance() {
         return new ProductVariantApi();
     }
 
-    public MedusaApiClient getApiClient() {
-        return medusaApiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public void setApiClient(MedusaApiClient medusaApiClient) {
-        this.medusaApiClient = medusaApiClient;
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
@@ -73,25 +73,25 @@ public class ProductVariantApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (ids != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("ids", ids));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("ids", ids));
         if (salesChannelId != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("sales_channel_id", salesChannelId));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("sales_channel_id", salesChannelId));
         if (expand != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("expand", expand));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("expand", expand));
         if (offset != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("offset", offset));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("offset", offset));
         if (limit != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("limit", limit));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("limit", limit));
         if (cartId != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("cart_id", cartId));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("cart_id", cartId));
         if (regionId != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("region_id", regionId));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("region_id", regionId));
         if (currencyCode != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("currency_code", currencyCode));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("currency_code", currencyCode));
         if (title != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("title", title));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("title", title));
         if (inventoryQuantity != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("inventory_quantity", inventoryQuantity));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("inventory_quantity", inventoryQuantity));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -100,17 +100,17 @@ public class ProductVariantApi {
         final String[] localVarAccepts = {
             "application/json"
         };
-        final String localVarAccept = medusaApiClient.selectHeaderAccept(localVarAccepts);
+        final String localVarAccept = medusaSdkClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
             
         };
-        final String localVarContentType = medusaApiClient.selectHeaderContentType(localVarContentTypes);
+        final String localVarContentType = medusaSdkClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
         if(progressListener != null) {
-            medusaApiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+            medusaSdkClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
                 public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
@@ -122,7 +122,7 @@ public class ProductVariantApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return medusaApiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return medusaSdkClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
     
     @SuppressWarnings("rawtypes")
@@ -177,7 +177,7 @@ public class ProductVariantApi {
     public ApiResponse<StoreVariantsListRes> getVariantsWithHttpInfo(String ids, String salesChannelId, String expand, BigDecimal offset, BigDecimal limit, String cartId, String regionId, String currencyCode, Title title, InventoryQuantity inventoryQuantity) throws ApiException {
         com.squareup.okhttp.Call call = getVariantsValidateBeforeCall(ids, salesChannelId, expand, offset, limit, cartId, regionId, currencyCode, title, inventoryQuantity, null, null);
         Type localVarReturnType = new TypeToken<StoreVariantsListRes>(){}.getType();
-        return medusaApiClient.execute(call, localVarReturnType);
+        return medusaSdkClient.execute(call, localVarReturnType);
     }
 
     /**
@@ -220,7 +220,7 @@ public class ProductVariantApi {
 
         com.squareup.okhttp.Call call = getVariantsValidateBeforeCall(ids, salesChannelId, expand, offset, limit, cartId, regionId, currencyCode, title, inventoryQuantity, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<StoreVariantsListRes>(){}.getType();
-        medusaApiClient.executeAsync(call, localVarReturnType, callback);
+        medusaSdkClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
@@ -240,18 +240,18 @@ public class ProductVariantApi {
         
         // create path and map variables
         String localVarPath = "/variants/{variant_id}"
-            .replaceAll("\\{" + "variant_id" + "\\}", medusaApiClient.escapeString(variantId.toString()));
+            .replaceAll("\\{" + "variant_id" + "\\}", medusaSdkClient.escapeString(variantId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (cartId != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("cart_id", cartId));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("cart_id", cartId));
         if (salesChannelId != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("sales_channel_id", salesChannelId));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("sales_channel_id", salesChannelId));
         if (regionId != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("region_id", regionId));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("region_id", regionId));
         if (currencyCode != null)
-        localVarQueryParams.addAll(medusaApiClient.parameterToPair("currency_code", currencyCode));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("currency_code", currencyCode));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -260,17 +260,17 @@ public class ProductVariantApi {
         final String[] localVarAccepts = {
             "application/json"
         };
-        final String localVarAccept = medusaApiClient.selectHeaderAccept(localVarAccepts);
+        final String localVarAccept = medusaSdkClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
             
         };
-        final String localVarContentType = medusaApiClient.selectHeaderContentType(localVarContentTypes);
+        final String localVarContentType = medusaSdkClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
         if(progressListener != null) {
-            medusaApiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+            medusaSdkClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
                 public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
@@ -282,7 +282,7 @@ public class ProductVariantApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return medusaApiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return medusaSdkClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
     
     @SuppressWarnings("rawtypes")
@@ -331,7 +331,7 @@ public class ProductVariantApi {
     public ApiResponse<StoreVariantsRes> getVariantsVariantWithHttpInfo(String variantId, String cartId, String salesChannelId, String regionId, String currencyCode) throws ApiException {
         com.squareup.okhttp.Call call = getVariantsVariantValidateBeforeCall(variantId, cartId, salesChannelId, regionId, currencyCode, null, null);
         Type localVarReturnType = new TypeToken<StoreVariantsRes>(){}.getType();
-        return medusaApiClient.execute(call, localVarReturnType);
+        return medusaSdkClient.execute(call, localVarReturnType);
     }
 
     /**
@@ -369,7 +369,7 @@ public class ProductVariantApi {
 
         com.squareup.okhttp.Call call = getVariantsVariantValidateBeforeCall(variantId, cartId, salesChannelId, regionId, currencyCode, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<StoreVariantsRes>(){}.getType();
-        medusaApiClient.executeAsync(call, localVarReturnType, callback);
+        medusaSdkClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
 }

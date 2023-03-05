@@ -12,9 +12,9 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.CreatedAt2;
-import mobi.appcent.medusa.store.model.InlineResponse200;
-import mobi.appcent.medusa.store.model.UpdatedAt2;
+import mobi.appcent.medusa.store.model.response.CreatedAt2;
+import mobi.appcent.medusa.store.model.response.InlineResponse200;
+import mobi.appcent.medusa.store.model.response.UpdatedAt2;
 import org.junit.Test;
 import org.junit.Ignore;
 

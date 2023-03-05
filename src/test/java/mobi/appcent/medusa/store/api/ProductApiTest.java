@@ -12,12 +12,12 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.CreatedAt4;
-import mobi.appcent.medusa.store.model.Id;
-import mobi.appcent.medusa.store.model.StorePostSearchRes;
-import mobi.appcent.medusa.store.model.StoreProductsListRes;
-import mobi.appcent.medusa.store.model.StoreProductsRes;
-import mobi.appcent.medusa.store.model.UpdatedAt4;
+import mobi.appcent.medusa.store.model.response.CreatedAt4;
+import mobi.appcent.medusa.store.model.response.Id;
+import mobi.appcent.medusa.store.model.response.StorePostSearchRes;
+import mobi.appcent.medusa.store.model.response.StoreProductsListRes;
+import mobi.appcent.medusa.store.model.response.StoreProductsRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt4;
 import org.junit.Test;
 import org.junit.Ignore;
 

@@ -12,8 +12,8 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StoreReturnReasonsListRes;
-import mobi.appcent.medusa.store.model.StoreReturnReasonsRes;
+import mobi.appcent.medusa.store.model.response.StoreReturnReasonsListRes;
+import mobi.appcent.medusa.store.model.response.StoreReturnReasonsRes;
 import org.junit.Test;
 import org.junit.Ignore;
 

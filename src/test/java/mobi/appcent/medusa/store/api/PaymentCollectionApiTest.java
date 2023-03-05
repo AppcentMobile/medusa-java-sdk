@@ -12,11 +12,11 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StorePaymentCollectionSessionsReq;
-import mobi.appcent.medusa.store.model.StorePaymentCollectionsRes;
-import mobi.appcent.medusa.store.model.StorePaymentCollectionsSessionRes;
-import mobi.appcent.medusa.store.model.StorePostPaymentCollectionsBatchSessionsAuthorizeReq;
-import mobi.appcent.medusa.store.model.StorePostPaymentCollectionsBatchSessionsReq;
+import mobi.appcent.medusa.store.model.response.StorePaymentCollectionSessionsReq;
+import mobi.appcent.medusa.store.model.response.StorePaymentCollectionsRes;
+import mobi.appcent.medusa.store.model.response.StorePaymentCollectionsSessionRes;
+import mobi.appcent.medusa.store.model.response.StorePostPaymentCollectionsBatchSessionsAuthorizeReq;
+import mobi.appcent.medusa.store.model.response.StorePostPaymentCollectionsBatchSessionsReq;
 import org.junit.Test;
 import org.junit.Ignore;
 

@@ -12,8 +12,8 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StorePostReturnsReq;
-import mobi.appcent.medusa.store.model.StoreReturnsRes;
+import mobi.appcent.medusa.store.model.response.StorePostReturnsReq;
+import mobi.appcent.medusa.store.model.response.StoreReturnsRes;
 import org.junit.Test;
 import org.junit.Ignore;
 

@@ -12,15 +12,15 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StoreCartsRes;
-import mobi.appcent.medusa.store.model.StoreCompleteCartRes;
-import mobi.appcent.medusa.store.model.StorePostCartReq;
-import mobi.appcent.medusa.store.model.StorePostCartsCartLineItemsItemReq;
-import mobi.appcent.medusa.store.model.StorePostCartsCartLineItemsReq;
-import mobi.appcent.medusa.store.model.StorePostCartsCartPaymentSessionReq;
-import mobi.appcent.medusa.store.model.StorePostCartsCartPaymentSessionUpdateReq;
-import mobi.appcent.medusa.store.model.StorePostCartsCartReq;
-import mobi.appcent.medusa.store.model.StorePostCartsCartShippingMethodReq;
+import mobi.appcent.medusa.store.model.response.StoreCartsRes;
+import mobi.appcent.medusa.store.model.response.StoreCompleteCartRes;
+import mobi.appcent.medusa.store.model.response.StorePostCartReq;
+import mobi.appcent.medusa.store.model.response.StorePostCartsCartLineItemsItemReq;
+import mobi.appcent.medusa.store.model.response.StorePostCartsCartLineItemsReq;
+import mobi.appcent.medusa.store.model.response.StorePostCartsCartPaymentSessionReq;
+import mobi.appcent.medusa.store.model.response.StorePostCartsCartPaymentSessionUpdateReq;
+import mobi.appcent.medusa.store.model.response.StorePostCartsCartReq;
+import mobi.appcent.medusa.store.model.response.StorePostCartsCartShippingMethodReq;
 import org.junit.Test;
 import org.junit.Ignore;
 

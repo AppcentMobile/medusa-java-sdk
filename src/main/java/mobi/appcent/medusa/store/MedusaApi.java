@@ -6,7 +6,7 @@ import mobi.appcent.medusa.store.api.*;
  */
 public class MedusaApi {
 
-    private static MedusaApiClient defaultMedusaApiClient = new MedusaApiClient();
+    private static MedusaSdkClient defaultMedusaSdkClient = new MedusaSdkClient();
     private final AuthApi authApi = AuthApi.getInstance();
     private final CartApi cartApi = CartApi.getInstance();
     private final CollectionApi collectionApi = CollectionApi.getInstance();
@@ -32,23 +32,23 @@ public class MedusaApi {
     }
 
     private void initializeSdkClients() {
-        authApi.setApiClient(defaultMedusaApiClient);
-        cartApi.setApiClient(defaultMedusaApiClient);
-        collectionApi.setApiClient(defaultMedusaApiClient);
-        customerApi.setApiClient(defaultMedusaApiClient);
-        giftCardApi.setApiClient(defaultMedusaApiClient);
-        inviteApi.setApiClient(defaultMedusaApiClient);
-        orderApi.setApiClient(defaultMedusaApiClient);
-        orderEditApi.setApiClient(defaultMedusaApiClient);
-        paymentCollectionApi.setApiClient(defaultMedusaApiClient);
-        productApi.setApiClient(defaultMedusaApiClient);
-        productTypeApi.setApiClient(defaultMedusaApiClient);
-        productVariantApi.setApiClient(defaultMedusaApiClient);
-        regionApi.setApiClient(defaultMedusaApiClient);
-        returnApi.setApiClient(defaultMedusaApiClient);
-        returnReasonApi.setApiClient(defaultMedusaApiClient);
-        shippingOptionApi.setApiClient(defaultMedusaApiClient);
-        swapApi.setApiClient(defaultMedusaApiClient);
+        authApi.setApiClient(defaultMedusaSdkClient);
+        cartApi.setApiClient(defaultMedusaSdkClient);
+        collectionApi.setApiClient(defaultMedusaSdkClient);
+        customerApi.setApiClient(defaultMedusaSdkClient);
+        giftCardApi.setApiClient(defaultMedusaSdkClient);
+        inviteApi.setApiClient(defaultMedusaSdkClient);
+        orderApi.setApiClient(defaultMedusaSdkClient);
+        orderEditApi.setApiClient(defaultMedusaSdkClient);
+        paymentCollectionApi.setApiClient(defaultMedusaSdkClient);
+        productApi.setApiClient(defaultMedusaSdkClient);
+        productTypeApi.setApiClient(defaultMedusaSdkClient);
+        productVariantApi.setApiClient(defaultMedusaSdkClient);
+        regionApi.setApiClient(defaultMedusaSdkClient);
+        returnApi.setApiClient(defaultMedusaSdkClient);
+        returnReasonApi.setApiClient(defaultMedusaSdkClient);
+        shippingOptionApi.setApiClient(defaultMedusaSdkClient);
+        swapApi.setApiClient(defaultMedusaSdkClient);
     }
 
     /**
@@ -57,40 +57,40 @@ public class MedusaApi {
      *
      * @return Default API client
      */
-    public MedusaApiClient getDefaultApiClient() {
-        return defaultMedusaApiClient;
+    public MedusaSdkClient getDefaultApiClient() {
+        return defaultMedusaSdkClient;
     }
 
     /**
      * Set the default API client, which would be used when creating API
      * instances without providing an API client.
      *
-     * @param medusaApiClient API client
+     * @param medusaSdkClient API client
      */
-    public void setDefaultApiClient(MedusaApiClient medusaApiClient) {
-        defaultMedusaApiClient = medusaApiClient;
+    public void setDefaultApiClient(MedusaSdkClient medusaSdkClient) {
+        defaultMedusaSdkClient = medusaSdkClient;
         initializeSdkClients();
     }
 
     public AuthApi auth() { return authApi; }
-    public CartApi cart() { return cartApi; }
-    public CollectionApi collection() { return collectionApi; }
-    public CustomerApi customer() { return customerApi; }
-    public GiftCardApi giftCard() { return giftCardApi; }
-    public InviteApi invite() { return inviteApi; }
-    public OrderApi order() { return orderApi; }
+    public CartApi carts() { return cartApi; }
+    public CollectionApi collections() { return collectionApi; }
+    public CustomerApi customers() { return customerApi; }
+    public GiftCardApi giftCards() { return giftCardApi; }
+    public InviteApi invites() { return inviteApi; }
+    public OrderApi orders() { return orderApi; }
     public OrderEditApi orderEdit() { return orderEditApi; }
-    public PaymentCollectionApi paymentCollection() { return paymentCollectionApi; }
-    public ProductApi product() { return productApi; }
-    public ProductCategoryApi productCategory() { return productCategoryApi; }
-    public ProductTagApi productTag() { return productTagApi; }
-    public ProductTypeApi productTypeApi() { return productTypeApi; }
-    public ProductVariantApi productVariant() { return productVariantApi; }
-    public RegionApi region() { return regionApi; }
-    public ReturnApi returnApi() { return returnApi; }
-    public ReturnReasonApi returnReason() { return returnReasonApi; }
-    public ShippingOptionApi shippingOption() { return shippingOptionApi; }
-    public SwapApi swap() { return swapApi; }
+    public PaymentCollectionApi paymentCollections() { return paymentCollectionApi; }
+    public ProductApi products() { return productApi; }
+    public ProductCategoryApi productCategories() { return productCategoryApi; }
+    public ProductTagApi productTags() { return productTagApi; }
+    public ProductTypeApi productTypes() { return productTypeApi; }
+    public ProductVariantApi productVariants() { return productVariantApi; }
+    public RegionApi regions() { return regionApi; }
+    public ReturnApi returns() { return returnApi; }
+    public ReturnReasonApi returnReasons() { return returnReasonApi; }
+    public ShippingOptionApi shippingOptions() { return shippingOptionApi; }
+    public SwapApi swaps() { return swapApi; }
 
 
 }

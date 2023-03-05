@@ -14,9 +14,9 @@ package mobi.appcent.medusa.store.api;
 
 import java.math.BigDecimal;
 
-import mobi.appcent.medusa.store.model.ShippingAddress;
-import mobi.appcent.medusa.store.model.StoreOrdersRes;
-import mobi.appcent.medusa.store.model.StorePostCustomersCustomerAcceptClaimReq;
+import mobi.appcent.medusa.store.model.response.ShippingAddress;
+import mobi.appcent.medusa.store.model.response.StoreOrdersRes;
+import mobi.appcent.medusa.store.model.response.StorePostCustomersCustomerAcceptClaimReq;
 import org.junit.Test;
 import org.junit.Ignore;
 

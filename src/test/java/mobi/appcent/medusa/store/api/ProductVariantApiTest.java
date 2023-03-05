@@ -14,10 +14,10 @@ package mobi.appcent.medusa.store.api;
 
 import java.math.BigDecimal;
 
-import mobi.appcent.medusa.store.model.InventoryQuantity;
-import mobi.appcent.medusa.store.model.StoreVariantsListRes;
-import mobi.appcent.medusa.store.model.StoreVariantsRes;
-import mobi.appcent.medusa.store.model.Title;
+import mobi.appcent.medusa.store.model.response.InventoryQuantity;
+import mobi.appcent.medusa.store.model.response.StoreVariantsListRes;
+import mobi.appcent.medusa.store.model.response.StoreVariantsRes;
+import mobi.appcent.medusa.store.model.response.Title;
 import org.junit.Test;
 import org.junit.Ignore;
 

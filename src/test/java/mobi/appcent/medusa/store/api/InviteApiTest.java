@@ -12,7 +12,7 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StorePostCustomersCustomerOrderClaimReq;
+import mobi.appcent.medusa.store.model.response.StorePostCustomersCustomerOrderClaimReq;
 import org.junit.Test;
 import org.junit.Ignore;
 

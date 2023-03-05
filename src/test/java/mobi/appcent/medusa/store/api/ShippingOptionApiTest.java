@@ -12,7 +12,7 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StoreShippingOptionsListRes;
+import mobi.appcent.medusa.store.model.response.StoreShippingOptionsListRes;
 import org.junit.Test;
 import org.junit.Ignore;
 

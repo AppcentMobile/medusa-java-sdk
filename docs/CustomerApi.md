@@ -26,7 +26,7 @@ Removes an Address from the Customer&#x27;s saved addresses.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.MedusaApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -81,7 +81,7 @@ Retrieves a Customer - the Customer must be logged in to retrieve their details.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.MedusaApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -132,7 +132,7 @@ Retrieves a list of a Customer&#x27;s Orders.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.MedusaApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -221,7 +221,7 @@ Retrieves a list of a Customer&#x27;s saved payment methods. Payment methods are
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.MedusaApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -317,7 +317,7 @@ Updates a Customer&#x27;s saved details.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.MedusaApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -372,7 +372,7 @@ Adds a Shipping Address to a Customer&#x27;s saved addresses.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.MedusaApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -427,7 +427,7 @@ Updates a Customer&#x27;s saved Shipping Address.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.MedusaApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;

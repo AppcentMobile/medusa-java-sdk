@@ -13,16 +13,21 @@
 package mobi.appcent.medusa.store.api;
 
 import mobi.appcent.medusa.store.*;
-import mobi.appcent.medusa.store.MedusaApiClient;
+import mobi.appcent.medusa.store.MedusaSdkClient;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.StoreAuthRes;
-import mobi.appcent.medusa.store.model.StoreGetAuthEmailRes;
-import mobi.appcent.medusa.store.model.StorePostAuthReq;
+import mobi.appcent.medusa.store.common.UrlConstant;
+import mobi.appcent.medusa.store.model.request.auth.DeleteAuthRequest;
+import mobi.appcent.medusa.store.model.request.auth.GetAuthEmailRequest;
+import mobi.appcent.medusa.store.model.request.auth.GetAuthRequest;
+import mobi.appcent.medusa.store.model.request.auth.PostAuthRequest;
+import mobi.appcent.medusa.store.model.response.StoreAuthRes;
+import mobi.appcent.medusa.store.model.response.StoreGetAuthEmailRes;
+import mobi.appcent.medusa.store.model.response.StorePostAuthReq;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -31,78 +36,18 @@ import java.util.List;
 import java.util.Map;
 
 public class AuthApi extends BaseApi {
-    private MedusaApiClient medusaApiClient;
+    private MedusaSdkClient medusaSdkClient;
 
     public static AuthApi getInstance() {
         return new AuthApi();
     }
 
-    public MedusaApiClient getApiClient() {
-        return medusaApiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public void setApiClient(MedusaApiClient medusaApiClient) {
-        this.medusaApiClient = medusaApiClient;
-    }
-
-    /**
-     * Build call for deleteAuth
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call deleteAuthCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/auth";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json", "text/plain"
-        };
-        final String localVarAccept = medusaApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = medusaApiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            medusaApiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "cookie_auth" };
-        return medusaApiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteAuthValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = deleteAuthCall(progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
@@ -110,412 +55,37 @@ public class AuthApi extends BaseApi {
      * Destroys a Customer&#x27;s authenticated session.
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteAuth() throws ApiException {
-        deleteAuthWithHttpInfo();
-    }
-
-    /**
-     * Customer Log out
-     * Destroys a Customer&#x27;s authenticated session.
-     * @return ApiResponse&lt;Void&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<Void> deleteAuthWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = deleteAuthValidateBeforeCall(null, null);
-        return medusaApiClient.execute(call);
-    }
-
-    /**
-     * Customer Log out (asynchronously)
-     * Destroys a Customer&#x27;s authenticated session.
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call deleteAuthAsync(final ApiCallback<Void> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = deleteAuthValidateBeforeCall(progressListener, progressRequestListener);
-        medusaApiClient.executeAsync(call, callback);
-        return call;
-    }
-    /**
-     * Build call for getAuth
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getAuthCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/auth";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json", "text/plain"
-        };
-        final String localVarAccept = medusaApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = medusaApiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            medusaApiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "cookie_auth" };
-        return medusaApiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getAuthValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = getAuthCall(progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public DeleteAuthRequest deleteAuth() throws ApiException {
+        return new DeleteAuthRequest(medusaSdkClient);
     }
 
     /**
      * Get Current Customer
      * Gets the currently logged in Customer.
-     * @return StoreAuthRes
+     * @return GetAuthRequest
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreAuthRes getAuth() throws ApiException {
-        ApiResponse<StoreAuthRes> resp = getAuthWithHttpInfo();
-        return resp.getData();
-    }
-
-    /**
-     * Get Current Customer
-     * Gets the currently logged in Customer.
-     * @return ApiResponse&lt;StoreAuthRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreAuthRes> getAuthWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = getAuthValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<StoreAuthRes>(){}.getType();
-        return medusaApiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get Current Customer (asynchronously)
-     * Gets the currently logged in Customer.
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getAuthAsync(final ApiCallback<StoreAuthRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getAuthValidateBeforeCall(progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreAuthRes>(){}.getType();
-        medusaApiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getAuthEmail
-     * @param email The email to check if exists. (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getAuthEmailCall(String email, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/auth/{email}"
-            .replaceAll("\\{" + "email" + "\\}", medusaApiClient.escapeString(email.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = medusaApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = medusaApiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            medusaApiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return medusaApiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getAuthEmailValidateBeforeCall(String email, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'email' is set
-        if (email == null) {
-            throw new ApiException("Missing the required parameter 'email' when calling getAuthEmail(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = getAuthEmailCall(email, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public GetAuthRequest getAuth() throws ApiException {
+        return new GetAuthRequest(medusaSdkClient);
     }
 
     /**
      * Check if email exists
      * Checks if a Customer with the given email has signed up.
-     * @param email The email to check if exists. (required)
-     * @return StoreGetAuthEmailRes
+     * @return GetAuthEmailRequest
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreGetAuthEmailRes getAuthEmail(String email) throws ApiException {
-        ApiResponse<StoreGetAuthEmailRes> resp = getAuthEmailWithHttpInfo(email);
-        return resp.getData();
-    }
-
-    /**
-     * Check if email exists
-     * Checks if a Customer with the given email has signed up.
-     * @param email The email to check if exists. (required)
-     * @return ApiResponse&lt;StoreGetAuthEmailRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreGetAuthEmailRes> getAuthEmailWithHttpInfo(String email) throws ApiException {
-        com.squareup.okhttp.Call call = getAuthEmailValidateBeforeCall(email, null, null);
-        Type localVarReturnType = new TypeToken<StoreGetAuthEmailRes>(){}.getType();
-        return medusaApiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Check if email exists (asynchronously)
-     * Checks if a Customer with the given email has signed up.
-     * @param email The email to check if exists. (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getAuthEmailAsync(String email, final ApiCallback<StoreGetAuthEmailRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getAuthEmailValidateBeforeCall(email, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreGetAuthEmailRes>(){}.getType();
-        medusaApiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for postAuth
-     * @param body  (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call postAuthCall(StorePostAuthReq body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
-        
-        // create path and map variables
-        String localVarPath = "/auth";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json", "text/plain"
-        };
-        final String localVarAccept = medusaApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = medusaApiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            medusaApiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return medusaApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call postAuthValidateBeforeCall(StorePostAuthReq body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = postAuthCall(body, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public GetAuthEmailRequest getAuthEmail() throws ApiException {
+        return new GetAuthEmailRequest(medusaSdkClient);
     }
 
     /**
      * Customer Login
      * Logs a Customer in and authorizes them to view their details. Successful authentication will set a session cookie in the Customer&#x27;s browser.
-     * @param body  (optional)
-     * @return StoreAuthRes
+     * @return PostAuthRequest
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreAuthRes postAuth(StorePostAuthReq body) throws ApiException {
-        ApiResponse<StoreAuthRes> resp = postAuthWithHttpInfo(body);
-        return resp.getData();
-    }
-
-    /**
-     * Customer Login
-     * Logs a Customer in and authorizes them to view their details. Successful authentication will set a session cookie in the Customer&#x27;s browser.
-     * @param body  (optional)
-     * @return ApiResponse&lt;StoreAuthRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreAuthRes> postAuthWithHttpInfo(StorePostAuthReq body) throws ApiException {
-        com.squareup.okhttp.Call call = postAuthValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<StoreAuthRes>(){}.getType();
-        return medusaApiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Customer Login (asynchronously)
-     * Logs a Customer in and authorizes them to view their details. Successful authentication will set a session cookie in the Customer&#x27;s browser.
-     * @param body  (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call postAuthAsync(StorePostAuthReq body, final ApiCallback<StoreAuthRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = postAuthValidateBeforeCall(body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreAuthRes>(){}.getType();
-        medusaApiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public PostAuthRequest postAuth() throws ApiException {
+        return new PostAuthRequest(medusaSdkClient);
     }
 }

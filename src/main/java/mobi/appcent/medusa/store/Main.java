@@ -1,11 +1,7 @@
 package mobi.appcent.medusa.store;
 
-import mobi.appcent.medusa.store.api.AuthApi;
-import mobi.appcent.medusa.store.api.CustomerApi;
-import mobi.appcent.medusa.store.model.StoreAuthRes;
-import mobi.appcent.medusa.store.model.StoreCustomersRes;
-import mobi.appcent.medusa.store.model.StorePostAuthReq;
-import mobi.appcent.medusa.store.model.StorePostCustomersReq;
+import mobi.appcent.medusa.store.model.response.StoreAuthRes;
+import mobi.appcent.medusa.store.model.response.StorePostAuthReq;
 
 /**
  * Created by erenalpaslan on 25.02.2023
@@ -20,13 +16,15 @@ public class Main {
                 .setBasePath("http://localhost:9000/store");
 
         try {
-            StoreAuthRes res = medusaApi.auth().postAuth(new StorePostAuthReq()
+            ApiResponse<StoreAuthRes> res = medusaApi
+                    .auth()
+                    .postAuth()
                     .email("test@gmail.com")
                     .password("supersecret")
-            );
-            System.out.println(res.getCustomer());
+                    .execute();
+            System.out.println(res.getData());
         } catch (ApiException exception) {
-            exception.printStackTrace();
+            System.err.println(exception);
         }
     }
 }

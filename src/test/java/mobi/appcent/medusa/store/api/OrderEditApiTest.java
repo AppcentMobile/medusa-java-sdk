@@ -12,8 +12,8 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StoreOrderEditsRes;
-import mobi.appcent.medusa.store.model.StorePostOrderEditsOrderEditDecline;
+import mobi.appcent.medusa.store.model.response.StoreOrderEditsRes;
+import mobi.appcent.medusa.store.model.response.StorePostOrderEditsOrderEditDecline;
 import org.junit.Test;
 import org.junit.Ignore;
 
