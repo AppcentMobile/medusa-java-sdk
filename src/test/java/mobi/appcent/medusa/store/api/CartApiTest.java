@@ -12,6 +12,10 @@
 
 package mobi.appcent.medusa.store.api;
 
+import mobi.appcent.medusa.store.model.request.cart.AddShippingMethodRequest;
+import mobi.appcent.medusa.store.model.request.cart.CalculateCartTaxesRequest;
+import mobi.appcent.medusa.store.model.request.cart.CreatePaymentSessionsRequest;
+import mobi.appcent.medusa.store.model.request.cart.RefreshPaymentSessionRequest;
 import mobi.appcent.medusa.store.model.response.StoreCartsRes;
 import mobi.appcent.medusa.store.model.response.StoreCompleteCartRes;
 import mobi.appcent.medusa.store.model.response.StorePostCartReq;
@@ -45,7 +49,7 @@ public class CartApiTest {
     public void deleteCartsCartDiscountsDiscountTest() throws Exception {
         String id = null;
         String code = null;
-        StoreCartsRes response = api.deleteCartsCartDiscountsDiscount(id, code);
+        StoreCartsRes response = api.removeDiscount(id, code).execute().getData();
 
         // TODO: test validations
     }
@@ -61,7 +65,7 @@ public class CartApiTest {
     public void deleteCartsCartLineItemsItemTest() throws Exception {
         String id = null;
         String lineId = null;
-        StoreCartsRes response = api.deleteCartsCartLineItemsItem(id, lineId);
+        StoreCartsRes response = api.deleteLineItem(id, lineId).execute().getData();
 
         // TODO: test validations
     }
@@ -77,7 +81,7 @@ public class CartApiTest {
     public void deleteCartsCartPaymentSessionsSessionTest() throws Exception {
         String id = null;
         String providerId = null;
-        StoreCartsRes response = api.deleteCartsCartPaymentSessionsSession(id, providerId);
+        StoreCartsRes response = api.deletePaymentSession(id, providerId).execute().getData();
 
         // TODO: test validations
     }
@@ -92,7 +96,7 @@ public class CartApiTest {
     @Test
     public void getCartsCartTest() throws Exception {
         String id = null;
-        StoreCartsRes response = api.getCartsCart(id);
+        StoreCartsRes response = api.getCart(id).execute().getData();
 
         // TODO: test validations
     }
@@ -107,7 +111,7 @@ public class CartApiTest {
     @Test
     public void postCartTest() throws Exception {
         StorePostCartReq body = null;
-        StoreCartsRes response = api.postCart(body);
+        StoreCartsRes response = api.createCart().execute().getData();
 
         // TODO: test validations
     }
@@ -123,7 +127,7 @@ public class CartApiTest {
     public void postCartsCartTest() throws Exception {
         String id = null;
         StorePostCartsCartReq body = null;
-        StoreCartsRes response = api.postCartsCart(id, body);
+        StoreCartsRes response = api.updateCart(id).execute().getData();
 
         // TODO: test validations
     }
@@ -138,7 +142,7 @@ public class CartApiTest {
     @Test
     public void postCartsCartCompleteTest() throws Exception {
         String id = null;
-        StoreCompleteCartRes response = api.postCartsCartComplete(id);
+        StoreCompleteCartRes response = api.completeCart(id).execute().getData();
 
         // TODO: test validations
     }
@@ -154,7 +158,7 @@ public class CartApiTest {
     public void postCartsCartLineItemsTest() throws Exception {
         String id = null;
         StorePostCartsCartLineItemsReq body = null;
-        StoreCartsRes response = api.postCartsCartLineItems(id, body);
+        StoreCartsRes response = api.addLineItem(id).execute().getData();
 
         // TODO: test validations
     }
@@ -171,7 +175,7 @@ public class CartApiTest {
         String id = null;
         String lineId = null;
         StorePostCartsCartLineItemsItemReq body = null;
-        StoreCartsRes response = api.postCartsCartLineItemsItem(id, lineId, body);
+        StoreCartsRes response = api.updateLineItem(id, lineId).execute().getData();
 
         // TODO: test validations
     }
@@ -187,7 +191,7 @@ public class CartApiTest {
     public void postCartsCartPaymentSessionTest() throws Exception {
         String id = null;
         StorePostCartsCartPaymentSessionReq body = null;
-        StoreCartsRes response = api.postCartsCartPaymentSession(id, body);
+        StoreCartsRes response = api.selectPaymentSession(id).execute().getData();
 
         // TODO: test validations
     }
@@ -204,7 +208,7 @@ public class CartApiTest {
         String id = null;
         String providerId = null;
         StorePostCartsCartPaymentSessionUpdateReq body = null;
-        StoreCartsRes response = api.postCartsCartPaymentSessionUpdate(id, providerId, body);
+        StoreCartsRes response = api.updatePaymentSession(id, providerId).execute().getData();
 
         // TODO: test validations
     }
@@ -219,7 +223,7 @@ public class CartApiTest {
     @Test
     public void postCartsCartPaymentSessionsTest() throws Exception {
         String id = null;
-        StoreCartsRes response = api.postCartsCartPaymentSessions(id);
+        StoreCartsRes response = api.createPaymentSessions(id).execute().getData();
 
         // TODO: test validations
     }
@@ -235,7 +239,7 @@ public class CartApiTest {
     public void postCartsCartPaymentSessionsSessionTest() throws Exception {
         String id = null;
         String providerId = null;
-        StoreCartsRes response = api.postCartsCartPaymentSessionsSession(id, providerId);
+        StoreCartsRes response = api.refreshPaymentSession(id, providerId).execute().getData();
 
         // TODO: test validations
     }
@@ -251,7 +255,7 @@ public class CartApiTest {
     public void postCartsCartShippingMethodTest() throws Exception {
         String id = null;
         StorePostCartsCartShippingMethodReq body = null;
-        StoreCartsRes response = api.postCartsCartShippingMethod(id, body);
+        StoreCartsRes response = api.addShippingMethod(id).execute().getData();
 
         // TODO: test validations
     }
@@ -266,7 +270,7 @@ public class CartApiTest {
     @Test
     public void postCartsCartTaxesTest() throws Exception {
         String id = null;
-        StoreCartsRes response = api.postCartsCartTaxes(id);
+        StoreCartsRes response = api.calculateCartTaxes(id).execute().getData();
 
         // TODO: test validations
     }
