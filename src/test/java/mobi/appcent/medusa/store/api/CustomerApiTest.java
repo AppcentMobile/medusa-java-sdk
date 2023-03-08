@@ -12,18 +12,18 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.CanceledAt;
-import mobi.appcent.medusa.store.model.CreatedAt1;
-import mobi.appcent.medusa.store.model.StoreCustomersListOrdersRes;
-import mobi.appcent.medusa.store.model.StoreCustomersListPaymentMethodsRes;
-import mobi.appcent.medusa.store.model.StoreCustomersRes;
-import mobi.appcent.medusa.store.model.StorePostCustomersCustomerAddressesAddressReq;
-import mobi.appcent.medusa.store.model.StorePostCustomersCustomerAddressesReq;
-import mobi.appcent.medusa.store.model.StorePostCustomersCustomerPasswordTokenReq;
-import mobi.appcent.medusa.store.model.StorePostCustomersCustomerReq;
-import mobi.appcent.medusa.store.model.StorePostCustomersReq;
-import mobi.appcent.medusa.store.model.StorePostCustomersResetPasswordReq;
-import mobi.appcent.medusa.store.model.UpdatedAt1;
+import mobi.appcent.medusa.store.model.response.CanceledAt;
+import mobi.appcent.medusa.store.model.response.CreatedAt1;
+import mobi.appcent.medusa.store.model.response.StoreCustomersListOrdersRes;
+import mobi.appcent.medusa.store.model.response.StoreCustomersListPaymentMethodsRes;
+import mobi.appcent.medusa.store.model.response.StoreCustomersRes;
+import mobi.appcent.medusa.store.model.response.StorePostCustomersCustomerAddressesAddressReq;
+import mobi.appcent.medusa.store.model.response.StorePostCustomersCustomerAddressesReq;
+import mobi.appcent.medusa.store.model.response.StorePostCustomersCustomerPasswordTokenReq;
+import mobi.appcent.medusa.store.model.response.StorePostCustomersCustomerReq;
+import mobi.appcent.medusa.store.model.response.StorePostCustomersReq;
+import mobi.appcent.medusa.store.model.response.StorePostCustomersResetPasswordReq;
+import mobi.appcent.medusa.store.model.response.UpdatedAt1;
 import org.junit.Test;
 import org.junit.Ignore;
 

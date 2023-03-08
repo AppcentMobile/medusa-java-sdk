@@ -12,24 +12,17 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.CreatedAt5;
-import mobi.appcent.medusa.store.model.StoreRegionsListRes;
-import mobi.appcent.medusa.store.model.StoreRegionsRes;
-import mobi.appcent.medusa.store.model.UpdatedAt5;
+import mobi.appcent.medusa.store.model.response.CreatedAt5;
+import mobi.appcent.medusa.store.model.response.StoreRegionsListRes;
+import mobi.appcent.medusa.store.model.response.StoreRegionsRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt5;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -38,22 +31,18 @@ import java.util.List;
 import java.util.Map;
 
 public class RegionApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public RegionApi() {
-        this(Configuration.getDefaultApiClient());
+    public static RegionApi getInstance() {
+        return new RegionApi();
     }
 
-    public RegionApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
@@ -76,13 +65,13 @@ public class RegionApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (offset != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("offset", offset));
         if (limit != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("limit", limit));
         if (createdAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("created_at", createdAt));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("created_at", createdAt));
         if (updatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("updated_at", updatedAt));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("updated_at", updatedAt));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -91,17 +80,17 @@ public class RegionApi {
         final String[] localVarAccepts = {
             "application/json"
         };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        final String localVarAccept = medusaSdkClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
             
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        final String localVarContentType = medusaSdkClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
         if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+            medusaSdkClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
                 public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
@@ -113,7 +102,7 @@ public class RegionApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return medusaSdkClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
     
     @SuppressWarnings("rawtypes")
@@ -156,7 +145,7 @@ public class RegionApi {
     public ApiResponse<StoreRegionsListRes> getRegionsWithHttpInfo(Integer offset, Integer limit, CreatedAt5 createdAt, UpdatedAt5 updatedAt) throws ApiException {
         com.squareup.okhttp.Call call = getRegionsValidateBeforeCall(offset, limit, createdAt, updatedAt, null, null);
         Type localVarReturnType = new TypeToken<StoreRegionsListRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
+        return medusaSdkClient.execute(call, localVarReturnType);
     }
 
     /**
@@ -193,7 +182,7 @@ public class RegionApi {
 
         com.squareup.okhttp.Call call = getRegionsValidateBeforeCall(offset, limit, createdAt, updatedAt, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<StoreRegionsListRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
+        medusaSdkClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
@@ -209,7 +198,7 @@ public class RegionApi {
         
         // create path and map variables
         String localVarPath = "/regions/{id}"
-            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
+            .replaceAll("\\{" + "id" + "\\}", medusaSdkClient.escapeString(id.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -221,17 +210,17 @@ public class RegionApi {
         final String[] localVarAccepts = {
             "application/json"
         };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        final String localVarAccept = medusaSdkClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
             
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        final String localVarContentType = medusaSdkClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
         if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+            medusaSdkClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
                 public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
@@ -243,7 +232,7 @@ public class RegionApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return medusaSdkClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
     
     @SuppressWarnings("rawtypes")
@@ -284,7 +273,7 @@ public class RegionApi {
     public ApiResponse<StoreRegionsRes> getRegionsRegionWithHttpInfo(String id) throws ApiException {
         com.squareup.okhttp.Call call = getRegionsRegionValidateBeforeCall(id, null, null);
         Type localVarReturnType = new TypeToken<StoreRegionsRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
+        return medusaSdkClient.execute(call, localVarReturnType);
     }
 
     /**
@@ -318,7 +307,7 @@ public class RegionApi {
 
         com.squareup.okhttp.Call call = getRegionsRegionValidateBeforeCall(id, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<StoreRegionsRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
+        medusaSdkClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
 }

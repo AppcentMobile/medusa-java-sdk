@@ -12,21 +12,15 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
+import mobi.appcent.medusa.store.MedusaSdkClient;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.StoreGiftCardsRes;
+import mobi.appcent.medusa.store.model.response.StoreGiftCardsRes;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -35,22 +29,18 @@ import java.util.List;
 import java.util.Map;
 
 public class GiftCardApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public GiftCardApi() {
-        this(Configuration.getDefaultApiClient());
+    public static GiftCardApi getInstance() {
+        return new GiftCardApi();
     }
 
-    public GiftCardApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
@@ -66,7 +56,7 @@ public class GiftCardApi {
         
         // create path and map variables
         String localVarPath = "/gift-cards/{code}"
-            .replaceAll("\\{" + "code" + "\\}", apiClient.escapeString(code.toString()));
+            .replaceAll("\\{" + "code" + "\\}", medusaSdkClient.escapeString(code.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -78,17 +68,17 @@ public class GiftCardApi {
         final String[] localVarAccepts = {
             "application/json"
         };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        final String localVarAccept = medusaSdkClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
             
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        final String localVarContentType = medusaSdkClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
         if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+            medusaSdkClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
                 public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
@@ -100,7 +90,7 @@ public class GiftCardApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return medusaSdkClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
     
     @SuppressWarnings("rawtypes")
@@ -141,7 +131,7 @@ public class GiftCardApi {
     public ApiResponse<StoreGiftCardsRes> getGiftCardsCodeWithHttpInfo(String code) throws ApiException {
         com.squareup.okhttp.Call call = getGiftCardsCodeValidateBeforeCall(code, null, null);
         Type localVarReturnType = new TypeToken<StoreGiftCardsRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
+        return medusaSdkClient.execute(call, localVarReturnType);
     }
 
     /**
@@ -175,7 +165,7 @@ public class GiftCardApi {
 
         com.squareup.okhttp.Call call = getGiftCardsCodeValidateBeforeCall(code, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<StoreGiftCardsRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
+        medusaSdkClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
 }

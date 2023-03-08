@@ -12,24 +12,18 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
+import mobi.appcent.medusa.store.MedusaSdkClient;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.CreatedAt;
-import mobi.appcent.medusa.store.model.StoreCollectionsListRes;
-import mobi.appcent.medusa.store.model.StoreCollectionsRes;
-import mobi.appcent.medusa.store.model.UpdatedAt;
+import mobi.appcent.medusa.store.model.response.CreatedAt;
+import mobi.appcent.medusa.store.model.response.StoreCollectionsListRes;
+import mobi.appcent.medusa.store.model.response.StoreCollectionsRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -38,22 +32,18 @@ import java.util.List;
 import java.util.Map;
 
 public class CollectionApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public CollectionApi() {
-        this(Configuration.getDefaultApiClient());
+    public static CollectionApi getInstance() {
+        return new CollectionApi();
     }
 
-    public CollectionApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
@@ -76,13 +66,13 @@ public class CollectionApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (offset != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("offset", offset));
         if (limit != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("limit", limit));
         if (createdAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("created_at", createdAt));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("created_at", createdAt));
         if (updatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("updated_at", updatedAt));
+        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("updated_at", updatedAt));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -91,17 +81,17 @@ public class CollectionApi {
         final String[] localVarAccepts = {
             "application/json"
         };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        final String localVarAccept = medusaSdkClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
             
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        final String localVarContentType = medusaSdkClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
         if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+            medusaSdkClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
                 public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
@@ -113,7 +103,7 @@ public class CollectionApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return medusaSdkClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
     
     @SuppressWarnings("rawtypes")
@@ -156,7 +146,7 @@ public class CollectionApi {
     public ApiResponse<StoreCollectionsListRes> getCollectionsWithHttpInfo(Integer offset, Integer limit, CreatedAt createdAt, UpdatedAt updatedAt) throws ApiException {
         com.squareup.okhttp.Call call = getCollectionsValidateBeforeCall(offset, limit, createdAt, updatedAt, null, null);
         Type localVarReturnType = new TypeToken<StoreCollectionsListRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
+        return medusaSdkClient.execute(call, localVarReturnType);
     }
 
     /**
@@ -193,7 +183,7 @@ public class CollectionApi {
 
         com.squareup.okhttp.Call call = getCollectionsValidateBeforeCall(offset, limit, createdAt, updatedAt, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<StoreCollectionsListRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
+        medusaSdkClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
@@ -209,7 +199,7 @@ public class CollectionApi {
         
         // create path and map variables
         String localVarPath = "/collections/{id}"
-            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
+            .replaceAll("\\{" + "id" + "\\}", medusaSdkClient.escapeString(id.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -221,17 +211,17 @@ public class CollectionApi {
         final String[] localVarAccepts = {
             "application/json"
         };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        final String localVarAccept = medusaSdkClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
 
         final String[] localVarContentTypes = {
             
         };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        final String localVarContentType = medusaSdkClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
         if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+            medusaSdkClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
                 @Override
                 public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
                     com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
@@ -243,7 +233,7 @@ public class CollectionApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return medusaSdkClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
     
     @SuppressWarnings("rawtypes")
@@ -284,7 +274,7 @@ public class CollectionApi {
     public ApiResponse<StoreCollectionsRes> getCollectionsCollectionWithHttpInfo(String id) throws ApiException {
         com.squareup.okhttp.Call call = getCollectionsCollectionValidateBeforeCall(id, null, null);
         Type localVarReturnType = new TypeToken<StoreCollectionsRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
+        return medusaSdkClient.execute(call, localVarReturnType);
     }
 
     /**
@@ -318,7 +308,7 @@ public class CollectionApi {
 
         com.squareup.okhttp.Call call = getCollectionsCollectionValidateBeforeCall(id, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<StoreCollectionsRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
+        medusaSdkClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
 }

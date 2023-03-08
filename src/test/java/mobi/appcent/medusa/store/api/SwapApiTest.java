@@ -12,8 +12,8 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StorePostSwapsReq;
-import mobi.appcent.medusa.store.model.StoreSwapsRes;
+import mobi.appcent.medusa.store.model.response.StorePostSwapsReq;
+import mobi.appcent.medusa.store.model.response.StoreSwapsRes;
 import org.junit.Test;
 import org.junit.Ignore;
 

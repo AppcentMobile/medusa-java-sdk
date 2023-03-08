@@ -12,10 +12,10 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.CreatedAt;
-import mobi.appcent.medusa.store.model.StoreCollectionsListRes;
-import mobi.appcent.medusa.store.model.StoreCollectionsRes;
-import mobi.appcent.medusa.store.model.UpdatedAt;
+import mobi.appcent.medusa.store.model.response.CreatedAt;
+import mobi.appcent.medusa.store.model.response.StoreCollectionsListRes;
+import mobi.appcent.medusa.store.model.response.StoreCollectionsRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt;
 import org.junit.Test;
 import org.junit.Ignore;
 
