@@ -44,7 +44,7 @@ public class OrderApiTest {
         String fields = null;
         String expand = null;
         ShippingAddress shippingAddress = null;
-        StoreOrdersRes response = api.getOrders(displayId, email, fields, expand, shippingAddress);
+        StoreOrdersRes response = api.getOrder(displayId, email).execute().getData();
 
         // TODO: test validations
     }
@@ -61,7 +61,7 @@ public class OrderApiTest {
         String id = null;
         String fields = null;
         String expand = null;
-        StoreOrdersRes response = api.getOrdersOrder(id, fields, expand);
+        StoreOrdersRes response = api.getOrder(id).execute().getData();
 
         // TODO: test validations
     }
@@ -76,7 +76,7 @@ public class OrderApiTest {
     @Test
     public void getOrdersOrderCartIdTest() throws Exception {
         String cartId = null;
-        StoreOrdersRes response = api.getOrdersOrderCartId(cartId);
+        StoreOrdersRes response = api.getOrderByCartId(cartId).execute().getData();
 
         // TODO: test validations
     }
@@ -91,7 +91,7 @@ public class OrderApiTest {
     @Test
     public void postOrdersCustomerOrderClaimsCustomerOrderClaimAcceptTest() throws Exception {
         StorePostCustomersCustomerAcceptClaimReq body = null;
-        api.postOrdersCustomerOrderClaimsCustomerOrderClaimAccept(body);
+        api.verifyOrderClaim().execute();
 
         // TODO: test validations
     }
