@@ -1,7 +1,6 @@
 package mobi.appcent.medusa.store.model.request.invite;
 
 import com.squareup.okhttp.Call;
-import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 import mobi.appcent.medusa.store.*;
 import mobi.appcent.medusa.store.common.HeaderConstant;
 import mobi.appcent.medusa.store.common.HttpMethod;
