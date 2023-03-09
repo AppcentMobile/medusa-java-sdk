@@ -20,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import mobi.appcent.medusa.store.model.request.giftcard.GetGiftCardByCodeRequest;
 import mobi.appcent.medusa.store.model.response.StoreGiftCardsRes;
 
 import java.lang.reflect.Type;
@@ -44,128 +45,13 @@ public class GiftCardApi {
     }
 
     /**
-     * Build call for getGiftCardsCode
-     * @param code The unique Gift Card code. (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getGiftCardsCodeCall(String code, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/gift-cards/{code}"
-            .replaceAll("\\{" + "code" + "\\}", medusaSdkClient.escapeString(code.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = medusaSdkClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = medusaSdkClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            medusaSdkClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return medusaSdkClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getGiftCardsCodeValidateBeforeCall(String code, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'code' is set
-        if (code == null) {
-            throw new ApiException("Missing the required parameter 'code' when calling getGiftCardsCode(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = getGiftCardsCodeCall(code, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
-    }
-
-    /**
      * Get Gift Card by Code
      * Retrieves a Gift Card by its associated unique code.
      * @param code The unique Gift Card code. (required)
      * @return StoreGiftCardsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreGiftCardsRes getGiftCardsCode(String code) throws ApiException {
-        ApiResponse<StoreGiftCardsRes> resp = getGiftCardsCodeWithHttpInfo(code);
-        return resp.getData();
-    }
-
-    /**
-     * Get Gift Card by Code
-     * Retrieves a Gift Card by its associated unique code.
-     * @param code The unique Gift Card code. (required)
-     * @return ApiResponse&lt;StoreGiftCardsRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreGiftCardsRes> getGiftCardsCodeWithHttpInfo(String code) throws ApiException {
-        com.squareup.okhttp.Call call = getGiftCardsCodeValidateBeforeCall(code, null, null);
-        Type localVarReturnType = new TypeToken<StoreGiftCardsRes>(){}.getType();
-        return medusaSdkClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get Gift Card by Code (asynchronously)
-     * Retrieves a Gift Card by its associated unique code.
-     * @param code The unique Gift Card code. (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getGiftCardsCodeAsync(String code, final ApiCallback<StoreGiftCardsRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getGiftCardsCodeValidateBeforeCall(code, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreGiftCardsRes>(){}.getType();
-        medusaSdkClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public GetGiftCardByCodeRequest getGiftCardByCode(String code) throws ApiException {
+        return new GetGiftCardByCodeRequest(medusaSdkClient, code);
     }
 }

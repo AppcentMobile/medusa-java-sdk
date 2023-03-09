@@ -36,7 +36,7 @@ public class GiftCardApiTest {
     @Test
     public void getGiftCardsCodeTest() throws Exception {
         String code = null;
-        StoreGiftCardsRes response = api.getGiftCardsCode(code);
+        StoreGiftCardsRes response = api.getGiftCardByCode(code).execute().getData();
 
         // TODO: test validations
     }
