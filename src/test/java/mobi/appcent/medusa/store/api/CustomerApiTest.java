@@ -50,7 +50,7 @@ public class CustomerApiTest {
     @Test
     public void deleteCustomersCustomerAddressesAddressTest() throws Exception {
         String addressId = null;
-        StoreCustomersRes response = api.deleteCustomersCustomerAddressesAddress(addressId);
+        StoreCustomersRes response = api.deleteAddressRequest(addressId).execute().getData();
 
         // TODO: test validations
     }
@@ -64,7 +64,7 @@ public class CustomerApiTest {
      */
     @Test
     public void getCustomersCustomerTest() throws Exception {
-        StoreCustomersRes response = api.getCustomersCustomer();
+        StoreCustomersRes response = api.getCustomer().execute().getData();
 
         // TODO: test validations
     }
@@ -96,7 +96,7 @@ public class CustomerApiTest {
         Integer offset = null;
         String fields = null;
         String expand = null;
-        StoreCustomersListOrdersRes response = api.getCustomersCustomerOrders(q, id, status, fulfillmentStatus, paymentStatus, displayId, cartId, email, regionId, currencyCode, taxRate, createdAt, updatedAt, canceledAt, limit, offset, fields, expand);
+        StoreCustomersListOrdersRes response = api.listOrders().execute().getData();
 
         // TODO: test validations
     }
@@ -110,7 +110,7 @@ public class CustomerApiTest {
      */
     @Test
     public void getCustomersCustomerPaymentMethodsTest() throws Exception {
-        StoreCustomersListPaymentMethodsRes response = api.getCustomersCustomerPaymentMethods();
+        StoreCustomersListPaymentMethodsRes response = api.getPaymentMethods().execute().getData();
 
         // TODO: test validations
     }
@@ -125,7 +125,7 @@ public class CustomerApiTest {
     @Test
     public void postCustomersTest() throws Exception {
         StorePostCustomersReq body = null;
-        StoreCustomersRes response = api.postCustomers(body);
+        StoreCustomersRes response = api.createCustomer().execute().getData();
 
         // TODO: test validations
     }
@@ -140,7 +140,7 @@ public class CustomerApiTest {
     @Test
     public void postCustomersCustomerTest() throws Exception {
         StorePostCustomersCustomerReq body = null;
-        StoreCustomersRes response = api.postCustomersCustomer(body);
+        StoreCustomersRes response = api.updateCustomer().execute().getData();
 
         // TODO: test validations
     }
@@ -155,7 +155,7 @@ public class CustomerApiTest {
     @Test
     public void postCustomersCustomerAddressesTest() throws Exception {
         StorePostCustomersCustomerAddressesReq body = null;
-        StoreCustomersRes response = api.postCustomersCustomerAddresses(body);
+        StoreCustomersRes response = api.addShippingAddress().execute().getData();
 
         // TODO: test validations
     }
@@ -171,7 +171,7 @@ public class CustomerApiTest {
     public void postCustomersCustomerAddressesAddressTest() throws Exception {
         String addressId = null;
         StorePostCustomersCustomerAddressesAddressReq body = null;
-        StoreCustomersRes response = api.postCustomersCustomerAddressesAddress(addressId, body);
+        StoreCustomersRes response = api.updateShippingAddress(addressId).execute().getData();
 
         // TODO: test validations
     }
@@ -186,7 +186,7 @@ public class CustomerApiTest {
     @Test
     public void postCustomersCustomerPasswordTokenTest() throws Exception {
         StorePostCustomersCustomerPasswordTokenReq body = null;
-        api.postCustomersCustomerPasswordToken(body);
+        api.passwordResetRequest().execute();
 
         // TODO: test validations
     }
@@ -201,7 +201,7 @@ public class CustomerApiTest {
     @Test
     public void postCustomersResetPasswordTest() throws Exception {
         StorePostCustomersResetPasswordReq body = null;
-        StoreCustomersRes response = api.postCustomersResetPassword(body);
+        StoreCustomersRes response = api.resetPassword().execute().getData();
 
         // TODO: test validations
     }
