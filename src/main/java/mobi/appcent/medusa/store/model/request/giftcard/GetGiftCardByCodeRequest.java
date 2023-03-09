@@ -29,7 +29,7 @@ public class GetGiftCardByCodeRequest extends BaseRequest<StoreGiftCardsRes> {
 
     @Override
     protected Call buildCall() throws ApiException {
-        String path = UrlConstant.COLLECTION_PATH + "/gift-cards/" + code;
+        String path = UrlConstant.GIFT_CARD_PATH + "/" + code;
         Map<String, String> headers = new HashMap<>();
 
         final String[] localVarAccepts = { HeaderConstant.APPLICATION_JSON };
