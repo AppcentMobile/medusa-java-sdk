@@ -49,7 +49,7 @@ public class ProductTagApiTest {
         String q = null;
         CreatedAt2 createdAt = null;
         UpdatedAt2 updatedAt = null;
-        InlineResponse200 response = api.getProductTags(limit, offset, order, discountConditionId, value, id, q, createdAt, updatedAt);
+        InlineResponse200 response = api.getProductTags().execute().getData();
 
         // TODO: test validations
     }
