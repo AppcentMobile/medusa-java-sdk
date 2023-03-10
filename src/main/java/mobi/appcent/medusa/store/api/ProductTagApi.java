@@ -20,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import mobi.appcent.medusa.store.model.request.producttag.ListProductTagsRequest;
 import mobi.appcent.medusa.store.model.response.CreatedAt2;
 import mobi.appcent.medusa.store.model.response.InlineResponse200;
 import mobi.appcent.medusa.store.model.response.UpdatedAt2;
@@ -46,173 +47,21 @@ public class ProductTagApi {
     }
 
     /**
-     * Build call for getProductTags
-     * @param limit The number of types to return. (optional, default to 20)
-     * @param offset The number of items to skip before the results. (optional, default to 0)
-     * @param order The field to sort items by. (optional)
-     * @param discountConditionId The discount condition id on which to filter the product tags. (optional)
-     * @param value The tag values to search for (optional)
-     * @param id The tag IDs to search for (optional)
-     * @param q A query string to search values for (optional)
-     * @param createdAt Date comparison for when resulting product tags were created. (optional)
-     * @param updatedAt Date comparison for when resulting product tags were updated. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getProductTagsCall(Integer limit, Integer offset, String order, String discountConditionId, List<String> value, List<String> id, String q, CreatedAt2 createdAt, UpdatedAt2 updatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/product-tags";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (limit != null)
-        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("limit", limit));
-        if (offset != null)
-        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("offset", offset));
-        if (order != null)
-        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("order", order));
-        if (discountConditionId != null)
-        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("discount_condition_id", discountConditionId));
-        if (value != null)
-        localVarCollectionQueryParams.addAll(medusaSdkClient.parameterToPairs("csv", "value", value));
-        if (id != null)
-        localVarCollectionQueryParams.addAll(medusaSdkClient.parameterToPairs("csv", "id", id));
-        if (q != null)
-        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("q", q));
-        if (createdAt != null)
-        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("created_at", createdAt));
-        if (updatedAt != null)
-        localVarQueryParams.addAll(medusaSdkClient.parameterToPair("updated_at", updatedAt));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json", "text/plain"
-        };
-        final String localVarAccept = medusaSdkClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = medusaSdkClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            medusaSdkClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return medusaSdkClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getProductTagsValidateBeforeCall(Integer limit, Integer offset, String order, String discountConditionId, List<String> value, List<String> id, String q, CreatedAt2 createdAt, UpdatedAt2 updatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = getProductTagsCall(limit, offset, order, discountConditionId, value, id, q, createdAt, updatedAt, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
-    }
-
-    /**
      * List Product Tags
      * Retrieve a list of Product Tags.
-     * @param limit The number of types to return. (optional, default to 20)
-     * @param offset The number of items to skip before the results. (optional, default to 0)
-     * @param order The field to sort items by. (optional)
-     * @param discountConditionId The discount condition id on which to filter the product tags. (optional)
-     * @param value The tag values to search for (optional)
-     * @param id The tag IDs to search for (optional)
-     * @param q A query string to search values for (optional)
-     * @param createdAt Date comparison for when resulting product tags were created. (optional)
-     * @param updatedAt Date comparison for when resulting product tags were updated. (optional)
+     * limit The number of types to return. (optional, default to 20)
+     * offset The number of items to skip before the results. (optional, default to 0)
+     * order The field to sort items by. (optional)
+     * discountConditionId The discount condition id on which to filter the product tags. (optional)
+     * value The tag values to search for (optional)
+     * id The tag IDs to search for (optional)
+     * q A query string to search values for (optional)
+     * createdAt Date comparison for when resulting product tags were created. (optional)
+     * updatedAt Date comparison for when resulting product tags were updated. (optional)
      * @return InlineResponse200
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public InlineResponse200 getProductTags(Integer limit, Integer offset, String order, String discountConditionId, List<String> value, List<String> id, String q, CreatedAt2 createdAt, UpdatedAt2 updatedAt) throws ApiException {
-        ApiResponse<InlineResponse200> resp = getProductTagsWithHttpInfo(limit, offset, order, discountConditionId, value, id, q, createdAt, updatedAt);
-        return resp.getData();
-    }
-
-    /**
-     * List Product Tags
-     * Retrieve a list of Product Tags.
-     * @param limit The number of types to return. (optional, default to 20)
-     * @param offset The number of items to skip before the results. (optional, default to 0)
-     * @param order The field to sort items by. (optional)
-     * @param discountConditionId The discount condition id on which to filter the product tags. (optional)
-     * @param value The tag values to search for (optional)
-     * @param id The tag IDs to search for (optional)
-     * @param q A query string to search values for (optional)
-     * @param createdAt Date comparison for when resulting product tags were created. (optional)
-     * @param updatedAt Date comparison for when resulting product tags were updated. (optional)
-     * @return ApiResponse&lt;InlineResponse200&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<InlineResponse200> getProductTagsWithHttpInfo(Integer limit, Integer offset, String order, String discountConditionId, List<String> value, List<String> id, String q, CreatedAt2 createdAt, UpdatedAt2 updatedAt) throws ApiException {
-        com.squareup.okhttp.Call call = getProductTagsValidateBeforeCall(limit, offset, order, discountConditionId, value, id, q, createdAt, updatedAt, null, null);
-        Type localVarReturnType = new TypeToken<InlineResponse200>(){}.getType();
-        return medusaSdkClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * List Product Tags (asynchronously)
-     * Retrieve a list of Product Tags.
-     * @param limit The number of types to return. (optional, default to 20)
-     * @param offset The number of items to skip before the results. (optional, default to 0)
-     * @param order The field to sort items by. (optional)
-     * @param discountConditionId The discount condition id on which to filter the product tags. (optional)
-     * @param value The tag values to search for (optional)
-     * @param id The tag IDs to search for (optional)
-     * @param q A query string to search values for (optional)
-     * @param createdAt Date comparison for when resulting product tags were created. (optional)
-     * @param updatedAt Date comparison for when resulting product tags were updated. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getProductTagsAsync(Integer limit, Integer offset, String order, String discountConditionId, List<String> value, List<String> id, String q, CreatedAt2 createdAt, UpdatedAt2 updatedAt, final ApiCallback<InlineResponse200> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getProductTagsValidateBeforeCall(limit, offset, order, discountConditionId, value, id, q, createdAt, updatedAt, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<InlineResponse200>(){}.getType();
-        medusaSdkClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public ListProductTagsRequest getProductTags() throws ApiException {
+        return new ListProductTagsRequest(medusaSdkClient);
     }
 }
