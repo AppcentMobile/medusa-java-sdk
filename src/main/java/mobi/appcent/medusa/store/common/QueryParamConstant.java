@@ -24,4 +24,16 @@ public class QueryParamConstant {
     public static final String CANCELED_AT = "canceled_at";
     public static final String FIELDS = "fields";
     public static final String EXPAND = "expand";
+    public static final String SALES_CHANNEL_ID = "sales_channel_id";
+    public static final String COLLECTION_ID = "collection_id";
+    public static final String TYPE_ID = "type_id";
+    public static final String TAGS = "tags";
+    public static final String TITLE = "title";
+    public static final String DESCRIPTION = "description";
+    public static final String HANDLE = "handle";
+    public static final String IS_GIFTCARD = "is_giftcard";
+    public static final String CATEGORY_ID = "category_id";
+    public static final String INCLUDE_CATEGORY_CHILDREN = "include_category_children";
+    public static final String ORDER = "order";
+
 }
