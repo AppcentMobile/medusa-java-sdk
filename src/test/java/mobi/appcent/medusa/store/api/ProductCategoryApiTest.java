@@ -40,7 +40,7 @@ public class ProductCategoryApiTest {
         String parentCategoryId = null;
         Integer offset = null;
         Integer limit = null;
-        StoreProductCategoriesListRes response = api.getProductCategories(q, parentCategoryId, offset, limit);
+        StoreProductCategoriesListRes response = api.listProductCategories().execute().getData();
 
         // TODO: test validations
     }
@@ -57,7 +57,7 @@ public class ProductCategoryApiTest {
         String id = null;
         String expand = null;
         String fields = null;
-        StoreGetProductCategoriesCategoryRes response = api.getProductCategoriesCategory(id, expand, fields);
+        StoreGetProductCategoriesCategoryRes response = api.getProductCategoriesCategory(id).execute().getData();
 
         // TODO: test validations
     }

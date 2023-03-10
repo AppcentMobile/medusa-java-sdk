@@ -35,5 +35,6 @@ public class QueryParamConstant {
     public static final String CATEGORY_ID = "category_id";
     public static final String INCLUDE_CATEGORY_CHILDREN = "include_category_children";
     public static final String ORDER = "order";
+    public static final String PARENT_CATEGORY_ID = "parent_category_id";
 
 }
