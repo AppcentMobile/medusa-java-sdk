@@ -69,7 +69,7 @@ public class ProductVariantApiTest {
         String salesChannelId = null;
         String regionId = null;
         String currencyCode = null;
-        StoreVariantsRes response = api.getVariantsVariant(variantId, cartId, salesChannelId, regionId, currencyCode);
+        StoreVariantsRes response = api.getVariant(variantId).execute().getData();
 
         // TODO: test validations
     }

@@ -37,7 +37,7 @@ public class ReturnApiTest {
     @Test
     public void postReturnsTest() throws Exception {
         StorePostReturnsReq body = null;
-        StoreReturnsRes response = api.postReturns(body);
+        StoreReturnsRes response = api.createReturn().execute().getData();
 
         // TODO: test validations
     }
