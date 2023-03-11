@@ -49,7 +49,7 @@ public class ProductTypeApiTest {
         String q = null;
         CreatedAt3 createdAt = null;
         UpdatedAt3 updatedAt = null;
-        StoreProductTypesListRes response = api.getProductTypes(limit, offset, order, discountConditionId, value, id, q, createdAt, updatedAt);
+        StoreProductTypesListRes response = api.getProductTypes().execute().getData();
 
         // TODO: test validations
     }
