@@ -51,7 +51,7 @@ public class ReturnApi {
      * @return StoreReturnsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public CreateReturnRequest createReturn(StorePostReturnsReq body) throws ApiException {
+    public CreateReturnRequest createReturn() throws ApiException {
         return new CreateReturnRequest(medusaSdkClient);
     }
 }
