@@ -45,6 +45,7 @@ public class InviteApi {
      * Claim an Order
      * Sends an email to emails registered to orders provided with link to transfer order ownership
      * body  (optional)
+     * @return ClaimOrderRequest
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ClaimOrderRequest claimOrder() throws ApiException {

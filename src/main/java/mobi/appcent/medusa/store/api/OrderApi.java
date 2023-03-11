@@ -93,6 +93,7 @@ public class OrderApi {
      * Verify an Order Claim
      * Verifies the claim order token provided to the customer upon request of order ownership
      * body  (optional)
+     * @return VerifyOrderClaimRequest
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public VerifyOrderClaimRequest verifyOrderClaim() throws ApiException {

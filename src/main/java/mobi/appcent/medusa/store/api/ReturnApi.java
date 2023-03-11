@@ -47,7 +47,7 @@ public class ReturnApi {
     /**
      * Create Return
      * Creates a Return for an Order.
-     * @param body  (optional)
+     * body  (optional)
      * @return StoreReturnsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
