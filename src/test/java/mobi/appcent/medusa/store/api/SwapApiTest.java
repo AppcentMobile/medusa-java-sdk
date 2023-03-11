@@ -37,7 +37,7 @@ public class SwapApiTest {
     @Test
     public void getSwapsSwapCartIdTest() throws Exception {
         String cartId = null;
-        StoreSwapsRes response = api.getSwapsSwapCartId(cartId);
+        StoreSwapsRes response = api.getSwapByCartId(cartId).execute().getData();
 
         // TODO: test validations
     }
@@ -52,7 +52,7 @@ public class SwapApiTest {
     @Test
     public void postSwapsTest() throws Exception {
         StorePostSwapsReq body = null;
-        StoreSwapsRes response = api.postSwaps(body);
+        StoreSwapsRes response = api.createSwap().execute().getData();
 
         // TODO: test validations
     }
