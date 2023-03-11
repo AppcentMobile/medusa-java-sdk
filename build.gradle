@@ -1,7 +1,7 @@
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 
-group = 'io.swagger'
+group = 'mobi.appcent'
 version = '1.0.0'
 
 buildscript {
@@ -25,11 +25,11 @@ if(hasProperty('target') && target == 'android') {
     apply plugin: 'com.github.dcendents.android-maven'
 
     android {
-        compileSdkVersion 25
+        compileSdkVersion 32
         buildToolsVersion '25.0.2'
         defaultConfig {
             minSdkVersion 14
-            targetSdkVersion 25
+            targetSdkVersion 32
         }
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
