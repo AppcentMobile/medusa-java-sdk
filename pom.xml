@@ -7,10 +7,6 @@
   <version>1.0.0</version>
   <name>medusa-java-sdk</name>
 
-  <prerequisites>
-    <maven>2.2.0</maven>
-  </prerequisites>
-
   <repositories>
     <repository>
       <id>github</id>
