@@ -15,19 +15,11 @@ package mobi.appcent.medusa.store.api;
 import mobi.appcent.medusa.store.*;
 import mobi.appcent.medusa.store.MedusaSdkClient;
 
-import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
-
-
+import mobi.appcent.medusa.store.model.request.swap.CreateSwapRequest;
+import mobi.appcent.medusa.store.model.request.swap.GetSwapByCartIdRequest;
 import mobi.appcent.medusa.store.model.response.StorePostSwapsReq;
 import mobi.appcent.medusa.store.model.response.StoreSwapsRes;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class SwapApi {
     private MedusaSdkClient medusaSdkClient;
@@ -45,248 +37,24 @@ public class SwapApi {
     }
 
     /**
-     * Build call for getSwapsSwapCartId
-     * @param cartId The id of the Cart (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getSwapsSwapCartIdCall(String cartId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/swaps/{cart_id}"
-            .replaceAll("\\{" + "cart_id" + "\\}", medusaSdkClient.escapeString(cartId.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = medusaSdkClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = medusaSdkClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            medusaSdkClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return medusaSdkClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getSwapsSwapCartIdValidateBeforeCall(String cartId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'cartId' is set
-        if (cartId == null) {
-            throw new ApiException("Missing the required parameter 'cartId' when calling getSwapsSwapCartId(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = getSwapsSwapCartIdCall(cartId, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
-    }
-
-    /**
      * Get by Cart ID
      * Retrieves a Swap by the id of the Cart used to confirm the Swap.
      * @param cartId The id of the Cart (required)
      * @return StoreSwapsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreSwapsRes getSwapsSwapCartId(String cartId) throws ApiException {
-        ApiResponse<StoreSwapsRes> resp = getSwapsSwapCartIdWithHttpInfo(cartId);
-        return resp.getData();
-    }
-
-    /**
-     * Get by Cart ID
-     * Retrieves a Swap by the id of the Cart used to confirm the Swap.
-     * @param cartId The id of the Cart (required)
-     * @return ApiResponse&lt;StoreSwapsRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreSwapsRes> getSwapsSwapCartIdWithHttpInfo(String cartId) throws ApiException {
-        com.squareup.okhttp.Call call = getSwapsSwapCartIdValidateBeforeCall(cartId, null, null);
-        Type localVarReturnType = new TypeToken<StoreSwapsRes>(){}.getType();
-        return medusaSdkClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get by Cart ID (asynchronously)
-     * Retrieves a Swap by the id of the Cart used to confirm the Swap.
-     * @param cartId The id of the Cart (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getSwapsSwapCartIdAsync(String cartId, final ApiCallback<StoreSwapsRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getSwapsSwapCartIdValidateBeforeCall(cartId, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreSwapsRes>(){}.getType();
-        medusaSdkClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for postSwaps
-     * @param body  (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call postSwapsCall(StorePostSwapsReq body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
-        
-        // create path and map variables
-        String localVarPath = "/swaps";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = medusaSdkClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = medusaSdkClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            medusaSdkClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return medusaSdkClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call postSwapsValidateBeforeCall(StorePostSwapsReq body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = postSwapsCall(body, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public GetSwapByCartIdRequest getSwapByCartId(String cartId) throws ApiException {
+        return new GetSwapByCartIdRequest(medusaSdkClient, cartId);
     }
 
     /**
      * Create a Swap
      * Creates a Swap on an Order by providing some items to return along with some items to send back
-     * @param body  (optional)
+     * body  (optional)
      * @return StoreSwapsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreSwapsRes postSwaps(StorePostSwapsReq body) throws ApiException {
-        ApiResponse<StoreSwapsRes> resp = postSwapsWithHttpInfo(body);
-        return resp.getData();
-    }
-
-    /**
-     * Create a Swap
-     * Creates a Swap on an Order by providing some items to return along with some items to send back
-     * @param body  (optional)
-     * @return ApiResponse&lt;StoreSwapsRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreSwapsRes> postSwapsWithHttpInfo(StorePostSwapsReq body) throws ApiException {
-        com.squareup.okhttp.Call call = postSwapsValidateBeforeCall(body, null, null);
-        Type localVarReturnType = new TypeToken<StoreSwapsRes>(){}.getType();
-        return medusaSdkClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Create a Swap (asynchronously)
-     * Creates a Swap on an Order by providing some items to return along with some items to send back
-     * @param body  (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call postSwapsAsync(StorePostSwapsReq body, final ApiCallback<StoreSwapsRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = postSwapsValidateBeforeCall(body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreSwapsRes>(){}.getType();
-        medusaSdkClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public CreateSwapRequest createSwap() throws ApiException {
+        return new CreateSwapRequest(medusaSdkClient);
     }
 }

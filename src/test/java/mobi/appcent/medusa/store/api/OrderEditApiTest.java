@@ -37,7 +37,7 @@ public class OrderEditApiTest {
     @Test
     public void getOrderEditsOrderEditTest() throws Exception {
         String id = null;
-        StoreOrderEditsRes response = api.getOrderEditsOrderEdit(id);
+        StoreOrderEditsRes response = api.retrieveOrderEdit(id).execute().getData();
 
         // TODO: test validations
     }
@@ -52,7 +52,7 @@ public class OrderEditApiTest {
     @Test
     public void postOrderEditsOrderEditCompleteTest() throws Exception {
         String id = null;
-        StoreOrderEditsRes response = api.postOrderEditsOrderEditComplete(id);
+        StoreOrderEditsRes response = api.completesOrderEdit(id).execute().getData();
 
         // TODO: test validations
     }
@@ -68,7 +68,7 @@ public class OrderEditApiTest {
     public void postOrderEditsOrderEditDeclineTest() throws Exception {
         String id = null;
         StorePostOrderEditsOrderEditDecline body = null;
-        StoreOrderEditsRes response = api.postOrderEditsOrderEditDecline(id, body);
+        StoreOrderEditsRes response = api.declineOrderEdit(id).execute().getData();
 
         // TODO: test validations
     }
