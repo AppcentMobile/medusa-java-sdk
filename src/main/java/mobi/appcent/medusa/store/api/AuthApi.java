@@ -53,6 +53,7 @@ public class AuthApi extends BaseApi {
     /**
      * Customer Log out
      * Destroys a Customer&#x27;s authenticated session.
+     * @return DeleteAuthRequest
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public DeleteAuthRequest deleteAuth() throws ApiException {

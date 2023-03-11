@@ -149,6 +149,7 @@ public class CustomerApi {
      * Request Password Reset
      * Creates a reset password token to be used in a subsequent /reset-password request. The password token should be sent out of band e.g. via email and will not be returned.
      * body  (optional)
+     * @return PasswordResetRequest
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public PasswordResetRequest passwordResetRequest() throws ApiException {
