@@ -36,7 +36,7 @@ public class ReturnReasonApiTest {
      */
     @Test
     public void getReturnReasonsTest() throws Exception {
-        StoreReturnReasonsListRes response = api.getReturnReasons();
+        StoreReturnReasonsListRes response = api.listReturnReason().execute().getData();
 
         // TODO: test validations
     }
@@ -51,7 +51,7 @@ public class ReturnReasonApiTest {
     @Test
     public void getReturnReasonsReasonTest() throws Exception {
         String id = null;
-        StoreReturnReasonsRes response = api.getReturnReasonsReason(id);
+        StoreReturnReasonsRes response = api.getReturnReason(id).execute().getData();
 
         // TODO: test validations
     }
