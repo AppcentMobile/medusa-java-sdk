@@ -14,10 +14,10 @@ package mobi.appcent.medusa.store.api;
 
 import java.math.BigDecimal;
 
-import mobi.appcent.medusa.store.model.InventoryQuantity;
-import mobi.appcent.medusa.store.model.StoreVariantsListRes;
-import mobi.appcent.medusa.store.model.StoreVariantsRes;
-import mobi.appcent.medusa.store.model.Title;
+import mobi.appcent.medusa.store.model.response.InventoryQuantity;
+import mobi.appcent.medusa.store.model.response.StoreVariantsListRes;
+import mobi.appcent.medusa.store.model.response.StoreVariantsRes;
+import mobi.appcent.medusa.store.model.response.Title;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -50,7 +50,7 @@ public class ProductVariantApiTest {
         String currencyCode = null;
         Title title = null;
         InventoryQuantity inventoryQuantity = null;
-        StoreVariantsListRes response = api.getVariants(ids, salesChannelId, expand, offset, limit, cartId, regionId, currencyCode, title, inventoryQuantity);
+        StoreVariantsListRes response = api.getVariants().execute().getData();
 
         // TODO: test validations
     }
@@ -69,7 +69,7 @@ public class ProductVariantApiTest {
         String salesChannelId = null;
         String regionId = null;
         String currencyCode = null;
-        StoreVariantsRes response = api.getVariantsVariant(variantId, cartId, salesChannelId, regionId, currencyCode);
+        StoreVariantsRes response = api.getVariant(variantId).execute().getData();
 
         // TODO: test validations
     }

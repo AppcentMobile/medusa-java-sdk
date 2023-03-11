@@ -12,9 +12,9 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.CreatedAt3;
-import mobi.appcent.medusa.store.model.StoreProductTypesListRes;
-import mobi.appcent.medusa.store.model.UpdatedAt3;
+import mobi.appcent.medusa.store.model.response.CreatedAt3;
+import mobi.appcent.medusa.store.model.response.StoreProductTypesListRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt3;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -49,7 +49,7 @@ public class ProductTypeApiTest {
         String q = null;
         CreatedAt3 createdAt = null;
         UpdatedAt3 updatedAt = null;
-        StoreProductTypesListRes response = api.getProductTypes(limit, offset, order, discountConditionId, value, id, q, createdAt, updatedAt);
+        StoreProductTypesListRes response = api.getProductTypes().execute().getData();
 
         // TODO: test validations
     }

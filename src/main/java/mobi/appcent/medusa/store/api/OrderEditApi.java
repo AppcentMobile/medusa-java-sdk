@@ -12,22 +12,19 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
+import mobi.appcent.medusa.store.MedusaSdkClient;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.StoreOrderEditsRes;
-import mobi.appcent.medusa.store.model.StorePostOrderEditsOrderEditDecline;
+import mobi.appcent.medusa.store.model.request.orderedit.CompletesOrderEditRequest;
+import mobi.appcent.medusa.store.model.request.orderedit.DeclineOrderEditRequest;
+import mobi.appcent.medusa.store.model.request.orderedit.RetrieveOrderEditRequest;
+import mobi.appcent.medusa.store.model.response.StoreOrderEditsRes;
+import mobi.appcent.medusa.store.model.response.StorePostOrderEditsOrderEditDecline;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -36,88 +33,18 @@ import java.util.List;
 import java.util.Map;
 
 public class OrderEditApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public OrderEditApi() {
-        this(Configuration.getDefaultApiClient());
+    public static OrderEditApi getInstance() {
+        return new OrderEditApi();
     }
 
-    public OrderEditApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
-
-    /**
-     * Build call for getOrderEditsOrderEdit
-     * @param id The ID of the OrderEdit. (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getOrderEditsOrderEditCall(String id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/order-edits/{id}"
-            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json", "text/plain"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getOrderEditsOrderEditValidateBeforeCall(String id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'id' is set
-        if (id == null) {
-            throw new ApiException("Missing the required parameter 'id' when calling getOrderEditsOrderEdit(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = getOrderEditsOrderEditCall(id, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
@@ -127,122 +54,8 @@ public class OrderEditApi {
      * @return StoreOrderEditsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreOrderEditsRes getOrderEditsOrderEdit(String id) throws ApiException {
-        ApiResponse<StoreOrderEditsRes> resp = getOrderEditsOrderEditWithHttpInfo(id);
-        return resp.getData();
-    }
-
-    /**
-     * Retrieve an OrderEdit
-     * Retrieves a OrderEdit.
-     * @param id The ID of the OrderEdit. (required)
-     * @return ApiResponse&lt;StoreOrderEditsRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreOrderEditsRes> getOrderEditsOrderEditWithHttpInfo(String id) throws ApiException {
-        com.squareup.okhttp.Call call = getOrderEditsOrderEditValidateBeforeCall(id, null, null);
-        Type localVarReturnType = new TypeToken<StoreOrderEditsRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Retrieve an OrderEdit (asynchronously)
-     * Retrieves a OrderEdit.
-     * @param id The ID of the OrderEdit. (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getOrderEditsOrderEditAsync(String id, final ApiCallback<StoreOrderEditsRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getOrderEditsOrderEditValidateBeforeCall(id, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreOrderEditsRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for postOrderEditsOrderEditComplete
-     * @param id The ID of the Order Edit. (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call postOrderEditsOrderEditCompleteCall(String id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/order-edits/{id}/complete"
-            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json", "text/plain"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call postOrderEditsOrderEditCompleteValidateBeforeCall(String id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'id' is set
-        if (id == null) {
-            throw new ApiException("Missing the required parameter 'id' when calling postOrderEditsOrderEditComplete(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = postOrderEditsOrderEditCompleteCall(id, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public RetrieveOrderEditRequest retrieveOrderEdit(String id) throws ApiException {
+        return new RetrieveOrderEditRequest(medusaSdkClient, id);
     }
 
     /**
@@ -252,185 +65,19 @@ public class OrderEditApi {
      * @return StoreOrderEditsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreOrderEditsRes postOrderEditsOrderEditComplete(String id) throws ApiException {
-        ApiResponse<StoreOrderEditsRes> resp = postOrderEditsOrderEditCompleteWithHttpInfo(id);
-        return resp.getData();
-    }
-
-    /**
-     * Completes an OrderEdit
-     * Completes an OrderEdit.
-     * @param id The ID of the Order Edit. (required)
-     * @return ApiResponse&lt;StoreOrderEditsRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreOrderEditsRes> postOrderEditsOrderEditCompleteWithHttpInfo(String id) throws ApiException {
-        com.squareup.okhttp.Call call = postOrderEditsOrderEditCompleteValidateBeforeCall(id, null, null);
-        Type localVarReturnType = new TypeToken<StoreOrderEditsRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Completes an OrderEdit (asynchronously)
-     * Completes an OrderEdit.
-     * @param id The ID of the Order Edit. (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call postOrderEditsOrderEditCompleteAsync(String id, final ApiCallback<StoreOrderEditsRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = postOrderEditsOrderEditCompleteValidateBeforeCall(id, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreOrderEditsRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for postOrderEditsOrderEditDecline
-     * @param id The ID of the OrderEdit. (required)
-     * @param body  (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call postOrderEditsOrderEditDeclineCall(String id, StorePostOrderEditsOrderEditDecline body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
-        
-        // create path and map variables
-        String localVarPath = "/order-edits/{id}/decline"
-            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json", "text/plain"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call postOrderEditsOrderEditDeclineValidateBeforeCall(String id, StorePostOrderEditsOrderEditDecline body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'id' is set
-        if (id == null) {
-            throw new ApiException("Missing the required parameter 'id' when calling postOrderEditsOrderEditDecline(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = postOrderEditsOrderEditDeclineCall(id, body, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public CompletesOrderEditRequest completesOrderEdit(String id) throws ApiException {
+        return new CompletesOrderEditRequest(medusaSdkClient, id);
     }
 
     /**
      * Decline an OrderEdit
      * Declines an OrderEdit.
      * @param id The ID of the OrderEdit. (required)
-     * @param body  (optional)
+     * body  (optional)
      * @return StoreOrderEditsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreOrderEditsRes postOrderEditsOrderEditDecline(String id, StorePostOrderEditsOrderEditDecline body) throws ApiException {
-        ApiResponse<StoreOrderEditsRes> resp = postOrderEditsOrderEditDeclineWithHttpInfo(id, body);
-        return resp.getData();
-    }
-
-    /**
-     * Decline an OrderEdit
-     * Declines an OrderEdit.
-     * @param id The ID of the OrderEdit. (required)
-     * @param body  (optional)
-     * @return ApiResponse&lt;StoreOrderEditsRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreOrderEditsRes> postOrderEditsOrderEditDeclineWithHttpInfo(String id, StorePostOrderEditsOrderEditDecline body) throws ApiException {
-        com.squareup.okhttp.Call call = postOrderEditsOrderEditDeclineValidateBeforeCall(id, body, null, null);
-        Type localVarReturnType = new TypeToken<StoreOrderEditsRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Decline an OrderEdit (asynchronously)
-     * Declines an OrderEdit.
-     * @param id The ID of the OrderEdit. (required)
-     * @param body  (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call postOrderEditsOrderEditDeclineAsync(String id, StorePostOrderEditsOrderEditDecline body, final ApiCallback<StoreOrderEditsRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = postOrderEditsOrderEditDeclineValidateBeforeCall(id, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreOrderEditsRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public DeclineOrderEditRequest declineOrderEdit(String id) throws ApiException {
+        return new DeclineOrderEditRequest(medusaSdkClient, id);
     }
 }

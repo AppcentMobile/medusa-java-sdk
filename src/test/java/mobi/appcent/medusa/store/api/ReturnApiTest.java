@@ -12,8 +12,8 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StorePostReturnsReq;
-import mobi.appcent.medusa.store.model.StoreReturnsRes;
+import mobi.appcent.medusa.store.model.response.StorePostReturnsReq;
+import mobi.appcent.medusa.store.model.response.StoreReturnsRes;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -37,7 +37,7 @@ public class ReturnApiTest {
     @Test
     public void postReturnsTest() throws Exception {
         StorePostReturnsReq body = null;
-        StoreReturnsRes response = api.postReturns(body);
+        StoreReturnsRes response = api.createReturn().execute().getData();
 
         // TODO: test validations
     }

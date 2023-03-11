@@ -22,7 +22,7 @@ Get a Payment Collection
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.ApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -128,7 +128,7 @@ Manages Multiple Payment Sessions from Payment Collections.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.ApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -185,7 +185,7 @@ Manages Payment Sessions from Payment Collections.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.ApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -242,7 +242,7 @@ Authorizes Payment Sessions of a Payment Collection.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.ApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -299,7 +299,7 @@ Authorizes a Payment Session of a Payment Collection.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.ApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;

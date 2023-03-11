@@ -12,14 +12,7 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -28,10 +21,12 @@ import java.io.IOException;
 
 import java.math.BigDecimal;
 
-import mobi.appcent.medusa.store.model.InventoryQuantity;
-import mobi.appcent.medusa.store.model.StoreVariantsListRes;
-import mobi.appcent.medusa.store.model.StoreVariantsRes;
-import mobi.appcent.medusa.store.model.Title;
+import mobi.appcent.medusa.store.model.request.productvariant.GetProductVariantRequest;
+import mobi.appcent.medusa.store.model.request.productvariant.GetProductVariantsRequest;
+import mobi.appcent.medusa.store.model.response.InventoryQuantity;
+import mobi.appcent.medusa.store.model.response.StoreVariantsListRes;
+import mobi.appcent.medusa.store.model.response.StoreVariantsRes;
+import mobi.appcent.medusa.store.model.response.Title;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -40,347 +35,52 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductVariantApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public ProductVariantApi() {
-        this(Configuration.getDefaultApiClient());
+    public static ProductVariantApi getInstance() {
+        return new ProductVariantApi();
     }
 
-    public ProductVariantApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
-
-    /**
-     * Build call for getVariants
-     * @param ids A comma separated list of Product Variant ids to filter by. (optional)
-     * @param salesChannelId A sales channel id for result configuration. (optional)
-     * @param expand A comma separated list of Product Variant relations to load. (optional)
-     * @param offset How many product variants to skip in the result. (optional)
-     * @param limit Maximum number of Product Variants to return. (optional)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The currency code to use for price selection. (optional)
-     * @param title product variant title to search for. (optional)
-     * @param inventoryQuantity Filter by available inventory quantity (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getVariantsCall(String ids, String salesChannelId, String expand, BigDecimal offset, BigDecimal limit, String cartId, String regionId, String currencyCode, Title title, InventoryQuantity inventoryQuantity, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/variants";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (ids != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("ids", ids));
-        if (salesChannelId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("sales_channel_id", salesChannelId));
-        if (expand != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("expand", expand));
-        if (offset != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
-        if (limit != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
-        if (cartId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("cart_id", cartId));
-        if (regionId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("region_id", regionId));
-        if (currencyCode != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("currency_code", currencyCode));
-        if (title != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("title", title));
-        if (inventoryQuantity != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("inventory_quantity", inventoryQuantity));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getVariantsValidateBeforeCall(String ids, String salesChannelId, String expand, BigDecimal offset, BigDecimal limit, String cartId, String regionId, String currencyCode, Title title, InventoryQuantity inventoryQuantity, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = getVariantsCall(ids, salesChannelId, expand, offset, limit, cartId, regionId, currencyCode, title, inventoryQuantity, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
      * Get Product Variants
      * Retrieves a list of Product Variants
-     * @param ids A comma separated list of Product Variant ids to filter by. (optional)
-     * @param salesChannelId A sales channel id for result configuration. (optional)
-     * @param expand A comma separated list of Product Variant relations to load. (optional)
-     * @param offset How many product variants to skip in the result. (optional)
-     * @param limit Maximum number of Product Variants to return. (optional)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The currency code to use for price selection. (optional)
-     * @param title product variant title to search for. (optional)
-     * @param inventoryQuantity Filter by available inventory quantity (optional)
+     * ids A comma separated list of Product Variant ids to filter by. (optional)
+     * salesChannelId A sales channel id for result configuration. (optional)
+     * expand A comma separated list of Product Variant relations to load. (optional)
+     * offset How many product variants to skip in the result. (optional)
+     * limit Maximum number of Product Variants to return. (optional)
+     * cartId The id of the Cart to set prices based on. (optional)
+     * regionId The id of the Region to set prices based on. (optional)
+     * currencyCode The currency code to use for price selection. (optional)
+     * title product variant title to search for. (optional)
+     * inventoryQuantity Filter by available inventory quantity (optional)
      * @return StoreVariantsListRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreVariantsListRes getVariants(String ids, String salesChannelId, String expand, BigDecimal offset, BigDecimal limit, String cartId, String regionId, String currencyCode, Title title, InventoryQuantity inventoryQuantity) throws ApiException {
-        ApiResponse<StoreVariantsListRes> resp = getVariantsWithHttpInfo(ids, salesChannelId, expand, offset, limit, cartId, regionId, currencyCode, title, inventoryQuantity);
-        return resp.getData();
-    }
-
-    /**
-     * Get Product Variants
-     * Retrieves a list of Product Variants
-     * @param ids A comma separated list of Product Variant ids to filter by. (optional)
-     * @param salesChannelId A sales channel id for result configuration. (optional)
-     * @param expand A comma separated list of Product Variant relations to load. (optional)
-     * @param offset How many product variants to skip in the result. (optional)
-     * @param limit Maximum number of Product Variants to return. (optional)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The currency code to use for price selection. (optional)
-     * @param title product variant title to search for. (optional)
-     * @param inventoryQuantity Filter by available inventory quantity (optional)
-     * @return ApiResponse&lt;StoreVariantsListRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreVariantsListRes> getVariantsWithHttpInfo(String ids, String salesChannelId, String expand, BigDecimal offset, BigDecimal limit, String cartId, String regionId, String currencyCode, Title title, InventoryQuantity inventoryQuantity) throws ApiException {
-        com.squareup.okhttp.Call call = getVariantsValidateBeforeCall(ids, salesChannelId, expand, offset, limit, cartId, regionId, currencyCode, title, inventoryQuantity, null, null);
-        Type localVarReturnType = new TypeToken<StoreVariantsListRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get Product Variants (asynchronously)
-     * Retrieves a list of Product Variants
-     * @param ids A comma separated list of Product Variant ids to filter by. (optional)
-     * @param salesChannelId A sales channel id for result configuration. (optional)
-     * @param expand A comma separated list of Product Variant relations to load. (optional)
-     * @param offset How many product variants to skip in the result. (optional)
-     * @param limit Maximum number of Product Variants to return. (optional)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The currency code to use for price selection. (optional)
-     * @param title product variant title to search for. (optional)
-     * @param inventoryQuantity Filter by available inventory quantity (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getVariantsAsync(String ids, String salesChannelId, String expand, BigDecimal offset, BigDecimal limit, String cartId, String regionId, String currencyCode, Title title, InventoryQuantity inventoryQuantity, final ApiCallback<StoreVariantsListRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getVariantsValidateBeforeCall(ids, salesChannelId, expand, offset, limit, cartId, regionId, currencyCode, title, inventoryQuantity, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreVariantsListRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getVariantsVariant
-     * @param variantId The id of the Product Variant. (required)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param salesChannelId A sales channel id for result configuration. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The 3 character ISO currency code to set prices based on. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getVariantsVariantCall(String variantId, String cartId, String salesChannelId, String regionId, String currencyCode, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/variants/{variant_id}"
-            .replaceAll("\\{" + "variant_id" + "\\}", apiClient.escapeString(variantId.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (cartId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("cart_id", cartId));
-        if (salesChannelId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("sales_channel_id", salesChannelId));
-        if (regionId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("region_id", regionId));
-        if (currencyCode != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("currency_code", currencyCode));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getVariantsVariantValidateBeforeCall(String variantId, String cartId, String salesChannelId, String regionId, String currencyCode, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'variantId' is set
-        if (variantId == null) {
-            throw new ApiException("Missing the required parameter 'variantId' when calling getVariantsVariant(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = getVariantsVariantCall(variantId, cartId, salesChannelId, regionId, currencyCode, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public GetProductVariantsRequest getVariants() throws ApiException {
+        return new GetProductVariantsRequest(medusaSdkClient);
     }
 
     /**
      * Get a Product Variant
      * Retrieves a Product Variant by id
      * @param variantId The id of the Product Variant. (required)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param salesChannelId A sales channel id for result configuration. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The 3 character ISO currency code to set prices based on. (optional)
+     * cartId The id of the Cart to set prices based on. (optional)
+     * salesChannelId A sales channel id for result configuration. (optional)
+     * regionId The id of the Region to set prices based on. (optional)
+     * currencyCode The 3 character ISO currency code to set prices based on. (optional)
      * @return StoreVariantsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreVariantsRes getVariantsVariant(String variantId, String cartId, String salesChannelId, String regionId, String currencyCode) throws ApiException {
-        ApiResponse<StoreVariantsRes> resp = getVariantsVariantWithHttpInfo(variantId, cartId, salesChannelId, regionId, currencyCode);
-        return resp.getData();
-    }
-
-    /**
-     * Get a Product Variant
-     * Retrieves a Product Variant by id
-     * @param variantId The id of the Product Variant. (required)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param salesChannelId A sales channel id for result configuration. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The 3 character ISO currency code to set prices based on. (optional)
-     * @return ApiResponse&lt;StoreVariantsRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreVariantsRes> getVariantsVariantWithHttpInfo(String variantId, String cartId, String salesChannelId, String regionId, String currencyCode) throws ApiException {
-        com.squareup.okhttp.Call call = getVariantsVariantValidateBeforeCall(variantId, cartId, salesChannelId, regionId, currencyCode, null, null);
-        Type localVarReturnType = new TypeToken<StoreVariantsRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get a Product Variant (asynchronously)
-     * Retrieves a Product Variant by id
-     * @param variantId The id of the Product Variant. (required)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param salesChannelId A sales channel id for result configuration. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The 3 character ISO currency code to set prices based on. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getVariantsVariantAsync(String variantId, String cartId, String salesChannelId, String regionId, String currencyCode, final ApiCallback<StoreVariantsRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getVariantsVariantValidateBeforeCall(variantId, cartId, salesChannelId, regionId, currencyCode, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreVariantsRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public GetProductVariantRequest getVariant(String variantId) throws ApiException {
+        return new GetProductVariantRequest(medusaSdkClient, variantId);
     }
 }

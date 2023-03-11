@@ -12,22 +12,18 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
+import mobi.appcent.medusa.store.MedusaSdkClient;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.StoreReturnReasonsListRes;
-import mobi.appcent.medusa.store.model.StoreReturnReasonsRes;
+import mobi.appcent.medusa.store.model.request.returnreason.GetReturnReasonRequest;
+import mobi.appcent.medusa.store.model.request.returnreason.ListReturnReasonRequest;
+import mobi.appcent.medusa.store.model.response.StoreReturnReasonsListRes;
+import mobi.appcent.medusa.store.model.response.StoreReturnReasonsRes;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -36,82 +32,18 @@ import java.util.List;
 import java.util.Map;
 
 public class ReturnReasonApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public ReturnReasonApi() {
-        this(Configuration.getDefaultApiClient());
+    public static ReturnReasonApi getInstance() {
+        return new ReturnReasonApi();
     }
 
-    public ReturnReasonApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
-
-    /**
-     * Build call for getReturnReasons
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getReturnReasonsCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/return-reasons";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getReturnReasonsValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = getReturnReasonsCall(progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
@@ -120,120 +52,8 @@ public class ReturnReasonApi {
      * @return StoreReturnReasonsListRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreReturnReasonsListRes getReturnReasons() throws ApiException {
-        ApiResponse<StoreReturnReasonsListRes> resp = getReturnReasonsWithHttpInfo();
-        return resp.getData();
-    }
-
-    /**
-     * List Return Reasons
-     * Retrieves a list of Return Reasons.
-     * @return ApiResponse&lt;StoreReturnReasonsListRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreReturnReasonsListRes> getReturnReasonsWithHttpInfo() throws ApiException {
-        com.squareup.okhttp.Call call = getReturnReasonsValidateBeforeCall(null, null);
-        Type localVarReturnType = new TypeToken<StoreReturnReasonsListRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * List Return Reasons (asynchronously)
-     * Retrieves a list of Return Reasons.
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getReturnReasonsAsync(final ApiCallback<StoreReturnReasonsListRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getReturnReasonsValidateBeforeCall(progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreReturnReasonsListRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getReturnReasonsReason
-     * @param id The id of the Return Reason. (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getReturnReasonsReasonCall(String id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/return-reasons/{id}"
-            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getReturnReasonsReasonValidateBeforeCall(String id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'id' is set
-        if (id == null) {
-            throw new ApiException("Missing the required parameter 'id' when calling getReturnReasonsReason(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = getReturnReasonsReasonCall(id, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public ListReturnReasonRequest listReturnReason() throws ApiException {
+        return new ListReturnReasonRequest(medusaSdkClient);
     }
 
     /**
@@ -243,56 +63,7 @@ public class ReturnReasonApi {
      * @return StoreReturnReasonsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreReturnReasonsRes getReturnReasonsReason(String id) throws ApiException {
-        ApiResponse<StoreReturnReasonsRes> resp = getReturnReasonsReasonWithHttpInfo(id);
-        return resp.getData();
-    }
-
-    /**
-     * Get a Return Reason
-     * Retrieves a Return Reason.
-     * @param id The id of the Return Reason. (required)
-     * @return ApiResponse&lt;StoreReturnReasonsRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreReturnReasonsRes> getReturnReasonsReasonWithHttpInfo(String id) throws ApiException {
-        com.squareup.okhttp.Call call = getReturnReasonsReasonValidateBeforeCall(id, null, null);
-        Type localVarReturnType = new TypeToken<StoreReturnReasonsRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get a Return Reason (asynchronously)
-     * Retrieves a Return Reason.
-     * @param id The id of the Return Reason. (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getReturnReasonsReasonAsync(String id, final ApiCallback<StoreReturnReasonsRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getReturnReasonsReasonValidateBeforeCall(id, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreReturnReasonsRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public GetReturnReasonRequest getReturnReason(String id) throws ApiException {
+        return new GetReturnReasonRequest(medusaSdkClient, id);
     }
 }
