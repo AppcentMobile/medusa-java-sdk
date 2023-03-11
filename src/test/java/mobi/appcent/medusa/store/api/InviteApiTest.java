@@ -36,7 +36,7 @@ public class InviteApiTest {
     @Test
     public void postOrdersCustomerOrderClaimTest() throws Exception {
         StorePostCustomersCustomerOrderClaimReq body = null;
-        api.postOrdersCustomerOrderClaim(body);
+        api.claimOrder().execute();
 
         // TODO: test validations
     }
