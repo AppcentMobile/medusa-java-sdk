@@ -38,5 +38,7 @@ public class QueryParamConstant {
     public static final String DISCOUNT_CONDITION_ID = "discount_condition_id";
     public static final String VALUE = "value";
     public static final String PARENT_CATEGORY_ID = "parent_category_id";
+    public static final String IDS = "ids";
+    public static final String INVENTORY_QUANTITY = "inventory_quantity";
 
 }
