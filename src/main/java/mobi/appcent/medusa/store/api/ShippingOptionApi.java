@@ -12,21 +12,16 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.StoreShippingOptionsListRes;
+import mobi.appcent.medusa.store.model.request.shippingoption.GetShippingOptionsByCartIdRequest;
+import mobi.appcent.medusa.store.model.request.shippingoption.GetShippingOptionsRequest;
+import mobi.appcent.medusa.store.model.response.StoreShippingOptionsListRes;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -35,222 +30,31 @@ import java.util.List;
 import java.util.Map;
 
 public class ShippingOptionApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public ShippingOptionApi() {
-        this(Configuration.getDefaultApiClient());
+    public static ShippingOptionApi getInstance() {
+        return new ShippingOptionApi();
     }
 
-    public ShippingOptionApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
-
-    /**
-     * Build call for getShippingOptions
-     * @param isReturn Whether return Shipping Options should be included. By default all Shipping Options are returned. (optional)
-     * @param productIds A comma separated list of Product ids to filter Shipping Options by. (optional)
-     * @param regionId the Region to retrieve Shipping Options from. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getShippingOptionsCall(Boolean isReturn, String productIds, String regionId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/shipping-options";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (isReturn != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("is_return", isReturn));
-        if (productIds != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("product_ids", productIds));
-        if (regionId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("region_id", regionId));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getShippingOptionsValidateBeforeCall(Boolean isReturn, String productIds, String regionId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = getShippingOptionsCall(isReturn, productIds, regionId, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
      * Get Shipping Options
      * Retrieves a list of Shipping Options.
-     * @param isReturn Whether return Shipping Options should be included. By default all Shipping Options are returned. (optional)
-     * @param productIds A comma separated list of Product ids to filter Shipping Options by. (optional)
-     * @param regionId the Region to retrieve Shipping Options from. (optional)
+     * isReturn Whether return Shipping Options should be included. By default all Shipping Options are returned. (optional)
+     * productIds A comma separated list of Product ids to filter Shipping Options by. (optional)
+     * regionId the Region to retrieve Shipping Options from. (optional)
      * @return StoreShippingOptionsListRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreShippingOptionsListRes getShippingOptions(Boolean isReturn, String productIds, String regionId) throws ApiException {
-        ApiResponse<StoreShippingOptionsListRes> resp = getShippingOptionsWithHttpInfo(isReturn, productIds, regionId);
-        return resp.getData();
-    }
-
-    /**
-     * Get Shipping Options
-     * Retrieves a list of Shipping Options.
-     * @param isReturn Whether return Shipping Options should be included. By default all Shipping Options are returned. (optional)
-     * @param productIds A comma separated list of Product ids to filter Shipping Options by. (optional)
-     * @param regionId the Region to retrieve Shipping Options from. (optional)
-     * @return ApiResponse&lt;StoreShippingOptionsListRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreShippingOptionsListRes> getShippingOptionsWithHttpInfo(Boolean isReturn, String productIds, String regionId) throws ApiException {
-        com.squareup.okhttp.Call call = getShippingOptionsValidateBeforeCall(isReturn, productIds, regionId, null, null);
-        Type localVarReturnType = new TypeToken<StoreShippingOptionsListRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get Shipping Options (asynchronously)
-     * Retrieves a list of Shipping Options.
-     * @param isReturn Whether return Shipping Options should be included. By default all Shipping Options are returned. (optional)
-     * @param productIds A comma separated list of Product ids to filter Shipping Options by. (optional)
-     * @param regionId the Region to retrieve Shipping Options from. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getShippingOptionsAsync(Boolean isReturn, String productIds, String regionId, final ApiCallback<StoreShippingOptionsListRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getShippingOptionsValidateBeforeCall(isReturn, productIds, regionId, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreShippingOptionsListRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getShippingOptionsCartId
-     * @param cartId The id of the Cart. (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getShippingOptionsCartIdCall(String cartId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/shipping-options/{cart_id}"
-            .replaceAll("\\{" + "cart_id" + "\\}", apiClient.escapeString(cartId.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getShippingOptionsCartIdValidateBeforeCall(String cartId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'cartId' is set
-        if (cartId == null) {
-            throw new ApiException("Missing the required parameter 'cartId' when calling getShippingOptionsCartId(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = getShippingOptionsCartIdCall(cartId, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public GetShippingOptionsRequest getShippingOptions() throws ApiException {
+        return new GetShippingOptionsRequest(medusaSdkClient);
     }
 
     /**
@@ -260,56 +64,8 @@ public class ShippingOptionApi {
      * @return StoreShippingOptionsListRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreShippingOptionsListRes getShippingOptionsCartId(String cartId) throws ApiException {
-        ApiResponse<StoreShippingOptionsListRes> resp = getShippingOptionsCartIdWithHttpInfo(cartId);
-        return resp.getData();
+    public GetShippingOptionsByCartIdRequest getShippingOptionsByCartId(String cartId) throws ApiException {
+        return new GetShippingOptionsByCartIdRequest(medusaSdkClient, cartId);
     }
 
-    /**
-     * List for Cart
-     * Retrieves a list of Shipping Options available to a cart.
-     * @param cartId The id of the Cart. (required)
-     * @return ApiResponse&lt;StoreShippingOptionsListRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreShippingOptionsListRes> getShippingOptionsCartIdWithHttpInfo(String cartId) throws ApiException {
-        com.squareup.okhttp.Call call = getShippingOptionsCartIdValidateBeforeCall(cartId, null, null);
-        Type localVarReturnType = new TypeToken<StoreShippingOptionsListRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * List for Cart (asynchronously)
-     * Retrieves a list of Shipping Options available to a cart.
-     * @param cartId The id of the Cart. (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getShippingOptionsCartIdAsync(String cartId, final ApiCallback<StoreShippingOptionsListRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getShippingOptionsCartIdValidateBeforeCall(cartId, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreShippingOptionsListRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
 }

@@ -12,10 +12,10 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.CreatedAt;
-import mobi.appcent.medusa.store.model.StoreCollectionsListRes;
-import mobi.appcent.medusa.store.model.StoreCollectionsRes;
-import mobi.appcent.medusa.store.model.UpdatedAt;
+import mobi.appcent.medusa.store.model.response.CreatedAt;
+import mobi.appcent.medusa.store.model.response.StoreCollectionsListRes;
+import mobi.appcent.medusa.store.model.response.StoreCollectionsRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -42,7 +42,7 @@ public class CollectionApiTest {
         Integer limit = null;
         CreatedAt createdAt = null;
         UpdatedAt updatedAt = null;
-        StoreCollectionsListRes response = api.getCollections(offset, limit, createdAt, updatedAt);
+        StoreCollectionsListRes response = api.getCollections().execute().getData();
 
         // TODO: test validations
     }
@@ -57,7 +57,7 @@ public class CollectionApiTest {
     @Test
     public void getCollectionsCollectionTest() throws Exception {
         String id = null;
-        StoreCollectionsRes response = api.getCollectionsCollection(id);
+        StoreCollectionsRes response = api.getCollectionsCollection(id).execute().getData();
 
         // TODO: test validations
     }

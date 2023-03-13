@@ -12,7 +12,7 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StoreShippingOptionsListRes;
+import mobi.appcent.medusa.store.model.response.StoreShippingOptionsListRes;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -38,7 +38,7 @@ public class ShippingOptionApiTest {
         Boolean isReturn = null;
         String productIds = null;
         String regionId = null;
-        StoreShippingOptionsListRes response = api.getShippingOptions(isReturn, productIds, regionId);
+        StoreShippingOptionsListRes response = api.getShippingOptions().execute().getData();
 
         // TODO: test validations
     }
@@ -53,7 +53,7 @@ public class ShippingOptionApiTest {
     @Test
     public void getShippingOptionsCartIdTest() throws Exception {
         String cartId = null;
-        StoreShippingOptionsListRes response = api.getShippingOptionsCartId(cartId);
+        StoreShippingOptionsListRes response = api.getShippingOptionsByCartId(cartId).execute().getData();
 
         // TODO: test validations
     }

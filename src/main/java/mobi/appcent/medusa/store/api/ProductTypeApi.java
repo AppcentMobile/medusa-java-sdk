@@ -12,23 +12,17 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.CreatedAt3;
-import mobi.appcent.medusa.store.model.StoreProductTypesListRes;
-import mobi.appcent.medusa.store.model.UpdatedAt3;
+import mobi.appcent.medusa.store.model.request.producttype.ListProductTypesRequest;
+import mobi.appcent.medusa.store.model.response.CreatedAt3;
+import mobi.appcent.medusa.store.model.response.StoreProductTypesListRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt3;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -37,192 +31,36 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductTypeApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public ProductTypeApi() {
-        this(Configuration.getDefaultApiClient());
+    public static ProductTypeApi getInstance() {
+        return new ProductTypeApi();
     }
 
-    public ProductTypeApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
-
-    /**
-     * Build call for getProductTypes
-     * @param limit The number of types to return. (optional, default to 20)
-     * @param offset The number of items to skip before the results. (optional, default to 0)
-     * @param order The field to sort items by. (optional)
-     * @param discountConditionId The discount condition id on which to filter the product types. (optional)
-     * @param value The type values to search for (optional)
-     * @param id The type IDs to search for (optional)
-     * @param q A query string to search values for (optional)
-     * @param createdAt Date comparison for when resulting product types were created. (optional)
-     * @param updatedAt Date comparison for when resulting product types were updated. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getProductTypesCall(Integer limit, Integer offset, String order, String discountConditionId, List<String> value, List<String> id, String q, CreatedAt3 createdAt, UpdatedAt3 updatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/product-types";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (limit != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
-        if (offset != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
-        if (order != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("order", order));
-        if (discountConditionId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("discount_condition_id", discountConditionId));
-        if (value != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "value", value));
-        if (id != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "id", id));
-        if (q != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("q", q));
-        if (createdAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("created_at", createdAt));
-        if (updatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("updated_at", updatedAt));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json", "text/plain"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "cookie_auth" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getProductTypesValidateBeforeCall(Integer limit, Integer offset, String order, String discountConditionId, List<String> value, List<String> id, String q, CreatedAt3 createdAt, UpdatedAt3 updatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = getProductTypesCall(limit, offset, order, discountConditionId, value, id, q, createdAt, updatedAt, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
      * List Product Types
      * Retrieve a list of Product Types.
-     * @param limit The number of types to return. (optional, default to 20)
-     * @param offset The number of items to skip before the results. (optional, default to 0)
-     * @param order The field to sort items by. (optional)
-     * @param discountConditionId The discount condition id on which to filter the product types. (optional)
-     * @param value The type values to search for (optional)
-     * @param id The type IDs to search for (optional)
-     * @param q A query string to search values for (optional)
-     * @param createdAt Date comparison for when resulting product types were created. (optional)
-     * @param updatedAt Date comparison for when resulting product types were updated. (optional)
+     * limit The number of types to return. (optional, default to 20)
+     * offset The number of items to skip before the results. (optional, default to 0)
+     * order The field to sort items by. (optional)
+     * discountConditionId The discount condition id on which to filter the product types. (optional)
+     * value The type values to search for (optional)
+     * id The type IDs to search for (optional)
+     * q A query string to search values for (optional)
+     * createdAt Date comparison for when resulting product types were created. (optional)
+     * updatedAt Date comparison for when resulting product types were updated. (optional)
      * @return StoreProductTypesListRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreProductTypesListRes getProductTypes(Integer limit, Integer offset, String order, String discountConditionId, List<String> value, List<String> id, String q, CreatedAt3 createdAt, UpdatedAt3 updatedAt) throws ApiException {
-        ApiResponse<StoreProductTypesListRes> resp = getProductTypesWithHttpInfo(limit, offset, order, discountConditionId, value, id, q, createdAt, updatedAt);
-        return resp.getData();
-    }
-
-    /**
-     * List Product Types
-     * Retrieve a list of Product Types.
-     * @param limit The number of types to return. (optional, default to 20)
-     * @param offset The number of items to skip before the results. (optional, default to 0)
-     * @param order The field to sort items by. (optional)
-     * @param discountConditionId The discount condition id on which to filter the product types. (optional)
-     * @param value The type values to search for (optional)
-     * @param id The type IDs to search for (optional)
-     * @param q A query string to search values for (optional)
-     * @param createdAt Date comparison for when resulting product types were created. (optional)
-     * @param updatedAt Date comparison for when resulting product types were updated. (optional)
-     * @return ApiResponse&lt;StoreProductTypesListRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreProductTypesListRes> getProductTypesWithHttpInfo(Integer limit, Integer offset, String order, String discountConditionId, List<String> value, List<String> id, String q, CreatedAt3 createdAt, UpdatedAt3 updatedAt) throws ApiException {
-        com.squareup.okhttp.Call call = getProductTypesValidateBeforeCall(limit, offset, order, discountConditionId, value, id, q, createdAt, updatedAt, null, null);
-        Type localVarReturnType = new TypeToken<StoreProductTypesListRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * List Product Types (asynchronously)
-     * Retrieve a list of Product Types.
-     * @param limit The number of types to return. (optional, default to 20)
-     * @param offset The number of items to skip before the results. (optional, default to 0)
-     * @param order The field to sort items by. (optional)
-     * @param discountConditionId The discount condition id on which to filter the product types. (optional)
-     * @param value The type values to search for (optional)
-     * @param id The type IDs to search for (optional)
-     * @param q A query string to search values for (optional)
-     * @param createdAt Date comparison for when resulting product types were created. (optional)
-     * @param updatedAt Date comparison for when resulting product types were updated. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getProductTypesAsync(Integer limit, Integer offset, String order, String discountConditionId, List<String> value, List<String> id, String q, CreatedAt3 createdAt, UpdatedAt3 updatedAt, final ApiCallback<StoreProductTypesListRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getProductTypesValidateBeforeCall(limit, offset, order, discountConditionId, value, id, q, createdAt, updatedAt, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreProductTypesListRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public ListProductTypesRequest getProductTypes() throws ApiException {
+        return new ListProductTypesRequest(medusaSdkClient);
     }
 }

@@ -12,11 +12,11 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StorePaymentCollectionSessionsReq;
-import mobi.appcent.medusa.store.model.StorePaymentCollectionsRes;
-import mobi.appcent.medusa.store.model.StorePaymentCollectionsSessionRes;
-import mobi.appcent.medusa.store.model.StorePostPaymentCollectionsBatchSessionsAuthorizeReq;
-import mobi.appcent.medusa.store.model.StorePostPaymentCollectionsBatchSessionsReq;
+import mobi.appcent.medusa.store.model.response.StorePaymentCollectionSessionsReq;
+import mobi.appcent.medusa.store.model.response.StorePaymentCollectionsRes;
+import mobi.appcent.medusa.store.model.response.StorePaymentCollectionsSessionRes;
+import mobi.appcent.medusa.store.model.response.StorePostPaymentCollectionsBatchSessionsAuthorizeReq;
+import mobi.appcent.medusa.store.model.response.StorePostPaymentCollectionsBatchSessionsReq;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -42,7 +42,7 @@ public class PaymentCollectionApiTest {
         String id = null;
         String expand = null;
         String fields = null;
-        StorePaymentCollectionsRes response = api.getPaymentCollectionsPaymentCollection(id, expand, fields);
+        StorePaymentCollectionsRes response = api.getPaymentCollection(id).execute().getData();
 
         // TODO: test validations
     }
@@ -58,7 +58,7 @@ public class PaymentCollectionApiTest {
     public void postPaymentCollectionsPaymentCollectionPaymentSessionsSessionTest() throws Exception {
         String id = null;
         String sessionId = null;
-        StorePaymentCollectionsSessionRes response = api.postPaymentCollectionsPaymentCollectionPaymentSessionsSession(id, sessionId);
+        StorePaymentCollectionsSessionRes response = api.refreshPaymentSession(id, sessionId).execute().getData();
 
         // TODO: test validations
     }
@@ -74,7 +74,7 @@ public class PaymentCollectionApiTest {
     public void postPaymentCollectionsPaymentCollectionSessionsBatchTest() throws Exception {
         String id = null;
         StorePostPaymentCollectionsBatchSessionsReq body = null;
-        StorePaymentCollectionsRes response = api.postPaymentCollectionsPaymentCollectionSessionsBatch(id, body);
+        StorePaymentCollectionsRes response = api.managePaymentSessions(id).execute().getData();
 
         // TODO: test validations
     }
@@ -90,7 +90,7 @@ public class PaymentCollectionApiTest {
     public void postPaymentCollectionsSessionsTest() throws Exception {
         String id = null;
         StorePaymentCollectionSessionsReq body = null;
-        StorePaymentCollectionsRes response = api.postPaymentCollectionsSessions(id, body);
+        StorePaymentCollectionsRes response = api.managePaymentSession(id).execute().getData();
 
         // TODO: test validations
     }
@@ -106,7 +106,7 @@ public class PaymentCollectionApiTest {
     public void postPaymentCollectionsSessionsBatchAuthorizeTest() throws Exception {
         String id = null;
         StorePostPaymentCollectionsBatchSessionsAuthorizeReq body = null;
-        StorePaymentCollectionsRes response = api.postPaymentCollectionsSessionsBatchAuthorize(id, body);
+        StorePaymentCollectionsRes response = api.authorizePaymentSessions(id).execute().getData();
 
         // TODO: test validations
     }
@@ -122,7 +122,7 @@ public class PaymentCollectionApiTest {
     public void postPaymentCollectionsSessionsSessionAuthorizeTest() throws Exception {
         String id = null;
         String sessionId = null;
-        StorePaymentCollectionsSessionRes response = api.postPaymentCollectionsSessionsSessionAuthorize(id, sessionId);
+        StorePaymentCollectionsSessionRes response = api.authorizePaymentSession(id, sessionId).execute().getData();
 
         // TODO: test validations
     }

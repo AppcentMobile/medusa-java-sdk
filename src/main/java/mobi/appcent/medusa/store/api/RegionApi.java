@@ -12,24 +12,19 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.CreatedAt5;
-import mobi.appcent.medusa.store.model.StoreRegionsListRes;
-import mobi.appcent.medusa.store.model.StoreRegionsRes;
-import mobi.appcent.medusa.store.model.UpdatedAt5;
+import mobi.appcent.medusa.store.model.request.region.GetRegionRequest;
+import mobi.appcent.medusa.store.model.request.region.ListRegionsRequest;
+import mobi.appcent.medusa.store.model.response.CreatedAt5;
+import mobi.appcent.medusa.store.model.response.StoreRegionsListRes;
+import mobi.appcent.medusa.store.model.response.StoreRegionsRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt5;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -38,228 +33,32 @@ import java.util.List;
 import java.util.Map;
 
 public class RegionApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public RegionApi() {
-        this(Configuration.getDefaultApiClient());
+    public static RegionApi getInstance() {
+        return new RegionApi();
     }
 
-    public RegionApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
-
-    /**
-     * Build call for getRegions
-     * @param offset How many regions to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of regions returned. (optional, default to 100)
-     * @param createdAt Date comparison for when resulting regions were created. (optional)
-     * @param updatedAt Date comparison for when resulting regions were updated. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getRegionsCall(Integer offset, Integer limit, CreatedAt5 createdAt, UpdatedAt5 updatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/regions";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (offset != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
-        if (limit != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
-        if (createdAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("created_at", createdAt));
-        if (updatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("updated_at", updatedAt));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRegionsValidateBeforeCall(Integer offset, Integer limit, CreatedAt5 createdAt, UpdatedAt5 updatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = getRegionsCall(offset, limit, createdAt, updatedAt, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
      * List Regions
      * Retrieves a list of Regions.
-     * @param offset How many regions to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of regions returned. (optional, default to 100)
-     * @param createdAt Date comparison for when resulting regions were created. (optional)
-     * @param updatedAt Date comparison for when resulting regions were updated. (optional)
+     * offset How many regions to skip in the result. (optional, default to 0)
+     * limit Limit the number of regions returned. (optional, default to 100)
+     * createdAt Date comparison for when resulting regions were created. (optional)
+     * updatedAt Date comparison for when resulting regions were updated. (optional)
      * @return StoreRegionsListRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreRegionsListRes getRegions(Integer offset, Integer limit, CreatedAt5 createdAt, UpdatedAt5 updatedAt) throws ApiException {
-        ApiResponse<StoreRegionsListRes> resp = getRegionsWithHttpInfo(offset, limit, createdAt, updatedAt);
-        return resp.getData();
-    }
-
-    /**
-     * List Regions
-     * Retrieves a list of Regions.
-     * @param offset How many regions to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of regions returned. (optional, default to 100)
-     * @param createdAt Date comparison for when resulting regions were created. (optional)
-     * @param updatedAt Date comparison for when resulting regions were updated. (optional)
-     * @return ApiResponse&lt;StoreRegionsListRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreRegionsListRes> getRegionsWithHttpInfo(Integer offset, Integer limit, CreatedAt5 createdAt, UpdatedAt5 updatedAt) throws ApiException {
-        com.squareup.okhttp.Call call = getRegionsValidateBeforeCall(offset, limit, createdAt, updatedAt, null, null);
-        Type localVarReturnType = new TypeToken<StoreRegionsListRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * List Regions (asynchronously)
-     * Retrieves a list of Regions.
-     * @param offset How many regions to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of regions returned. (optional, default to 100)
-     * @param createdAt Date comparison for when resulting regions were created. (optional)
-     * @param updatedAt Date comparison for when resulting regions were updated. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getRegionsAsync(Integer offset, Integer limit, CreatedAt5 createdAt, UpdatedAt5 updatedAt, final ApiCallback<StoreRegionsListRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getRegionsValidateBeforeCall(offset, limit, createdAt, updatedAt, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreRegionsListRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getRegionsRegion
-     * @param id The id of the Region. (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getRegionsRegionCall(String id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/regions/{id}"
-            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getRegionsRegionValidateBeforeCall(String id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'id' is set
-        if (id == null) {
-            throw new ApiException("Missing the required parameter 'id' when calling getRegionsRegion(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = getRegionsRegionCall(id, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public ListRegionsRequest getRegions() throws ApiException {
+        return new ListRegionsRequest(medusaSdkClient);
     }
 
     /**
@@ -269,56 +68,7 @@ public class RegionApi {
      * @return StoreRegionsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreRegionsRes getRegionsRegion(String id) throws ApiException {
-        ApiResponse<StoreRegionsRes> resp = getRegionsRegionWithHttpInfo(id);
-        return resp.getData();
-    }
-
-    /**
-     * Get a Region
-     * Retrieves a Region.
-     * @param id The id of the Region. (required)
-     * @return ApiResponse&lt;StoreRegionsRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreRegionsRes> getRegionsRegionWithHttpInfo(String id) throws ApiException {
-        com.squareup.okhttp.Call call = getRegionsRegionValidateBeforeCall(id, null, null);
-        Type localVarReturnType = new TypeToken<StoreRegionsRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get a Region (asynchronously)
-     * Retrieves a Region.
-     * @param id The id of the Region. (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getRegionsRegionAsync(String id, final ApiCallback<StoreRegionsRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getRegionsRegionValidateBeforeCall(id, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreRegionsRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public GetRegionRequest getRegion(String id) throws ApiException {
+        return new GetRegionRequest(medusaSdkClient, id);
     }
 }

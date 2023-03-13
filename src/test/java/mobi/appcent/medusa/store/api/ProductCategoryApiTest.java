@@ -12,8 +12,8 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StoreGetProductCategoriesCategoryRes;
-import mobi.appcent.medusa.store.model.StoreProductCategoriesListRes;
+import mobi.appcent.medusa.store.model.response.StoreGetProductCategoriesCategoryRes;
+import mobi.appcent.medusa.store.model.response.StoreProductCategoriesListRes;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -40,7 +40,7 @@ public class ProductCategoryApiTest {
         String parentCategoryId = null;
         Integer offset = null;
         Integer limit = null;
-        StoreProductCategoriesListRes response = api.getProductCategories(q, parentCategoryId, offset, limit);
+        StoreProductCategoriesListRes response = api.listProductCategories().execute().getData();
 
         // TODO: test validations
     }
@@ -57,7 +57,7 @@ public class ProductCategoryApiTest {
         String id = null;
         String expand = null;
         String fields = null;
-        StoreGetProductCategoriesCategoryRes response = api.getProductCategoriesCategory(id, expand, fields);
+        StoreGetProductCategoriesCategoryRes response = api.getProductCategoriesCategory(id).execute().getData();
 
         // TODO: test validations
     }

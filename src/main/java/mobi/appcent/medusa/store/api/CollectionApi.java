@@ -12,24 +12,20 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
+import mobi.appcent.medusa.store.MedusaSdkClient;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.CreatedAt;
-import mobi.appcent.medusa.store.model.StoreCollectionsListRes;
-import mobi.appcent.medusa.store.model.StoreCollectionsRes;
-import mobi.appcent.medusa.store.model.UpdatedAt;
+import mobi.appcent.medusa.store.model.request.collection.GetCollectionRequest;
+import mobi.appcent.medusa.store.model.request.collection.ListCollectionsRequest;
+import mobi.appcent.medusa.store.model.response.CreatedAt;
+import mobi.appcent.medusa.store.model.response.StoreCollectionsListRes;
+import mobi.appcent.medusa.store.model.response.StoreCollectionsRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -38,228 +34,32 @@ import java.util.List;
 import java.util.Map;
 
 public class CollectionApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public CollectionApi() {
-        this(Configuration.getDefaultApiClient());
+    public static CollectionApi getInstance() {
+        return new CollectionApi();
     }
 
-    public CollectionApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
-
-    /**
-     * Build call for getCollections
-     * @param offset The number of collections to skip before starting to collect the collections set (optional, default to 0)
-     * @param limit The number of collections to return (optional, default to 10)
-     * @param createdAt Date comparison for when resulting collections were created. (optional)
-     * @param updatedAt Date comparison for when resulting collections were updated. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getCollectionsCall(Integer offset, Integer limit, CreatedAt createdAt, UpdatedAt updatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/collections";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (offset != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
-        if (limit != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
-        if (createdAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("created_at", createdAt));
-        if (updatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("updated_at", updatedAt));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getCollectionsValidateBeforeCall(Integer offset, Integer limit, CreatedAt createdAt, UpdatedAt updatedAt, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = getCollectionsCall(offset, limit, createdAt, updatedAt, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
      * List Collections
      * Retrieve a list of Product Collection.
-     * @param offset The number of collections to skip before starting to collect the collections set (optional, default to 0)
-     * @param limit The number of collections to return (optional, default to 10)
-     * @param createdAt Date comparison for when resulting collections were created. (optional)
-     * @param updatedAt Date comparison for when resulting collections were updated. (optional)
+     * offset The number of collections to skip before starting to collect the collections set (optional, default to 0)
+     * limit The number of collections to return (optional, default to 10)
+     * createdAt Date comparison for when resulting collections were created. (optional)
+     * updatedAt Date comparison for when resulting collections were updated. (optional)
      * @return StoreCollectionsListRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreCollectionsListRes getCollections(Integer offset, Integer limit, CreatedAt createdAt, UpdatedAt updatedAt) throws ApiException {
-        ApiResponse<StoreCollectionsListRes> resp = getCollectionsWithHttpInfo(offset, limit, createdAt, updatedAt);
-        return resp.getData();
-    }
-
-    /**
-     * List Collections
-     * Retrieve a list of Product Collection.
-     * @param offset The number of collections to skip before starting to collect the collections set (optional, default to 0)
-     * @param limit The number of collections to return (optional, default to 10)
-     * @param createdAt Date comparison for when resulting collections were created. (optional)
-     * @param updatedAt Date comparison for when resulting collections were updated. (optional)
-     * @return ApiResponse&lt;StoreCollectionsListRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreCollectionsListRes> getCollectionsWithHttpInfo(Integer offset, Integer limit, CreatedAt createdAt, UpdatedAt updatedAt) throws ApiException {
-        com.squareup.okhttp.Call call = getCollectionsValidateBeforeCall(offset, limit, createdAt, updatedAt, null, null);
-        Type localVarReturnType = new TypeToken<StoreCollectionsListRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * List Collections (asynchronously)
-     * Retrieve a list of Product Collection.
-     * @param offset The number of collections to skip before starting to collect the collections set (optional, default to 0)
-     * @param limit The number of collections to return (optional, default to 10)
-     * @param createdAt Date comparison for when resulting collections were created. (optional)
-     * @param updatedAt Date comparison for when resulting collections were updated. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getCollectionsAsync(Integer offset, Integer limit, CreatedAt createdAt, UpdatedAt updatedAt, final ApiCallback<StoreCollectionsListRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getCollectionsValidateBeforeCall(offset, limit, createdAt, updatedAt, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreCollectionsListRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getCollectionsCollection
-     * @param id The id of the Product Collection (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getCollectionsCollectionCall(String id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/collections/{id}"
-            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getCollectionsCollectionValidateBeforeCall(String id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'id' is set
-        if (id == null) {
-            throw new ApiException("Missing the required parameter 'id' when calling getCollectionsCollection(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = getCollectionsCollectionCall(id, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public ListCollectionsRequest getCollections() throws ApiException {
+        return new ListCollectionsRequest(medusaSdkClient);
     }
 
     /**
@@ -269,56 +69,7 @@ public class CollectionApi {
      * @return StoreCollectionsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreCollectionsRes getCollectionsCollection(String id) throws ApiException {
-        ApiResponse<StoreCollectionsRes> resp = getCollectionsCollectionWithHttpInfo(id);
-        return resp.getData();
-    }
-
-    /**
-     * Get a Collection
-     * Retrieves a Product Collection.
-     * @param id The id of the Product Collection (required)
-     * @return ApiResponse&lt;StoreCollectionsRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreCollectionsRes> getCollectionsCollectionWithHttpInfo(String id) throws ApiException {
-        com.squareup.okhttp.Call call = getCollectionsCollectionValidateBeforeCall(id, null, null);
-        Type localVarReturnType = new TypeToken<StoreCollectionsRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get a Collection (asynchronously)
-     * Retrieves a Product Collection.
-     * @param id The id of the Product Collection (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getCollectionsCollectionAsync(String id, final ApiCallback<StoreCollectionsRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getCollectionsCollectionValidateBeforeCall(id, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreCollectionsRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public GetCollectionRequest getCollectionsCollection(String id) throws ApiException {
+        return new GetCollectionRequest(medusaSdkClient, id);
     }
 }

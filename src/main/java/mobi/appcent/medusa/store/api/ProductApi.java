@@ -12,26 +12,23 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
+import mobi.appcent.medusa.store.MedusaSdkClient;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.CreatedAt4;
-import mobi.appcent.medusa.store.model.Id;
-import mobi.appcent.medusa.store.model.StorePostSearchRes;
-import mobi.appcent.medusa.store.model.StoreProductsListRes;
-import mobi.appcent.medusa.store.model.StoreProductsRes;
-import mobi.appcent.medusa.store.model.UpdatedAt4;
+import mobi.appcent.medusa.store.model.request.product.GetProductRequest;
+import mobi.appcent.medusa.store.model.request.product.ListProductsRequest;
+import mobi.appcent.medusa.store.model.request.product.SearchProductsRequest;
+import mobi.appcent.medusa.store.model.response.CreatedAt4;
+import mobi.appcent.medusa.store.model.response.Id;
+import mobi.appcent.medusa.store.model.response.StorePostSearchRes;
+import mobi.appcent.medusa.store.model.response.StoreProductsListRes;
+import mobi.appcent.medusa.store.model.response.StoreProductsRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt4;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -40,569 +37,79 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public ProductApi() {
-        this(Configuration.getDefaultApiClient());
+    public static ProductApi getInstance() {
+        return new ProductApi();
     }
 
-    public ProductApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
-
-    /**
-     * Build call for getProducts
-     * @param q Query used for searching products by title, description, variant&#x27;s title, variant&#x27;s sku, and collection&#x27;s title (optional)
-     * @param id product IDs to search for. (optional)
-     * @param salesChannelId an array of sales channel IDs to filter the retrieved products by. (optional)
-     * @param collectionId Collection IDs to search for (optional)
-     * @param typeId Type IDs to search for (optional)
-     * @param tags Tag IDs to search for (optional)
-     * @param title title to search for. (optional)
-     * @param description description to search for. (optional)
-     * @param handle handle to search for. (optional)
-     * @param isGiftcard Search for giftcards using is_giftcard&#x3D;true. (optional)
-     * @param createdAt Date comparison for when resulting products were created. (optional)
-     * @param updatedAt Date comparison for when resulting products were updated. (optional)
-     * @param categoryId Category ids to filter by. (optional)
-     * @param includeCategoryChildren Include category children when filtering by category_id. (optional)
-     * @param offset How many products to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of products returned. (optional, default to 100)
-     * @param expand (Comma separated) Which fields should be expanded in each product of the result. (optional)
-     * @param fields (Comma separated) Which fields should be included in each product of the result. (optional)
-     * @param order the field used to order the products. (optional)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The currency code to use for price selection. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getProductsCall(String q, Id id, List<String> salesChannelId, List<String> collectionId, List<String> typeId, List<String> tags, String title, String description, String handle, Boolean isGiftcard, CreatedAt4 createdAt, UpdatedAt4 updatedAt, List<String> categoryId, Boolean includeCategoryChildren, Integer offset, Integer limit, String expand, String fields, String order, String cartId, String regionId, String currencyCode, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/products";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (q != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("q", q));
-        if (id != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("id", id));
-        if (salesChannelId != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "sales_channel_id", salesChannelId));
-        if (collectionId != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "collection_id", collectionId));
-        if (typeId != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "type_id", typeId));
-        if (tags != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "tags", tags));
-        if (title != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("title", title));
-        if (description != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("description", description));
-        if (handle != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("handle", handle));
-        if (isGiftcard != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("is_giftcard", isGiftcard));
-        if (createdAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("created_at", createdAt));
-        if (updatedAt != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("updated_at", updatedAt));
-        if (categoryId != null)
-        localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("csv", "category_id", categoryId));
-        if (includeCategoryChildren != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("include_category_children", includeCategoryChildren));
-        if (offset != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
-        if (limit != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
-        if (expand != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("expand", expand));
-        if (fields != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("fields", fields));
-        if (order != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("order", order));
-        if (cartId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("cart_id", cartId));
-        if (regionId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("region_id", regionId));
-        if (currencyCode != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("currency_code", currencyCode));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getProductsValidateBeforeCall(String q, Id id, List<String> salesChannelId, List<String> collectionId, List<String> typeId, List<String> tags, String title, String description, String handle, Boolean isGiftcard, CreatedAt4 createdAt, UpdatedAt4 updatedAt, List<String> categoryId, Boolean includeCategoryChildren, Integer offset, Integer limit, String expand, String fields, String order, String cartId, String regionId, String currencyCode, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = getProductsCall(q, id, salesChannelId, collectionId, typeId, tags, title, description, handle, isGiftcard, createdAt, updatedAt, categoryId, includeCategoryChildren, offset, limit, expand, fields, order, cartId, regionId, currencyCode, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
      * List Products
      * Retrieves a list of Products.
-     * @param q Query used for searching products by title, description, variant&#x27;s title, variant&#x27;s sku, and collection&#x27;s title (optional)
-     * @param id product IDs to search for. (optional)
-     * @param salesChannelId an array of sales channel IDs to filter the retrieved products by. (optional)
-     * @param collectionId Collection IDs to search for (optional)
-     * @param typeId Type IDs to search for (optional)
-     * @param tags Tag IDs to search for (optional)
-     * @param title title to search for. (optional)
-     * @param description description to search for. (optional)
-     * @param handle handle to search for. (optional)
-     * @param isGiftcard Search for giftcards using is_giftcard&#x3D;true. (optional)
-     * @param createdAt Date comparison for when resulting products were created. (optional)
-     * @param updatedAt Date comparison for when resulting products were updated. (optional)
-     * @param categoryId Category ids to filter by. (optional)
-     * @param includeCategoryChildren Include category children when filtering by category_id. (optional)
-     * @param offset How many products to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of products returned. (optional, default to 100)
-     * @param expand (Comma separated) Which fields should be expanded in each product of the result. (optional)
-     * @param fields (Comma separated) Which fields should be included in each product of the result. (optional)
-     * @param order the field used to order the products. (optional)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The currency code to use for price selection. (optional)
+     * q Query used for searching products by title, description, variant&#x27;s title, variant&#x27;s sku, and collection&#x27;s title (optional)
+     * id product IDs to search for. (optional)
+     * salesChannelId an array of sales channel IDs to filter the retrieved products by. (optional)
+     * collectionId Collection IDs to search for (optional)
+     * typeId Type IDs to search for (optional)
+     * tags Tag IDs to search for (optional)
+     * title title to search for. (optional)
+     * description description to search for. (optional)
+     * handle handle to search for. (optional)
+     * isGiftcard Search for giftcards using is_giftcard&#x3D;true. (optional)
+     * createdAt Date comparison for when resulting products were created. (optional)
+     * updatedAt Date comparison for when resulting products were updated. (optional)
+     * categoryId Category ids to filter by. (optional)
+     * includeCategoryChildren Include category children when filtering by category_id. (optional)
+     * offset How many products to skip in the result. (optional, default to 0)
+     * limit Limit the number of products returned. (optional, default to 100)
+     * expand (Comma separated) Which fields should be expanded in each product of the result. (optional)
+     * fields (Comma separated) Which fields should be included in each product of the result. (optional)
+     * order the field used to order the products. (optional)
+     * cartId The id of the Cart to set prices based on. (optional)
+     * regionId The id of the Region to set prices based on. (optional)
+     * currencyCode The currency code to use for price selection. (optional)
      * @return StoreProductsListRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreProductsListRes getProducts(String q, Id id, List<String> salesChannelId, List<String> collectionId, List<String> typeId, List<String> tags, String title, String description, String handle, Boolean isGiftcard, CreatedAt4 createdAt, UpdatedAt4 updatedAt, List<String> categoryId, Boolean includeCategoryChildren, Integer offset, Integer limit, String expand, String fields, String order, String cartId, String regionId, String currencyCode) throws ApiException {
-        ApiResponse<StoreProductsListRes> resp = getProductsWithHttpInfo(q, id, salesChannelId, collectionId, typeId, tags, title, description, handle, isGiftcard, createdAt, updatedAt, categoryId, includeCategoryChildren, offset, limit, expand, fields, order, cartId, regionId, currencyCode);
-        return resp.getData();
-    }
-
-    /**
-     * List Products
-     * Retrieves a list of Products.
-     * @param q Query used for searching products by title, description, variant&#x27;s title, variant&#x27;s sku, and collection&#x27;s title (optional)
-     * @param id product IDs to search for. (optional)
-     * @param salesChannelId an array of sales channel IDs to filter the retrieved products by. (optional)
-     * @param collectionId Collection IDs to search for (optional)
-     * @param typeId Type IDs to search for (optional)
-     * @param tags Tag IDs to search for (optional)
-     * @param title title to search for. (optional)
-     * @param description description to search for. (optional)
-     * @param handle handle to search for. (optional)
-     * @param isGiftcard Search for giftcards using is_giftcard&#x3D;true. (optional)
-     * @param createdAt Date comparison for when resulting products were created. (optional)
-     * @param updatedAt Date comparison for when resulting products were updated. (optional)
-     * @param categoryId Category ids to filter by. (optional)
-     * @param includeCategoryChildren Include category children when filtering by category_id. (optional)
-     * @param offset How many products to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of products returned. (optional, default to 100)
-     * @param expand (Comma separated) Which fields should be expanded in each product of the result. (optional)
-     * @param fields (Comma separated) Which fields should be included in each product of the result. (optional)
-     * @param order the field used to order the products. (optional)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The currency code to use for price selection. (optional)
-     * @return ApiResponse&lt;StoreProductsListRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreProductsListRes> getProductsWithHttpInfo(String q, Id id, List<String> salesChannelId, List<String> collectionId, List<String> typeId, List<String> tags, String title, String description, String handle, Boolean isGiftcard, CreatedAt4 createdAt, UpdatedAt4 updatedAt, List<String> categoryId, Boolean includeCategoryChildren, Integer offset, Integer limit, String expand, String fields, String order, String cartId, String regionId, String currencyCode) throws ApiException {
-        com.squareup.okhttp.Call call = getProductsValidateBeforeCall(q, id, salesChannelId, collectionId, typeId, tags, title, description, handle, isGiftcard, createdAt, updatedAt, categoryId, includeCategoryChildren, offset, limit, expand, fields, order, cartId, regionId, currencyCode, null, null);
-        Type localVarReturnType = new TypeToken<StoreProductsListRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * List Products (asynchronously)
-     * Retrieves a list of Products.
-     * @param q Query used for searching products by title, description, variant&#x27;s title, variant&#x27;s sku, and collection&#x27;s title (optional)
-     * @param id product IDs to search for. (optional)
-     * @param salesChannelId an array of sales channel IDs to filter the retrieved products by. (optional)
-     * @param collectionId Collection IDs to search for (optional)
-     * @param typeId Type IDs to search for (optional)
-     * @param tags Tag IDs to search for (optional)
-     * @param title title to search for. (optional)
-     * @param description description to search for. (optional)
-     * @param handle handle to search for. (optional)
-     * @param isGiftcard Search for giftcards using is_giftcard&#x3D;true. (optional)
-     * @param createdAt Date comparison for when resulting products were created. (optional)
-     * @param updatedAt Date comparison for when resulting products were updated. (optional)
-     * @param categoryId Category ids to filter by. (optional)
-     * @param includeCategoryChildren Include category children when filtering by category_id. (optional)
-     * @param offset How many products to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of products returned. (optional, default to 100)
-     * @param expand (Comma separated) Which fields should be expanded in each product of the result. (optional)
-     * @param fields (Comma separated) Which fields should be included in each product of the result. (optional)
-     * @param order the field used to order the products. (optional)
-     * @param cartId The id of the Cart to set prices based on. (optional)
-     * @param regionId The id of the Region to set prices based on. (optional)
-     * @param currencyCode The currency code to use for price selection. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getProductsAsync(String q, Id id, List<String> salesChannelId, List<String> collectionId, List<String> typeId, List<String> tags, String title, String description, String handle, Boolean isGiftcard, CreatedAt4 createdAt, UpdatedAt4 updatedAt, List<String> categoryId, Boolean includeCategoryChildren, Integer offset, Integer limit, String expand, String fields, String order, String cartId, String regionId, String currencyCode, final ApiCallback<StoreProductsListRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getProductsValidateBeforeCall(q, id, salesChannelId, collectionId, typeId, tags, title, description, handle, isGiftcard, createdAt, updatedAt, categoryId, includeCategoryChildren, offset, limit, expand, fields, order, cartId, regionId, currencyCode, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreProductsListRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getProductsProduct
-     * @param id The id of the Product. (required)
-     * @param salesChannelId The sales channel used when fetching the product. (optional)
-     * @param cartId The ID of the customer&#x27;s cart. (optional)
-     * @param regionId The ID of the region the customer is using. This is helpful to ensure correct prices are retrieved for a region. (optional)
-     * @param fields (Comma separated) Which fields should be included in the result. (optional)
-     * @param expand (Comma separated) Which fields should be expanded in each product of the result. (optional)
-     * @param currencyCode The 3 character ISO currency code to set prices based on. This is helpful to ensure correct prices are retrieved for a currency. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getProductsProductCall(String id, String salesChannelId, String cartId, String regionId, String fields, String expand, String currencyCode, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/products/{id}"
-            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (salesChannelId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("sales_channel_id", salesChannelId));
-        if (cartId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("cart_id", cartId));
-        if (regionId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("region_id", regionId));
-        if (fields != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("fields", fields));
-        if (expand != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("expand", expand));
-        if (currencyCode != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("currency_code", currencyCode));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getProductsProductValidateBeforeCall(String id, String salesChannelId, String cartId, String regionId, String fields, String expand, String currencyCode, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'id' is set
-        if (id == null) {
-            throw new ApiException("Missing the required parameter 'id' when calling getProductsProduct(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = getProductsProductCall(id, salesChannelId, cartId, regionId, fields, expand, currencyCode, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public ListProductsRequest listProducts() throws ApiException {
+        return new ListProductsRequest(medusaSdkClient);
     }
 
     /**
      * Get a Product
      * Retrieves a Product.
      * @param id The id of the Product. (required)
-     * @param salesChannelId The sales channel used when fetching the product. (optional)
-     * @param cartId The ID of the customer&#x27;s cart. (optional)
-     * @param regionId The ID of the region the customer is using. This is helpful to ensure correct prices are retrieved for a region. (optional)
-     * @param fields (Comma separated) Which fields should be included in the result. (optional)
-     * @param expand (Comma separated) Which fields should be expanded in each product of the result. (optional)
-     * @param currencyCode The 3 character ISO currency code to set prices based on. This is helpful to ensure correct prices are retrieved for a currency. (optional)
+     * salesChannelId The sales channel used when fetching the product. (optional)
+     * cartId The ID of the customer&#x27;s cart. (optional)
+     * regionId The ID of the region the customer is using. This is helpful to ensure correct prices are retrieved for a region. (optional)
+     * fields (Comma separated) Which fields should be included in the result. (optional)
+     * expand (Comma separated) Which fields should be expanded in each product of the result. (optional)
+     * currencyCode The 3 character ISO currency code to set prices based on. This is helpful to ensure correct prices are retrieved for a currency. (optional)
      * @return StoreProductsRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreProductsRes getProductsProduct(String id, String salesChannelId, String cartId, String regionId, String fields, String expand, String currencyCode) throws ApiException {
-        ApiResponse<StoreProductsRes> resp = getProductsProductWithHttpInfo(id, salesChannelId, cartId, regionId, fields, expand, currencyCode);
-        return resp.getData();
-    }
-
-    /**
-     * Get a Product
-     * Retrieves a Product.
-     * @param id The id of the Product. (required)
-     * @param salesChannelId The sales channel used when fetching the product. (optional)
-     * @param cartId The ID of the customer&#x27;s cart. (optional)
-     * @param regionId The ID of the region the customer is using. This is helpful to ensure correct prices are retrieved for a region. (optional)
-     * @param fields (Comma separated) Which fields should be included in the result. (optional)
-     * @param expand (Comma separated) Which fields should be expanded in each product of the result. (optional)
-     * @param currencyCode The 3 character ISO currency code to set prices based on. This is helpful to ensure correct prices are retrieved for a currency. (optional)
-     * @return ApiResponse&lt;StoreProductsRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreProductsRes> getProductsProductWithHttpInfo(String id, String salesChannelId, String cartId, String regionId, String fields, String expand, String currencyCode) throws ApiException {
-        com.squareup.okhttp.Call call = getProductsProductValidateBeforeCall(id, salesChannelId, cartId, regionId, fields, expand, currencyCode, null, null);
-        Type localVarReturnType = new TypeToken<StoreProductsRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get a Product (asynchronously)
-     * Retrieves a Product.
-     * @param id The id of the Product. (required)
-     * @param salesChannelId The sales channel used when fetching the product. (optional)
-     * @param cartId The ID of the customer&#x27;s cart. (optional)
-     * @param regionId The ID of the region the customer is using. This is helpful to ensure correct prices are retrieved for a region. (optional)
-     * @param fields (Comma separated) Which fields should be included in the result. (optional)
-     * @param expand (Comma separated) Which fields should be expanded in each product of the result. (optional)
-     * @param currencyCode The 3 character ISO currency code to set prices based on. This is helpful to ensure correct prices are retrieved for a currency. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getProductsProductAsync(String id, String salesChannelId, String cartId, String regionId, String fields, String expand, String currencyCode, final ApiCallback<StoreProductsRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getProductsProductValidateBeforeCall(id, salesChannelId, cartId, regionId, fields, expand, currencyCode, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreProductsRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for postProductsSearch
-     * @param q The query to run the search with. (required)
-     * @param offset How many products to skip in the result. (optional)
-     * @param limit Limit the number of products returned. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call postProductsSearchCall(String q, Integer offset, Integer limit, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/products/search";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (q != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("q", q));
-        if (offset != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
-        if (limit != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call postProductsSearchValidateBeforeCall(String q, Integer offset, Integer limit, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'q' is set
-        if (q == null) {
-            throw new ApiException("Missing the required parameter 'q' when calling postProductsSearch(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = postProductsSearchCall(q, offset, limit, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public GetProductRequest getProduct(String id) throws ApiException {
+        return new GetProductRequest(medusaSdkClient, id);
     }
 
     /**
      * Search Products
      * Run a search query on products using the search engine installed on Medusa
      * @param q The query to run the search with. (required)
-     * @param offset How many products to skip in the result. (optional)
-     * @param limit Limit the number of products returned. (optional)
+     * offset How many products to skip in the result. (optional)
+     * limit Limit the number of products returned. (optional)
      * @return StorePostSearchRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StorePostSearchRes postProductsSearch(String q, Integer offset, Integer limit) throws ApiException {
-        ApiResponse<StorePostSearchRes> resp = postProductsSearchWithHttpInfo(q, offset, limit);
-        return resp.getData();
-    }
-
-    /**
-     * Search Products
-     * Run a search query on products using the search engine installed on Medusa
-     * @param q The query to run the search with. (required)
-     * @param offset How many products to skip in the result. (optional)
-     * @param limit Limit the number of products returned. (optional)
-     * @return ApiResponse&lt;StorePostSearchRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StorePostSearchRes> postProductsSearchWithHttpInfo(String q, Integer offset, Integer limit) throws ApiException {
-        com.squareup.okhttp.Call call = postProductsSearchValidateBeforeCall(q, offset, limit, null, null);
-        Type localVarReturnType = new TypeToken<StorePostSearchRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Search Products (asynchronously)
-     * Run a search query on products using the search engine installed on Medusa
-     * @param q The query to run the search with. (required)
-     * @param offset How many products to skip in the result. (optional)
-     * @param limit Limit the number of products returned. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call postProductsSearchAsync(String q, Integer offset, Integer limit, final ApiCallback<StorePostSearchRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = postProductsSearchValidateBeforeCall(q, offset, limit, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StorePostSearchRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public SearchProductsRequest postProductsSearch(String q) throws ApiException {
+        return new SearchProductsRequest(medusaSdkClient, q);
     }
 }

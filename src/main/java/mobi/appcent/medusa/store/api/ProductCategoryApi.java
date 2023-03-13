@@ -12,22 +12,18 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
+import mobi.appcent.medusa.store.MedusaSdkClient;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.StoreGetProductCategoriesCategoryRes;
-import mobi.appcent.medusa.store.model.StoreProductCategoriesListRes;
+import mobi.appcent.medusa.store.model.request.productcategory.GetProductCategoryRequest;
+import mobi.appcent.medusa.store.model.request.productcategory.ListProductCategoriesRequest;
+import mobi.appcent.medusa.store.model.response.StoreGetProductCategoriesCategoryRes;
+import mobi.appcent.medusa.store.model.response.StoreProductCategoriesListRes;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -36,299 +32,44 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductCategoryApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public ProductCategoryApi() {
-        this(Configuration.getDefaultApiClient());
+    public static ProductCategoryApi getInstance() {
+        return new ProductCategoryApi();
     }
 
-    public ProductCategoryApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
-
-    /**
-     * Build call for getProductCategories
-     * @param q Query used for searching product category names orhandles. (optional)
-     * @param parentCategoryId Returns categories scoped by parent (optional)
-     * @param offset How many product categories to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of product categories returned. (optional, default to 100)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getProductCategoriesCall(String q, String parentCategoryId, Integer offset, Integer limit, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/product-categories";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (q != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("q", q));
-        if (parentCategoryId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("parent_category_id", parentCategoryId));
-        if (offset != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
-        if (limit != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json", "text/plain"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "cookie_auth" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getProductCategoriesValidateBeforeCall(String q, String parentCategoryId, Integer offset, Integer limit, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = getProductCategoriesCall(q, parentCategoryId, offset, limit, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
      * List Product Categories
      * Retrieve a list of product categories.
-     * @param q Query used for searching product category names orhandles. (optional)
-     * @param parentCategoryId Returns categories scoped by parent (optional)
-     * @param offset How many product categories to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of product categories returned. (optional, default to 100)
+     * q Query used for searching product category names orhandles. (optional)
+     * parentCategoryId Returns categories scoped by parent (optional)
+     * offset How many product categories to skip in the result. (optional, default to 0)
+     * limit Limit the number of product categories returned. (optional, default to 100)
      * @return StoreProductCategoriesListRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreProductCategoriesListRes getProductCategories(String q, String parentCategoryId, Integer offset, Integer limit) throws ApiException {
-        ApiResponse<StoreProductCategoriesListRes> resp = getProductCategoriesWithHttpInfo(q, parentCategoryId, offset, limit);
-        return resp.getData();
-    }
-
-    /**
-     * List Product Categories
-     * Retrieve a list of product categories.
-     * @param q Query used for searching product category names orhandles. (optional)
-     * @param parentCategoryId Returns categories scoped by parent (optional)
-     * @param offset How many product categories to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of product categories returned. (optional, default to 100)
-     * @return ApiResponse&lt;StoreProductCategoriesListRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreProductCategoriesListRes> getProductCategoriesWithHttpInfo(String q, String parentCategoryId, Integer offset, Integer limit) throws ApiException {
-        com.squareup.okhttp.Call call = getProductCategoriesValidateBeforeCall(q, parentCategoryId, offset, limit, null, null);
-        Type localVarReturnType = new TypeToken<StoreProductCategoriesListRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * List Product Categories (asynchronously)
-     * Retrieve a list of product categories.
-     * @param q Query used for searching product category names orhandles. (optional)
-     * @param parentCategoryId Returns categories scoped by parent (optional)
-     * @param offset How many product categories to skip in the result. (optional, default to 0)
-     * @param limit Limit the number of product categories returned. (optional, default to 100)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getProductCategoriesAsync(String q, String parentCategoryId, Integer offset, Integer limit, final ApiCallback<StoreProductCategoriesListRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getProductCategoriesValidateBeforeCall(q, parentCategoryId, offset, limit, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreProductCategoriesListRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
-     * Build call for getProductCategoriesCategory
-     * @param id The ID of the Product Category (required)
-     * @param expand (Comma separated) Which fields should be expanded in each product category. (optional)
-     * @param fields (Comma separated) Which fields should be retrieved in each product category. (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call getProductCategoriesCategoryCall(String id, String expand, String fields, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
-        
-        // create path and map variables
-        String localVarPath = "/product-categories/{id}"
-            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (expand != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("expand", expand));
-        if (fields != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("fields", fields));
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json", "text/plain"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "cookie_auth" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getProductCategoriesCategoryValidateBeforeCall(String id, String expand, String fields, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        // verify the required parameter 'id' is set
-        if (id == null) {
-            throw new ApiException("Missing the required parameter 'id' when calling getProductCategoriesCategory(Async)");
-        }
-        
-        com.squareup.okhttp.Call call = getProductCategoriesCategoryCall(id, expand, fields, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public ListProductCategoriesRequest listProductCategories() throws ApiException {
+        return new ListProductCategoriesRequest(medusaSdkClient);
     }
 
     /**
      * Get a Product Category
      * Retrieves a Product Category.
      * @param id The ID of the Product Category (required)
-     * @param expand (Comma separated) Which fields should be expanded in each product category. (optional)
-     * @param fields (Comma separated) Which fields should be retrieved in each product category. (optional)
+     * expand (Comma separated) Which fields should be expanded in each product category. (optional)
+     * fields (Comma separated) Which fields should be retrieved in each product category. (optional)
      * @return StoreGetProductCategoriesCategoryRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public StoreGetProductCategoriesCategoryRes getProductCategoriesCategory(String id, String expand, String fields) throws ApiException {
-        ApiResponse<StoreGetProductCategoriesCategoryRes> resp = getProductCategoriesCategoryWithHttpInfo(id, expand, fields);
-        return resp.getData();
-    }
-
-    /**
-     * Get a Product Category
-     * Retrieves a Product Category.
-     * @param id The ID of the Product Category (required)
-     * @param expand (Comma separated) Which fields should be expanded in each product category. (optional)
-     * @param fields (Comma separated) Which fields should be retrieved in each product category. (optional)
-     * @return ApiResponse&lt;StoreGetProductCategoriesCategoryRes&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<StoreGetProductCategoriesCategoryRes> getProductCategoriesCategoryWithHttpInfo(String id, String expand, String fields) throws ApiException {
-        com.squareup.okhttp.Call call = getProductCategoriesCategoryValidateBeforeCall(id, expand, fields, null, null);
-        Type localVarReturnType = new TypeToken<StoreGetProductCategoriesCategoryRes>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Get a Product Category (asynchronously)
-     * Retrieves a Product Category.
-     * @param id The ID of the Product Category (required)
-     * @param expand (Comma separated) Which fields should be expanded in each product category. (optional)
-     * @param fields (Comma separated) Which fields should be retrieved in each product category. (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call getProductCategoriesCategoryAsync(String id, String expand, String fields, final ApiCallback<StoreGetProductCategoriesCategoryRes> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = getProductCategoriesCategoryValidateBeforeCall(id, expand, fields, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StoreGetProductCategoriesCategoryRes>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
+    public GetProductCategoryRequest getProductCategoriesCategory(String id) throws ApiException {
+        return new GetProductCategoryRequest(medusaSdkClient, id);
     }
 }

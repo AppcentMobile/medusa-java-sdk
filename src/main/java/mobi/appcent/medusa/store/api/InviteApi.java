@@ -12,19 +12,14 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.ApiCallback;
-import mobi.appcent.medusa.store.ApiClient;
-import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.ApiResponse;
-import mobi.appcent.medusa.store.Configuration;
-import mobi.appcent.medusa.store.Pair;
-import mobi.appcent.medusa.store.ProgressRequestBody;
-import mobi.appcent.medusa.store.ProgressResponseBody;
+import mobi.appcent.medusa.store.*;
+import mobi.appcent.medusa.store.MedusaSdkClient;
 
 import java.io.IOException;
 
 
-import mobi.appcent.medusa.store.model.StorePostCustomersCustomerOrderClaimReq;
+import mobi.appcent.medusa.store.model.request.invite.ClaimOrderRequest;
+import mobi.appcent.medusa.store.model.response.StorePostCustomersCustomerOrderClaimReq;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,138 +27,28 @@ import java.util.List;
 import java.util.Map;
 
 public class InviteApi {
-    private ApiClient apiClient;
+    private MedusaSdkClient medusaSdkClient;
 
-    public InviteApi() {
-        this(Configuration.getDefaultApiClient());
+    public static InviteApi getInstance() {
+        return new InviteApi();
     }
 
-    public InviteApi(ApiClient apiClient) {
-        this.apiClient = apiClient;
+    public MedusaSdkClient getApiClient() {
+        return medusaSdkClient;
     }
 
-    public ApiClient getApiClient() {
-        return apiClient;
-    }
-
-    public void setApiClient(ApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
-
-    /**
-     * Build call for postOrdersCustomerOrderClaim
-     * @param body  (optional)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call postOrdersCustomerOrderClaimCall(StorePostCustomersCustomerOrderClaimReq body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = body;
-        
-        // create path and map variables
-        String localVarPath = "/orders/batch/customer/token";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json", "text/plain"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] { "cookie_auth" };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-    
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call postOrdersCustomerOrderClaimValidateBeforeCall(StorePostCustomersCustomerOrderClaimReq body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        com.squareup.okhttp.Call call = postOrdersCustomerOrderClaimCall(body, progressListener, progressRequestListener);
-        return call;
-
-        
-        
-        
-        
+    public void setApiClient(MedusaSdkClient medusaSdkClient) {
+        this.medusaSdkClient = medusaSdkClient;
     }
 
     /**
      * Claim an Order
      * Sends an email to emails registered to orders provided with link to transfer order ownership
-     * @param body  (optional)
+     * body  (optional)
+     * @return ClaimOrderRequest
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void postOrdersCustomerOrderClaim(StorePostCustomersCustomerOrderClaimReq body) throws ApiException {
-        postOrdersCustomerOrderClaimWithHttpInfo(body);
-    }
-
-    /**
-     * Claim an Order
-     * Sends an email to emails registered to orders provided with link to transfer order ownership
-     * @param body  (optional)
-     * @return ApiResponse&lt;Void&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<Void> postOrdersCustomerOrderClaimWithHttpInfo(StorePostCustomersCustomerOrderClaimReq body) throws ApiException {
-        com.squareup.okhttp.Call call = postOrdersCustomerOrderClaimValidateBeforeCall(body, null, null);
-        return apiClient.execute(call);
-    }
-
-    /**
-     * Claim an Order (asynchronously)
-     * Sends an email to emails registered to orders provided with link to transfer order ownership
-     * @param body  (optional)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call postOrdersCustomerOrderClaimAsync(StorePostCustomersCustomerOrderClaimReq body, final ApiCallback<Void> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = postOrdersCustomerOrderClaimValidateBeforeCall(body, progressListener, progressRequestListener);
-        apiClient.executeAsync(call, callback);
-        return call;
+    public ClaimOrderRequest claimOrder() throws ApiException {
+        return new ClaimOrderRequest(medusaSdkClient);
     }
 }

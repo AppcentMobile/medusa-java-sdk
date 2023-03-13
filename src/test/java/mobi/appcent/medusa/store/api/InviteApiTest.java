@@ -12,7 +12,7 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.StorePostCustomersCustomerOrderClaimReq;
+import mobi.appcent.medusa.store.model.response.StorePostCustomersCustomerOrderClaimReq;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -36,7 +36,7 @@ public class InviteApiTest {
     @Test
     public void postOrdersCustomerOrderClaimTest() throws Exception {
         StorePostCustomersCustomerOrderClaimReq body = null;
-        api.postOrdersCustomerOrderClaim(body);
+        api.claimOrder().execute();
 
         // TODO: test validations
     }

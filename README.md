@@ -120,7 +120,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/medusa-java-client-1.0.0.jar`
+* `target/medusa-java-sdk-1.0.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -128,19 +128,18 @@ Then manually install the following JARs:
 Please follow the [installation](#installation) instruction and execute the following Java code:
 
 ```java
-import mobi.appcent.medusa.store.ApiClient;
+import mobi.appcent.medusa.store.MedusaSdkClient;
 import mobi.appcent.medusa.store.ApiException;
-import mobi.appcent.medusa.store.Configuration;
 import mobi.appcent.medusa.store.api.AuthApi;
 import mobi.appcent.medusa.store.auth.ApiKeyAuth;
-import mobi.appcent.medusa.store.model.StoreAuthRes;
-import mobi.appcent.medusa.store.model.StoreGetAuthEmailRes;
-import mobi.appcent.medusa.store.model.StorePostAuthReq;
+import mobi.appcent.medusa.store.model.response.StoreAuthRes;
+import mobi.appcent.medusa.store.model.response.StoreGetAuthEmailRes;
+import mobi.appcent.medusa.store.model.response.StorePostAuthReq;
 
 public class AuthApiExample {
 
   public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    MedusaSdkClient defaultClient = Configuration.getDefaultApiClient();
 
     // Configure API key authorization: cookie_auth
     ApiKeyAuth cookie_auth = (ApiKeyAuth) defaultClient.getAuthentication("cookie_auth");
@@ -157,18 +156,18 @@ public class AuthApiExample {
     }
   }
 }
-import  mobi.appcent.medusa.store.*;
-import  mobi.appcent.medusa.store.auth.*;
-import  mobi.appcent.medusa.store.model.*;
-import  mobi.appcent.medusa.store.api.AuthApi;
+import mobi.appcent.medusa.store.*;
+        import mobi.appcent.medusa.store.auth.*;
+        import mobi.appcent.medusa.store.model.*;
+        import mobi.appcent.medusa.store.api.AuthApi;
 
-import java.io.File;
-import java.util.*;
+        import java.io.File;
+        import java.util.*;
 
 public class AuthApiExample {
 
   public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    MedusaSdkClient defaultClient = Configuration.getDefaultApiClient();
 
     // Configure API key authorization: cookie_auth
     ApiKeyAuth cookie_auth = (ApiKeyAuth) defaultClient.getAuthentication("cookie_auth");
@@ -186,13 +185,13 @@ public class AuthApiExample {
     }
   }
 }
-import  mobi.appcent.medusa.store.*;
-import  mobi.appcent.medusa.store.auth.*;
-import  mobi.appcent.medusa.store.model.*;
-import  mobi.appcent.medusa.store.api.AuthApi;
+import mobi.appcent.medusa.store.*;
+        import mobi.appcent.medusa.store.auth.*;
+        import mobi.appcent.medusa.store.model.*;
+        import mobi.appcent.medusa.store.api.AuthApi;
 
-import java.io.File;
-import java.util.*;
+        import java.io.File;
+        import java.util.*;
 
 public class AuthApiExample {
 
@@ -209,13 +208,13 @@ public class AuthApiExample {
     }
   }
 }
-import  mobi.appcent.medusa.store.*;
-import  mobi.appcent.medusa.store.auth.*;
-import  mobi.appcent.medusa.store.model.*;
-import  mobi.appcent.medusa.store.api.AuthApi;
+import mobi.appcent.medusa.store.*;
+        import mobi.appcent.medusa.store.auth.*;
+        import mobi.appcent.medusa.store.model.*;
+        import mobi.appcent.medusa.store.api.AuthApi;
 
-import java.io.File;
-import java.util.*;
+        import java.io.File;
+        import java.util.*;
 
 public class AuthApiExample {
 

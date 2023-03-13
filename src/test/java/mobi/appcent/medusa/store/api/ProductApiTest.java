@@ -12,12 +12,12 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.CreatedAt4;
-import mobi.appcent.medusa.store.model.Id;
-import mobi.appcent.medusa.store.model.StorePostSearchRes;
-import mobi.appcent.medusa.store.model.StoreProductsListRes;
-import mobi.appcent.medusa.store.model.StoreProductsRes;
-import mobi.appcent.medusa.store.model.UpdatedAt4;
+import mobi.appcent.medusa.store.model.response.CreatedAt4;
+import mobi.appcent.medusa.store.model.response.Id;
+import mobi.appcent.medusa.store.model.response.StorePostSearchRes;
+import mobi.appcent.medusa.store.model.response.StoreProductsListRes;
+import mobi.appcent.medusa.store.model.response.StoreProductsRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt4;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -65,7 +65,7 @@ public class ProductApiTest {
         String cartId = null;
         String regionId = null;
         String currencyCode = null;
-        StoreProductsListRes response = api.getProducts(q, id, salesChannelId, collectionId, typeId, tags, title, description, handle, isGiftcard, createdAt, updatedAt, categoryId, includeCategoryChildren, offset, limit, expand, fields, order, cartId, regionId, currencyCode);
+        StoreProductsListRes response = api.listProducts().execute().getData();
 
         // TODO: test validations
     }
@@ -86,7 +86,7 @@ public class ProductApiTest {
         String fields = null;
         String expand = null;
         String currencyCode = null;
-        StoreProductsRes response = api.getProductsProduct(id, salesChannelId, cartId, regionId, fields, expand, currencyCode);
+        StoreProductsRes response = api.getProduct(id).execute().getData();
 
         // TODO: test validations
     }
@@ -103,7 +103,7 @@ public class ProductApiTest {
         String q = null;
         Integer offset = null;
         Integer limit = null;
-        StorePostSearchRes response = api.postProductsSearch(q, offset, limit);
+        StorePostSearchRes response = api.postProductsSearch(q).execute().getData();
 
         // TODO: test validations
     }

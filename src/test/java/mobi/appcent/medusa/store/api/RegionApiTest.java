@@ -12,10 +12,10 @@
 
 package mobi.appcent.medusa.store.api;
 
-import mobi.appcent.medusa.store.model.CreatedAt5;
-import mobi.appcent.medusa.store.model.StoreRegionsListRes;
-import mobi.appcent.medusa.store.model.StoreRegionsRes;
-import mobi.appcent.medusa.store.model.UpdatedAt5;
+import mobi.appcent.medusa.store.model.response.CreatedAt5;
+import mobi.appcent.medusa.store.model.response.StoreRegionsListRes;
+import mobi.appcent.medusa.store.model.response.StoreRegionsRes;
+import mobi.appcent.medusa.store.model.response.UpdatedAt5;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -42,7 +42,7 @@ public class RegionApiTest {
         Integer limit = null;
         CreatedAt5 createdAt = null;
         UpdatedAt5 updatedAt = null;
-        StoreRegionsListRes response = api.getRegions(offset, limit, createdAt, updatedAt);
+        StoreRegionsListRes response = api.getRegions().execute().getData();
 
         // TODO: test validations
     }
@@ -57,7 +57,7 @@ public class RegionApiTest {
     @Test
     public void getRegionsRegionTest() throws Exception {
         String id = null;
-        StoreRegionsRes response = api.getRegionsRegion(id);
+        StoreRegionsRes response = api.getRegion(id).execute().getData();
 
         // TODO: test validations
     }

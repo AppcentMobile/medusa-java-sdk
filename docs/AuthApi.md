@@ -20,7 +20,7 @@ Destroys a Customer&#x27;s authenticated session.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.ApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
@@ -70,7 +70,7 @@ Gets the currently logged in Customer.
 ### Example
 ```java
 // Import classes:
-//import mobi.appcent.medusa.store.ApiClient;
+//import mobi.appcent.medusa.store.MedusaSdkClient;
 //import mobi.appcent.medusa.store.ApiException;
 //import mobi.appcent.medusa.store.Configuration;
 //import mobi.appcent.medusa.store.auth.*;
