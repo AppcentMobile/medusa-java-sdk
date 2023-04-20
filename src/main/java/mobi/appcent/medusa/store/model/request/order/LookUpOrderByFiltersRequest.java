@@ -72,8 +72,7 @@ public class LookUpOrderByFiltersRequest extends BaseRequest<StoreOrdersRes> {
         if (shippingAddress != null)
             localVarQueryParams.addAll(client.parameterToPair(QueryParamConstant.SHIPPING_ADDRESS, shippingAddress));
 
-
-        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null, null);
+        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null);
     }
 
     @Override

@@ -114,8 +114,7 @@ public class ListProductTypesRequest extends BaseRequest<StoreProductTypesListRe
         if (updatedAt != null)
             localVarQueryParams.addAll(client.parameterToPair(QueryParamConstant.UPDATED_AT, updatedAt));
 
-        String[] localVarAuthNames = new String[] { "cookie_auth" };
-        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, localVarCollectionQueryParams, null, headers, null, localVarAuthNames);
+        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, localVarCollectionQueryParams, null, headers, null);
     }
 
     @Override

@@ -8,10 +8,9 @@ import mobi.appcent.medusa.store.common.QueryParamConstant;
 import mobi.appcent.medusa.store.common.UrlConstant;
 import mobi.appcent.medusa.store.model.request.BaseRequest;
 import mobi.appcent.medusa.store.model.response.CreatedAt2;
-import mobi.appcent.medusa.store.model.response.InlineResponse200;
+import mobi.appcent.medusa.store.model.response.ProductTagsResponse;
 import mobi.appcent.medusa.store.model.response.UpdatedAt2;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +19,7 @@ import java.util.Map;
 /**
  * Created by erenalpaslan on 10.03.2023
  */
-public class ListProductTagsRequest extends BaseRequest<InlineResponse200> {
+public class ListProductTagsRequest extends BaseRequest<ProductTagsResponse> {
 
     private final MedusaSdkClient client;
     private Integer limit;
@@ -115,17 +114,17 @@ public class ListProductTagsRequest extends BaseRequest<InlineResponse200> {
             localVarQueryParams.addAll(client.parameterToPair(QueryParamConstant.UPDATED_AT, updatedAt));
 
 
-        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, localVarCollectionQueryParams, null, headers, null, null);
+        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, localVarCollectionQueryParams, null, headers, null);
     }
 
     @Override
-    public ApiResponse<InlineResponse200> execute() throws ApiException {
+    public ApiResponse<ProductTagsResponse> execute() throws ApiException {
         Call call = buildCall();
         return client.execute(call);
     }
 
     @Override
-    public void executeAsync(ApiCallback<InlineResponse200> callback) throws ApiException {
+    public void executeAsync(ApiCallback<ProductTagsResponse> callback) throws ApiException {
         Call call = buildCall();
         client.executeAsync(call, callback);
     }

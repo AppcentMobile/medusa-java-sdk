@@ -123,7 +123,7 @@ public class GetProductVariantsRequest extends BaseRequest<StoreVariantsListRes>
             localVarQueryParams.addAll(client.parameterToPair(QueryParamConstant.INVENTORY_QUANTITY, inventoryQuantity));
 
 
-        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null, null);
+        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null);
     }
 
     @Override

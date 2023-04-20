@@ -59,7 +59,7 @@ public class SearchProductsRequest extends BaseRequest<StorePostSearchRes> {
         if (limit != null)
             localVarQueryParams.addAll(client.parameterToPair(QueryParamConstant.LIMIT, limit));
 
-        return client.buildCall(path, HttpMethod.POST, localVarQueryParams, null, null, headers, null, null);
+        return client.buildCall(path, HttpMethod.POST, localVarQueryParams, null, null, headers, null);
     }
 
     @Override

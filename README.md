@@ -131,30 +131,29 @@ Please follow the [installation](#installation) instruction and execute the foll
 import mobi.appcent.medusa.store.MedusaSdkClient;
 import mobi.appcent.medusa.store.ApiException;
 import mobi.appcent.medusa.store.api.AuthApi;
-import mobi.appcent.medusa.store.auth.ApiKeyAuth;
 import mobi.appcent.medusa.store.model.response.StoreAuthRes;
 import mobi.appcent.medusa.store.model.response.StoreGetAuthEmailRes;
 import mobi.appcent.medusa.store.model.response.StorePostAuthReq;
 
 public class AuthApiExample {
 
-  public static void main(String[] args) {
-    MedusaSdkClient defaultClient = Configuration.getDefaultApiClient();
+    public static void main(String[] args) {
+        MedusaSdkClient defaultClient = Configuration.getDefaultApiClient();
 
-    // Configure API key authorization: cookie_auth
-    ApiKeyAuth cookie_auth = (ApiKeyAuth) defaultClient.getAuthentication("cookie_auth");
-    cookie_auth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //cookie_auth.setApiKeyPrefix("Token");
+        // Configure API key authorization: cookie_auth
+        ApiKeyAuth cookie_auth = (ApiKeyAuth) defaultClient.getAuthentication("cookie_auth");
+        cookie_auth.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //cookie_auth.setApiKeyPrefix("Token");
 
-    AuthApi apiInstance = new AuthApi();
-    try {
-      apiInstance.deleteAuth();
-    } catch (ApiException e) {
-      System.err.println("Exception when calling AuthApi#deleteAuth");
-      e.printStackTrace();
+        AuthApi apiInstance = new AuthApi();
+        try {
+            apiInstance.deleteAuth();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AuthApi#deleteAuth");
+            e.printStackTrace();
+        }
     }
-  }
 }
 import mobi.appcent.medusa.store.*;
         import mobi.appcent.medusa.store.auth.*;
@@ -166,24 +165,24 @@ import mobi.appcent.medusa.store.*;
 
 public class AuthApiExample {
 
-  public static void main(String[] args) {
-    MedusaSdkClient defaultClient = Configuration.getDefaultApiClient();
+    public static void main(String[] args) {
+        MedusaSdkClient defaultClient = Configuration.getDefaultApiClient();
 
-    // Configure API key authorization: cookie_auth
-    ApiKeyAuth cookie_auth = (ApiKeyAuth) defaultClient.getAuthentication("cookie_auth");
-    cookie_auth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //cookie_auth.setApiKeyPrefix("Token");
+        // Configure API key authorization: cookie_auth
+        ApiKeyAuth cookie_auth = (ApiKeyAuth) defaultClient.getAuthentication("cookie_auth");
+        cookie_auth.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //cookie_auth.setApiKeyPrefix("Token");
 
-    AuthApi apiInstance = new AuthApi();
-    try {
-      StoreAuthRes result = apiInstance.getAuth();
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling AuthApi#getAuth");
-      e.printStackTrace();
+        AuthApi apiInstance = new AuthApi();
+        try {
+            StoreAuthRes result = apiInstance.getAuth();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AuthApi#getAuth");
+            e.printStackTrace();
+        }
     }
-  }
 }
 import mobi.appcent.medusa.store.*;
         import mobi.appcent.medusa.store.auth.*;
@@ -195,18 +194,18 @@ import mobi.appcent.medusa.store.*;
 
 public class AuthApiExample {
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
 
-    AuthApi apiInstance = new AuthApi();
-    String email = "email_example"; // String | The email to check if exists.
-    try {
-      StoreGetAuthEmailRes result = apiInstance.getAuthEmail(email);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling AuthApi#getAuthEmail");
-      e.printStackTrace();
+        AuthApi apiInstance = new AuthApi();
+        String email = "email_example"; // String | The email to check if exists.
+        try {
+            StoreGetAuthEmailRes result = apiInstance.getAuthEmail(email);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AuthApi#getAuthEmail");
+            e.printStackTrace();
+        }
     }
-  }
 }
 import mobi.appcent.medusa.store.*;
         import mobi.appcent.medusa.store.auth.*;
@@ -218,18 +217,18 @@ import mobi.appcent.medusa.store.*;
 
 public class AuthApiExample {
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
 
-    AuthApi apiInstance = new AuthApi();
-    StorePostAuthReq body = new StorePostAuthReq(); // StorePostAuthReq | 
-    try {
-      StoreAuthRes result = apiInstance.postAuth(body);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling AuthApi#postAuth");
-      e.printStackTrace();
+        AuthApi apiInstance = new AuthApi();
+        StorePostAuthReq body = new StorePostAuthReq(); // StorePostAuthReq | 
+        try {
+            StoreAuthRes result = apiInstance.postAuth(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AuthApi#postAuth");
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 

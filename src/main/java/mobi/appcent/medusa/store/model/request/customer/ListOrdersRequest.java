@@ -185,9 +185,7 @@ public class ListOrdersRequest extends BaseRequest<StoreCustomersListOrdersRes> 
         if (expand != null)
             localVarQueryParams.addAll(client.parameterToPair(QueryParamConstant.EXPAND, expand));
 
-
-        String[] localVarAuthNames = new String[] { "cookie_auth" };
-        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, localVarCollectionQueryParams, null, headers, null, localVarAuthNames);
+        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, localVarCollectionQueryParams, null, headers, null);
     }
 
     @Override
