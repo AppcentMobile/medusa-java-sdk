@@ -107,7 +107,7 @@ allprojects {
   }
 }
 
-implementation 'com.github.AppcentMobile:medusa-java-sdk:1.0.0'
+implementation 'com.github.AppcentMobile:medusa-java-sdk:1.0.1'
 ```
 
 ### Others
@@ -120,7 +120,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/medusa-java-sdk-1.0.0.jar`
+* `target/medusa-java-sdk-1.0.1.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
