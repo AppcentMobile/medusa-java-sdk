@@ -76,7 +76,7 @@ public class ListCollectionsRequest extends BaseRequest<StoreCollectionsListRes>
         if (updatedAt != null)
             localVarQueryParams.addAll(client.parameterToPair(QueryParamConstant.UPDATED_AT, updatedAt));
 
-        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null, null);
+        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null);
     }
 
     @Override

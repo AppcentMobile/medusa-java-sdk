@@ -10,64 +10,147 @@
  * Do not edit the class manually.
  */
 
-package mobi.appcent.medusa.store.auth;
+package mobi.appcent.medusa.store.model.response;
 
-import mobi.appcent.medusa.store.Pair;
+import java.util.Objects;
 
-import java.util.Map;
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2023-02-24T12:45:51.835798768Z[GMT]")public class ApiKeyAuth implements Authentication {
-  private final String location;
-  private final String paramName;
+/**
+ * InlineResponse200
+ */
 
-  private String apiKey;
-  private String apiKeyPrefix;
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2023-02-24T12:45:51.835798768Z[GMT]")
+public class ProductTagsResponse {
+  @SerializedName("product_tags")
+  private ProductTag productTags = null;
 
-  public ApiKeyAuth(String location, String paramName) {
-    this.location = location;
-    this.paramName = paramName;
+  @SerializedName("count")
+  private Integer count = null;
+
+  @SerializedName("offset")
+  private Integer offset = null;
+
+  @SerializedName("limit")
+  private Integer limit = null;
+
+  public ProductTagsResponse productTags(ProductTag productTags) {
+    this.productTags = productTags;
+    return this;
   }
 
-  public String getLocation() {
-    return location;
+   /**
+   * Get productTags
+   * @return productTags
+  **/
+  @Schema(description = "")
+  public ProductTag getProductTags() {
+    return productTags;
   }
 
-  public String getParamName() {
-    return paramName;
+  public void setProductTags(ProductTag productTags) {
+    this.productTags = productTags;
   }
 
-  public String getApiKey() {
-    return apiKey;
+  public ProductTagsResponse count(Integer count) {
+    this.count = count;
+    return this;
   }
 
-  public void setApiKey(String apiKey) {
-    this.apiKey = apiKey;
+   /**
+   * The total number of items available
+   * @return count
+  **/
+  @Schema(description = "The total number of items available")
+  public Integer getCount() {
+    return count;
   }
 
-  public String getApiKeyPrefix() {
-    return apiKeyPrefix;
+  public void setCount(Integer count) {
+    this.count = count;
   }
 
-  public void setApiKeyPrefix(String apiKeyPrefix) {
-    this.apiKeyPrefix = apiKeyPrefix;
+  public ProductTagsResponse offset(Integer offset) {
+    this.offset = offset;
+    return this;
+  }
+
+   /**
+   * The number of items skipped before these items
+   * @return offset
+  **/
+  @Schema(description = "The number of items skipped before these items")
+  public Integer getOffset() {
+    return offset;
+  }
+
+  public void setOffset(Integer offset) {
+    this.offset = offset;
+  }
+
+  public ProductTagsResponse limit(Integer limit) {
+    this.limit = limit;
+    return this;
+  }
+
+   /**
+   * The number of items per page
+   * @return limit
+  **/
+  @Schema(description = "The number of items per page")
+  public Integer getLimit() {
+    return limit;
+  }
+
+  public void setLimit(Integer limit) {
+    this.limit = limit;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ProductTagsResponse productTagsResponse = (ProductTagsResponse) o;
+    return Objects.equals(this.productTags, productTagsResponse.productTags) &&
+        Objects.equals(this.count, productTagsResponse.count) &&
+        Objects.equals(this.offset, productTagsResponse.offset) &&
+        Objects.equals(this.limit, productTagsResponse.limit);
   }
 
   @Override
-  public void applyToParams(List<Pair> queryParams, Map<String, String> headerParams) {
-    if (apiKey == null) {
-      return;
-    }
-    String value;
-    if (apiKeyPrefix != null) {
-      value = apiKeyPrefix + " " + apiKey;
-    } else {
-      value = apiKey;
-    }
-    if ("query".equals(location)) {
-      queryParams.add(new Pair(paramName, value));
-    } else if ("header".equals(location)) {
-      headerParams.put(paramName, value);
-    }
+  public int hashCode() {
+    return Objects.hash(productTags, count, offset, limit);
   }
+
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class InlineResponse200 {\n");
+    
+    sb.append("    productTags: ").append(toIndentedString(productTags)).append("\n");
+    sb.append("    count: ").append(toIndentedString(count)).append("\n");
+    sb.append("    offset: ").append(toIndentedString(offset)).append("\n");
+    sb.append("    limit: ").append(toIndentedString(limit)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
+
 }

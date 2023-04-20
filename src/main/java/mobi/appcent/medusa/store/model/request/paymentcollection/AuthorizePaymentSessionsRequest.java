@@ -45,8 +45,7 @@ public class AuthorizePaymentSessionsRequest extends BaseRequest<StorePaymentCol
         if (localVarAccept != null) headers.put(HeaderConstant.ACCEPT, localVarAccept);
         headers.put(HeaderConstant.CONTENT_TYPE, HeaderConstant.APPLICATION_JSON);
 
-        String[] localVarAuthNames = new String[] { "cookie_auth" };
-        return client.buildCall(path, HttpMethod.POST, null, null, body, headers, null, localVarAuthNames);
+        return client.buildCall(path, HttpMethod.POST, null, null, body, headers, null);
     }
 
     @Override

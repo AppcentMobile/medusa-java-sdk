@@ -16,6 +16,7 @@ import com.squareup.okhttp.*;
 import com.squareup.okhttp.internal.http.HttpMethod;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor.Level;
+import mobi.appcent.medusa.store.auth.*;
 import okio.BufferedSink;
 import okio.Okio;
 import org.threeten.bp.LocalDate;
@@ -27,6 +28,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.CookieHandler;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.lang.reflect.Type;
@@ -46,19 +49,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import mobi.appcent.medusa.store.auth.Authentication;
-import mobi.appcent.medusa.store.auth.HttpBasicAuth;
-import mobi.appcent.medusa.store.auth.ApiKeyAuth;
-import mobi.appcent.medusa.store.auth.OAuth;
-
 public class MedusaSdkClient {
 
     private String basePath = "https://api.medusa-commerce.com/store";
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;
-
-    private Map<String, Authentication> authentications;
 
     private DateFormat dateFormat;
     private DateFormat datetimeFormat;
@@ -73,26 +69,20 @@ public class MedusaSdkClient {
     private JSON json;
 
     private HttpLoggingInterceptor loggingInterceptor;
+    private String authCookie = null;
+    private String publishableApiKey = null;
 
     /*
      * Constructor for ApiClient
      */
     public MedusaSdkClient() {
         httpClient = new OkHttpClient();
-
+        httpClient.interceptors().add(new AddCookiesInterceptor(this));
+        httpClient.interceptors().add(new ReceivedCookiesInterceptor(this));
 
         verifyingSsl = true;
 
         json = new JSON();
-
-        // Set default User-Agent.
-        setUserAgent("Swagger-Codegen/1.0.0/java");
-
-        // Setup authentications (key: authentication name, value: authentication).
-        authentications = new HashMap<String, Authentication>();
-        authentications.put("cookie_auth", new ApiKeyAuth("query", "connect.sid"));
-        // Prevent the authentications from being modified.
-        authentications = Collections.unmodifiableMap(authentications);
     }
 
     /**
@@ -244,100 +234,6 @@ public class MedusaSdkClient {
     public MedusaSdkClient setLenientOnJson(boolean lenientOnJson) {
         this.json.setLenientOnJson(lenientOnJson);
         return this;
-    }
-
-    /**
-     * Get authentications (key: authentication name, value: authentication).
-     *
-     * @return Map of authentication objects
-     */
-    public Map<String, Authentication> getAuthentications() {
-        return authentications;
-    }
-
-    /**
-     * Get authentication for the given name.
-     *
-     * @param authName The authentication name
-     * @return The authentication, null if not found
-     */
-    public Authentication getAuthentication(String authName) {
-        return authentications.get(authName);
-    }
-
-    /**
-     * Helper method to set username for the first HTTP basic authentication.
-     *
-     * @param username Username
-     */
-    public void setUsername(String username) {
-        for (Authentication auth : authentications.values()) {
-            if (auth instanceof HttpBasicAuth) {
-                ((HttpBasicAuth) auth).setUsername(username);
-                return;
-            }
-        }
-        throw new RuntimeException("No HTTP basic authentication configured!");
-    }
-
-    /**
-     * Helper method to set password for the first HTTP basic authentication.
-     *
-     * @param password Password
-     */
-    public void setPassword(String password) {
-        for (Authentication auth : authentications.values()) {
-            if (auth instanceof HttpBasicAuth) {
-                ((HttpBasicAuth) auth).setPassword(password);
-                return;
-            }
-        }
-        throw new RuntimeException("No HTTP basic authentication configured!");
-    }
-
-    /**
-     * Helper method to set API key value for the first API key authentication.
-     *
-     * @param apiKey API key
-     */
-    public void setApiKey(String apiKey) {
-        for (Authentication auth : authentications.values()) {
-            if (auth instanceof ApiKeyAuth) {
-                ((ApiKeyAuth) auth).setApiKey(apiKey);
-                return;
-            }
-        }
-        throw new RuntimeException("No API key authentication configured!");
-    }
-
-    /**
-     * Helper method to set API key prefix for the first API key authentication.
-     *
-     * @param apiKeyPrefix API key prefix
-     */
-    public void setApiKeyPrefix(String apiKeyPrefix) {
-        for (Authentication auth : authentications.values()) {
-            if (auth instanceof ApiKeyAuth) {
-                ((ApiKeyAuth) auth).setApiKeyPrefix(apiKeyPrefix);
-                return;
-            }
-        }
-        throw new RuntimeException("No API key authentication configured!");
-    }
-
-    /**
-     * Helper method to set access token for the first OAuth2 authentication.
-     *
-     * @param accessToken Access token
-     */
-    public void setAccessToken(String accessToken) {
-        for (Authentication auth : authentications.values()) {
-            if (auth instanceof OAuth) {
-                ((OAuth) auth).setAccessToken(accessToken);
-                return;
-            }
-        }
-        throw new RuntimeException("No OAuth2 authentication configured!");
     }
 
     /**
@@ -937,8 +833,6 @@ public class MedusaSdkClient {
      * @param body The request body object
      * @param headerParams The header parameters
      * @param formParams The form parameters
-     * @param authNames The authentications to apply
-     * @param progressRequestListener Progress request listener
      * @return The HTTP call
      * @throws ApiException If fail to serialize the request body object
      */
@@ -949,40 +843,9 @@ public class MedusaSdkClient {
             List<Pair> collectionQueryParams,
             Object body,
             Map<String, String> headerParams,
-            Map<String, Object> formParams,
-            String[] authNames,
-            ProgressRequestBody.ProgressRequestListener progressRequestListener
+            Map<String, Object> formParams
     ) throws ApiException {
-        Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, progressRequestListener);
-
-        return httpClient.newCall(request);
-    }
-
-    /**
-     * Build HTTP call with the given options.
-     *
-     * @param path The sub-path of the HTTP URL
-     * @param method The request method, one of "GET", "HEAD", "OPTIONS", "POST", "PUT", "PATCH" and "DELETE"
-     * @param queryParams The query parameters
-     * @param collectionQueryParams The collection query parameters
-     * @param body The request body object
-     * @param headerParams The header parameters
-     * @param formParams The form parameters
-     * @param authNames The authentications to apply
-     * @return The HTTP call
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public Call buildCall(
-            String path,
-            String method,
-            List<Pair> queryParams,
-            List<Pair> collectionQueryParams,
-            Object body,
-            Map<String, String> headerParams,
-            Map<String, Object> formParams,
-            String[] authNames
-    ) throws ApiException {
-        Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams, authNames, null);
+        Request request = buildRequest(path, method, queryParams, collectionQueryParams, body, headerParams, formParams);
 
         return httpClient.newCall(request);
     }
@@ -997,16 +860,10 @@ public class MedusaSdkClient {
      * @param body The request body object
      * @param headerParams The header parameters
      * @param formParams The form parameters
-     * @param authNames The authentications to apply
-     * @param progressRequestListener Progress request listener
      * @return The HTTP request
      * @throws ApiException If fail to serialize the request body object
      */
-    public Request buildRequest(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        if (authNames == null)
-            authNames = new String[] { };
-        updateParamsForAuth(authNames, queryParams, headerParams);
-
+    public Request buildRequest(String path, String method, List<Pair> queryParams, List<Pair> collectionQueryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams) throws ApiException {
         final String url = buildUrl(path, queryParams, collectionQueryParams);
         final Request.Builder reqBuilder = new Request.Builder().url(url);
         processHeaderParams(headerParams, reqBuilder);
@@ -1036,16 +893,7 @@ public class MedusaSdkClient {
             reqBody = serialize(body, contentType);
         }
 
-        Request request = null;
-
-        if(progressRequestListener != null && reqBody != null) {
-            ProgressRequestBody progressRequestBody = new ProgressRequestBody(reqBody, progressRequestListener);
-            request = reqBuilder.method(method, progressRequestBody).build();
-        } else {
-            request = reqBuilder.method(method, reqBody).build();
-        }
-
-        return request;
+        return reqBuilder.method(method, reqBody).build();
     }
 
     /**
@@ -1111,21 +959,6 @@ public class MedusaSdkClient {
             if (!headerParams.containsKey(header.getKey())) {
                 reqBuilder.header(header.getKey(), parameterToString(header.getValue()));
             }
-        }
-    }
-
-    /**
-     * Update query and header parameters based on authentication settings.
-     *
-     * @param authNames The authentications to apply
-     * @param queryParams  List of query parameters
-     * @param headerParams  Map of header parameters
-     */
-    public void updateParamsForAuth(String[] authNames, List<Pair> queryParams, Map<String, String> headerParams) {
-        for (String authName : authNames) {
-            Authentication auth = authentications.get(authName);
-            if (auth == null) throw new RuntimeException("Authentication undefined: " + authName);
-            auth.applyToParams(queryParams, headerParams);
         }
     }
 
@@ -1243,5 +1076,21 @@ public class MedusaSdkClient {
         } catch (IOException e) {
             throw new AssertionError(e);
         }
+    }
+
+    public String getAuth() {
+        return authCookie;
+    }
+
+    public void setAuth(String auth) {
+        this.authCookie = auth;
+    }
+
+    public String getPublishableApiKey() {
+        return publishableApiKey;
+    }
+
+    public void setPublishableApiKey(String apiKey) {
+        this.publishableApiKey = apiKey;
     }
 }

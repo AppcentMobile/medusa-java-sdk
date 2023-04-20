@@ -15,21 +15,8 @@ package mobi.appcent.medusa.store.api;
 import mobi.appcent.medusa.store.*;
 import mobi.appcent.medusa.store.MedusaSdkClient;
 
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
 
 import mobi.appcent.medusa.store.model.request.producttag.ListProductTagsRequest;
-import mobi.appcent.medusa.store.model.response.CreatedAt2;
-import mobi.appcent.medusa.store.model.response.InlineResponse200;
-import mobi.appcent.medusa.store.model.response.UpdatedAt2;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ProductTagApi {
     private MedusaSdkClient medusaSdkClient;

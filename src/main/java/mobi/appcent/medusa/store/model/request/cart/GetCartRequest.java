@@ -39,7 +39,7 @@ public class GetCartRequest extends BaseRequest<StoreCartsRes> {
         if (localVarAccept != null) headers.put(HeaderConstant.ACCEPT, localVarAccept);
         headers.put(HeaderConstant.CONTENT_TYPE, HeaderConstant.APPLICATION_JSON);
 
-        return client.buildCall(path, HttpMethod.GET, null, null, null, headers, null, null);
+        return client.buildCall(path, HttpMethod.GET, null, null, null, headers, null);
     }
 
     @Override

@@ -42,6 +42,7 @@ public class MedusaApi {
         orderEditApi.setApiClient(defaultMedusaSdkClient);
         paymentCollectionApi.setApiClient(defaultMedusaSdkClient);
         productApi.setApiClient(defaultMedusaSdkClient);
+        productTagApi.setApiClient(defaultMedusaSdkClient);
         productTypeApi.setApiClient(defaultMedusaSdkClient);
         productVariantApi.setApiClient(defaultMedusaSdkClient);
         regionApi.setApiClient(defaultMedusaSdkClient);

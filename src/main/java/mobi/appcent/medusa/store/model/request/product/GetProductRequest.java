@@ -90,7 +90,7 @@ public class GetProductRequest extends BaseRequest<StoreProductsRes> {
             localVarQueryParams.addAll(client.parameterToPair(QueryParamConstant.CURRENCY_CODE, currencyCode));
 
 
-        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null, null);
+        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null);
     }
 
     @Override

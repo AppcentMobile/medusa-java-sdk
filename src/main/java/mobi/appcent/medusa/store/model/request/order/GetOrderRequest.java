@@ -57,8 +57,7 @@ public class GetOrderRequest extends BaseRequest<StoreOrdersRes> {
         if (expand != null)
             localVarQueryParams.addAll(client.parameterToPair(QueryParamConstant.EXPAND, expand));
 
-
-        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null, null);
+        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null);
     }
 
     @Override

@@ -72,8 +72,7 @@ public class ListProductCategoriesRequest extends BaseRequest<StoreProductCatego
             localVarQueryParams.addAll(client.parameterToPair(QueryParamConstant.LIMIT, limit));
 
 
-        String[] localVarAuthNames = new String[] { "cookie_auth" };
-        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null, localVarAuthNames);
+        return client.buildCall(path, HttpMethod.GET, localVarQueryParams, null, null, headers, null);
     }
 
     @Override

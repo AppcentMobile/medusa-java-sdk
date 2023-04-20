@@ -13,7 +13,7 @@
 package mobi.appcent.medusa.store.api;
 
 import mobi.appcent.medusa.store.model.response.CreatedAt2;
-import mobi.appcent.medusa.store.model.response.InlineResponse200;
+import mobi.appcent.medusa.store.model.response.ProductTagsResponse;
 import mobi.appcent.medusa.store.model.response.UpdatedAt2;
 import org.junit.Test;
 import org.junit.Ignore;
@@ -49,7 +49,7 @@ public class ProductTagApiTest {
         String q = null;
         CreatedAt2 createdAt = null;
         UpdatedAt2 updatedAt = null;
-        InlineResponse200 response = api.getProductTags().execute().getData();
+        ProductTagsResponse response = api.getProductTags().execute().getData();
 
         // TODO: test validations
     }
