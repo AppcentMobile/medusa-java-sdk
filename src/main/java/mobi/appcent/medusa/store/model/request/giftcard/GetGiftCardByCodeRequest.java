@@ -1,14 +1,17 @@
 package mobi.appcent.medusa.store.model.request.giftcard;
 
+import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.Call;
 import mobi.appcent.medusa.store.*;
 import mobi.appcent.medusa.store.common.HeaderConstant;
 import mobi.appcent.medusa.store.common.HttpMethod;
 import mobi.appcent.medusa.store.common.UrlConstant;
 import mobi.appcent.medusa.store.model.request.BaseRequest;
+import mobi.appcent.medusa.store.model.response.StoreCustomersRes;
 import mobi.appcent.medusa.store.model.response.StoreGiftCardsRes;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,12 +47,17 @@ public class GetGiftCardByCodeRequest extends BaseRequest<StoreGiftCardsRes> {
     @Override
     public ApiResponse<StoreGiftCardsRes> execute() throws ApiException {
         Call call = buildCall();
-        return client.execute(call);
+        return client.execute(call, getType());
     }
 
     @Override
     public void executeAsync(ApiCallback<StoreGiftCardsRes> callback) throws ApiException {
         Call call = buildCall();
         client.executeAsync(call, callback);
+    }
+
+    @Override
+    public Type getType() {
+        return new TypeToken<StoreGiftCardsRes>(){}.getType();
     }
 }
