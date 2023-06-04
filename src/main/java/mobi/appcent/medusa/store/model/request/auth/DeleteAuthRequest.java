@@ -40,7 +40,7 @@ public class DeleteAuthRequest extends BaseRequest<Void> {
     @Override
     public ApiResponse<Void> execute() throws ApiException {
         Call call = buildCall();
-        return client.execute(call);
+        return client.execute(call, null);
     }
 
     @Override
@@ -48,5 +48,10 @@ public class DeleteAuthRequest extends BaseRequest<Void> {
         Call call = buildCall();
         Type type = new TypeToken<ApiResponse<Void>>(){}.getType();
         client.executeAsync(call, type, callback);
+    }
+
+    @Override
+    public Type getType() {
+        return new TypeToken<Void>(){}.getType();
     }
 }

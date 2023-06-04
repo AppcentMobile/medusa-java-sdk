@@ -712,16 +712,15 @@ public class MedusaSdkClient {
     }
 
     /**
-     * {@link #execute(Call, Type)}
+     * {@link #executeCall(Call, Type)}
      *
      * @param <T> Type
      * @param call An instance of the Call object
      * @throws ApiException If fail to execute the call
      * @return ApiResponse&lt;T&gt;
      */
-    public <T> ApiResponse<T> execute(Call call) throws ApiException {
-        TypeReference<T> typeReference = new TypeReference<T>() {};
-        return execute(call, typeReference.getType());
+    public <T> ApiResponse<T> execute(Call call, Type type) throws ApiException {
+        return executeCall(call, type);
     }
 
     /**
@@ -735,7 +734,7 @@ public class MedusaSdkClient {
      *   when returnType is null.
      * @throws ApiException If fail to execute the call
      */
-    private <T> ApiResponse<T> execute(Call call, Type returnType) throws ApiException {
+    private <T> ApiResponse<T> executeCall(Call call, Type returnType) throws ApiException {
         try {
             Response response = call.execute();
             T data = handleResponse(response, returnType);
@@ -759,7 +758,7 @@ public class MedusaSdkClient {
     /**
      * Execute HTTP call asynchronously.
      *
-     * @see #execute(Call, Type)
+     * @see #executeCall(Call, Type)
      * @param <T> Type
      * @param call The callback to be executed when the API call finishes
      * @param returnType Return type

@@ -1,5 +1,6 @@
 package mobi.appcent.medusa.store.model.request.collection;
 
+import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.Call;
 import mobi.appcent.medusa.store.*;
 import mobi.appcent.medusa.store.common.HeaderConstant;
@@ -9,9 +10,11 @@ import mobi.appcent.medusa.store.common.UrlConstant;
 import mobi.appcent.medusa.store.model.request.BaseRequest;
 import mobi.appcent.medusa.store.model.response.CreatedAt;
 import mobi.appcent.medusa.store.model.response.StoreCollectionsListRes;
+import mobi.appcent.medusa.store.model.response.StoreCollectionsRes;
 import mobi.appcent.medusa.store.model.response.UpdatedAt;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,12 +85,17 @@ public class ListCollectionsRequest extends BaseRequest<StoreCollectionsListRes>
     @Override
     public ApiResponse<StoreCollectionsListRes> execute() throws ApiException {
         Call call = buildCall();
-        return client.execute(call);
+        return client.execute(call, getType());
     }
 
     @Override
     public void executeAsync(ApiCallback<StoreCollectionsListRes> callback) throws ApiException {
         Call call = buildCall();
-        client.executeAsync(call, callback);
+        client.executeAsync(call, getType(), callback);
+    }
+
+    @Override
+    public Type getType() {
+        return new TypeToken<StoreCollectionsListRes>(){}.getType();
     }
 }
