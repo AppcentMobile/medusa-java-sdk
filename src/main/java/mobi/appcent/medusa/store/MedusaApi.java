@@ -50,6 +50,7 @@ public class MedusaApi {
         returnReasonApi.setApiClient(defaultMedusaSdkClient);
         shippingOptionApi.setApiClient(defaultMedusaSdkClient);
         swapApi.setApiClient(defaultMedusaSdkClient);
+        productCategoryApi.setApiClient(defaultMedusaSdkClient);
     }
 
     /**
