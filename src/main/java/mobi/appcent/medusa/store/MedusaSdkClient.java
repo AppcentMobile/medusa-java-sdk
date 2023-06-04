@@ -12,11 +12,13 @@
 
 package mobi.appcent.medusa.store;
 
+import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.*;
 import com.squareup.okhttp.internal.http.HttpMethod;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor.Level;
 import mobi.appcent.medusa.store.auth.*;
+import mobi.appcent.medusa.store.common.TypeReference;
 import okio.BufferedSink;
 import okio.Okio;
 import org.threeten.bp.LocalDate;
@@ -718,7 +720,8 @@ public class MedusaSdkClient {
      * @return ApiResponse&lt;T&gt;
      */
     public <T> ApiResponse<T> execute(Call call) throws ApiException {
-        return execute(call, null);
+        TypeReference<T> typeReference = new TypeReference<T>() {};
+        return execute(call, typeReference.getType());
     }
 
     /**
@@ -732,7 +735,7 @@ public class MedusaSdkClient {
      *   when returnType is null.
      * @throws ApiException If fail to execute the call
      */
-    public <T> ApiResponse<T> execute(Call call, Type returnType) throws ApiException {
+    private <T> ApiResponse<T> execute(Call call, Type returnType) throws ApiException {
         try {
             Response response = call.execute();
             T data = handleResponse(response, returnType);
