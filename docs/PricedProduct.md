@@ -1,6 +1,6 @@
-# PricedProduct
+# Product
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**pricedProductVariants** | [**List&lt;PricedVariant&gt;**](PricedVariant.md) |  |  [optional]
+**ProductVariants** | [**List&lt;PricedVariant&gt;**](PricedVariant.md) |  |  [optional]

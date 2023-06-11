@@ -24,9 +24,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2023-02-24T12:45:51.835798768Z[GMT]")
 public class StoreProductsRes {
   @SerializedName("product")
-  private PricedProduct product = null;
+  private Product product = null;
 
-  public StoreProductsRes product(PricedProduct product) {
+  public StoreProductsRes product(Product product) {
     this.product = product;
     return this;
   }
@@ -36,11 +36,11 @@ public class StoreProductsRes {
    * @return product
   **/
   @Schema(description = "")
-  public PricedProduct getProduct() {
+  public Product getProduct() {
     return product;
   }
 
-  public void setProduct(PricedProduct product) {
+  public void setProduct(Product product) {
     this.product = product;
   }
 

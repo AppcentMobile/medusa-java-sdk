@@ -26,7 +26,7 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2023-02-24T12:45:51.835798768Z[GMT]")
 public class StoreProductsListRes {
   @SerializedName("products")
-  private List<PricedProduct> products = null;
+  private List<Product> products = null;
 
   @SerializedName("count")
   private Integer count = null;
@@ -37,14 +37,14 @@ public class StoreProductsListRes {
   @SerializedName("limit")
   private Integer limit = null;
 
-  public StoreProductsListRes products(List<PricedProduct> products) {
+  public StoreProductsListRes products(List<Product> products) {
     this.products = products;
     return this;
   }
 
-  public StoreProductsListRes addProductsItem(PricedProduct productsItem) {
+  public StoreProductsListRes addProductsItem(Product productsItem) {
     if (this.products == null) {
-      this.products = new ArrayList<PricedProduct>();
+      this.products = new ArrayList<Product>();
     }
     this.products.add(productsItem);
     return this;
@@ -55,11 +55,11 @@ public class StoreProductsListRes {
    * @return products
   **/
   @Schema(description = "")
-  public List<PricedProduct> getProducts() {
+  public List<Product> getProducts() {
     return products;
   }
 
-  public void setProducts(List<PricedProduct> products) {
+  public void setProducts(List<Product> products) {
     this.products = products;
   }
 
